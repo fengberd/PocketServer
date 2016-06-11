@@ -221,7 +221,7 @@ public class HomeActivity extends SherlockActivity
 			{
 				if(ServerUtils.isRunning())
 				{
-					ServerUtils.executeCMD("stop");
+					ServerUtils.writeCommand("stop");
 				}
 			}
 		});
@@ -326,7 +326,7 @@ public class HomeActivity extends SherlockActivity
 		}
 		if(item.getItemId() == FORCE_CLOSE_CODE)
 		{
-			ServerUtils.stopServer();
+			ServerUtils.killServer();
 			if(serverIntent != null)
 			{
 				stopService(serverIntent);

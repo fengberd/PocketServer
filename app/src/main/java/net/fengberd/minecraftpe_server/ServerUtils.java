@@ -8,44 +8,45 @@ import android.content.Context;
 public final class ServerUtils
 {
 	public static Context mContext;
-	
+
+	private static Process serverProcess;
 	private static OutputStream stdin;
 	private static InputStream stdout;
 
-	final public static void setContext(Context mContext)
+	public static void setContext(Context mContext)
 	{
 		ServerUtils.mContext=mContext;
 	}
 
-	final public static String getAppDirectory()
+	public static String getAppDirectory()
 	{
 		return mContext.getApplicationInfo().dataDir;
 	}
 
-	final public static String getDataDirectory()
+	public static String getDataDirectory()
 	{
 		String dir=android.os.Environment.getExternalStorageDirectory().getPath() + (HomeActivity.nukkitMode?"/Nukkit":"/PocketMine");
 		new File(dir).mkdirs();
 		return dir;
 	}
 
-	final public static Boolean killProcessByName(String mProcessName)
+	public static void killServer()
 	{
-		return execCommand(getAppDirectory() + "/busybox killall -9 " + mProcessName);
+		try
+		{
+			Runtime.getRuntime().exec(getAppDirectory() + "/busybox killall -9 " +(HomeActivity.nukkitMode?"java":"php")).waitFor();
+		}
+		catch(Exception e)
+		{
+			
+		}
 	}
-
-	final public static void stopServer()
-	{
-		killProcessByName(HomeActivity.nukkitMode?"java":"php");
-	}
-
-	static Process serverProc;
 
 	public static Boolean isRunning()
 	{
 		try
 		{
-			serverProc.exitValue();
+			serverProcess.exitValue();
 		}
 		catch(Exception e)
 		{
@@ -122,9 +123,9 @@ public final class ServerUtils
 		builder.environment().put("TMPDIR",getDataDirectory() + "/tmp");
 		try
 		{
-			serverProc=builder.start();
-			stdout=serverProc.getInputStream();
-			stdin=serverProc.getOutputStream();
+			serverProcess=builder.start();
+			stdout=serverProcess.getInputStream();
+			stdin=serverProcess.getOutputStream();
 			Thread tMonitor = new Thread()
 			{
 				public void run()
@@ -194,24 +195,9 @@ public final class ServerUtils
 			LogActivity.log("[PE Server] Unable to start "+(HomeActivity.nukkitMode?"Java":"PHP")+".");
 			LogActivity.log(e.toString());
 			HomeActivity.stopNotifyService();
-			killProcessByName(HomeActivity.nukkitMode?"java":"php");
+			killServer();
 		}
 		return;
-	}
-
-	final public static boolean execCommand(String mCommand)
-	{
-		Runtime r = Runtime.getRuntime();
-		try
-		{
-			r.exec(mCommand).waitFor();
-		}
-		catch(Exception e)
-		{
-			r=null;
-			return false;
-		}
-		return true;
 	}
 
 	final static public void setPermission()
@@ -233,7 +219,7 @@ public final class ServerUtils
 		}
 	}
 
-	public static void executeCMD(String Cmd)
+	public static void writeCommand(String Cmd)
 	{
 		try
 		{
