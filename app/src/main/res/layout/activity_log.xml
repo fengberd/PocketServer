@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".LogActivity"
+	android:padding="10dp">
+
+	<ScrollView
+		android:id="@+id/logScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_above="@+id/button_send"
+		android:paddingBottom="4dp">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<TextView
+				android:id="@+id/label_log"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:ellipsize="none"
+				android:singleLine="false"
+				android:textColor="#F7F7F7"/>
+
+		</LinearLayout>
+
+	</ScrollView>
+
+	<EditText
+		android:id="@+id/edit_command"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignLeft="@+id/logScrollView"
+		android:layout_alignParentBottom="true"
+		android:layout_toLeftOf="@+id/button_send"
+		android:ems="10">
+
+	</EditText>
+
+	<Button
+		android:id="@+id/button_send"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBaseline="@id/edit_command"
+		android:layout_alignBottom="@id/edit_command"
+		android:layout_alignRight="@+id/logScrollView"
+		android:text="@string/button_send"/>
+
+</RelativeLayout>
+

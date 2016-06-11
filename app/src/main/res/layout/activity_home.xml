@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:padding="15dip">
+
+			<TextView
+				style="@style/ListTitleText"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="2dip"
+				android:text="@string/label_management"/>
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dip"
+				android:orientation="horizontal">
+
+				<Button
+					android:id="@+id/button_start"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:gravity="center"
+					android:text="@string/button_start"/>
+
+				<Button
+					android:id="@+id/button_stop"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:gravity="center"
+					android:text="@string/button_stop"/>
+
+			</LinearLayout>
+
+			<TextView
+				style="@style/ListTitleText"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="2dip"
+				android:text="@string/label_assistant"/>
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dip"
+				android:orientation="horizontal">
+
+				<Button
+					android:id="@+id/button_install_php"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:gravity="center"
+					android:text="@string/button_install_php"/>
+
+				<Button
+					android:id="@+id/button_install_jre"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:gravity="center"
+					android:text="@string/button_install_jre"/>
+
+			</LinearLayout>
+
+			<TextView
+				style="@style/ListTitleText"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="2dip"
+				android:text="@string/label_type"/>
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal">
+
+				<RadioGroup
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
+					android:orientation="horizontal"
+					android:weightSum="2">
+
+					<RadioButton
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:id="@+id/radio_pocketmine"
+						android:text="@string/check_pocketmine"
+						android:layout_weight="1.0"/>
+
+					<RadioButton
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:id="@+id/radio_nukkit"
+						android:text="@string/check_nukkit"
+						android:layout_weight="1.0"/>
+
+				</RadioGroup>
+
+			</LinearLayout>
+
+			<CheckBox
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:id="@+id/check_ansi"
+				android:text="@string/check_ansi"/>
+
+			<Button
+				android:layout_height="wrap_content"
+				android:text="@string/button_mount"
+				android:layout_width="match_parent"
+				android:id="@+id/button_mount"/>
+
+			<CheckBox
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:id="@+id/check_kusud"
+				android:text="@string/check_kusud"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="Put PocketMine-MP.phar or src folder to /sdcard/PocketMine"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Put your Nukkit.jar to /sdcard/Nukkit"
+				android:layout_width="wrap_content"/>
+
+		</LinearLayout>
+
+	</ScrollView>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Copyright 2016 © FENGberd.All rights reserved."
+		android:layout_width="match_parent"
+		android:layout_alignParentBottom="true"
+		android:gravity="center"
+		android:layout_marginBottom="10dp"/>
+
+</RelativeLayout>
+
