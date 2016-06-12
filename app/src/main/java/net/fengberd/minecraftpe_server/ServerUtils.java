@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 
 import android.content.Context;
+import java.util.*;
 
 public final class ServerUtils
 {
@@ -103,7 +104,8 @@ public final class ServerUtils
 				getAppDirectory() + "/java/jre/bin/java",
 				"-jar",
 				getDataDirectory() + file,
-				HomeActivity.ansiMode?"enable-ansi":"disable-ansi"
+				HomeActivity.ansiMode?"enable-ansi":"disable-ansi",
+				"disable-jline"
 			};
 		}
 		else
@@ -120,7 +122,8 @@ public final class ServerUtils
 		ProcessBuilder builder = new ProcessBuilder(args);
 		builder.redirectErrorStream(true);
 		builder.directory(new File(getDataDirectory()));
-		builder.environment().put("TMPDIR",getDataDirectory() + "/tmp");
+		Map<String,String> env=builder.environment();
+		env.put("TMPDIR",getDataDirectory() + "/tmp");
 		try
 		{
 			serverProcess=builder.start();
@@ -151,7 +154,7 @@ public final class ServerUtils
 									if(c == '\n' || c == '\u0007')
 									{
 										String line = s.toString();
-										if(c == '\u0007' && line.startsWith("\u001B]0;"))
+										if(c == '\u0007' || line.startsWith("\u001B]0;"))
 										{
 											//Do nothing.
 										}
