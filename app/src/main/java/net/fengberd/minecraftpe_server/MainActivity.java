@@ -257,8 +257,27 @@ public class MainActivity extends SherlockActivity
 		}
 		return null;
 	}
-	
+
 	public static void downloadServer(String jenkins,File saveTo,final ProgressDialog dialog)
+	{
+		try
+		{
+			JSONObject json=new JSONObject(getInternetString(jenkins+"lastSuccessfulBuild/api/json"));
+			JSONArray artifacts=json.getJSONArray("artifacts");
+			if(artifacts.length()<=0)
+			{
+				throw new Exception(instance.getString(R.string.message_no_artifacts));
+			}
+			json=artifacts.getJSONObject(0);
+			downloadFile(jenkins+"lastSuccessfulBuild/artifact/"+json.getString("relativePath"),saveTo,dialog);
+		}
+		catch(Exception e)
+		{
+			instance.toast(e.getMessage());
+		}
+	}
+	
+	public static void downloadFile(String url,File saveTo,final ProgressDialog dialog)
 	{
 		OutputStream output=null;
 		InputStream input=null;
@@ -268,15 +287,8 @@ public class MainActivity extends SherlockActivity
 			{
 				saveTo.delete();
 			}
-			JSONObject json=new JSONObject(getInternetString(jenkins+"lastSuccessfulBuild/api/json"));
-			JSONArray artifacts=json.getJSONArray("artifacts");
-			if(artifacts.length()<=0)
-			{
-				throw new Exception(instance.getString(R.string.message_no_artifacts));
-			}
-			json=artifacts.getJSONObject(0);
 			output=new FileOutputStream(saveTo);
-			HttpResponse response=new DefaultHttpClient().execute(new HttpGet(jenkins+"lastSuccessfulBuild/artifact/"+json.getString("relativePath")));
+			HttpResponse response=new DefaultHttpClient().execute(new HttpGet(url));
 			if(response.getStatusLine().getStatusCode()!=200)
 			{
 				throw new Exception(response.getStatusLine().toString());
@@ -428,43 +440,43 @@ public class MainActivity extends SherlockActivity
 			{
 				public void run()
 				{
-					downloadServer("https://raw.githubusercontent.com/FENGberd/MinecraftPEServer/master/_DOWNLOAD/php7.tar.gz",new File(ServerUtils.getAppDirectory()+"/php7.tar.gz"),processing_dialog);
+					downloadFile("https://raw.githubusercontent.com/FENGberd/MinecraftPEServer/master/_DOWNLOAD/php7.tar.gz",new File(ServerUtils.getAppDirectory()+"/php7.tar.gz"),processing_dialog);
 					runOnUiThread(new Runnable()
 					{
 						public void run()
 						{
 							processing_dialog.dismiss();
-						}
-					});
-					final ProgressDialog processing_dialog=new ProgressDialog(instance);
-					processing_dialog.setCancelable(false);
-					processing_dialog.setMessage(getString(R.string.message_installing));
-					processing_dialog.show();
-					new Thread(new Runnable()
-					{
-						public void run()
-						{
-							try
-							{
-								installBusybox();
-								Runtime.getRuntime().exec("../busybox tar zxf nukkit_library.tar.gz",new String[0],new File(ServerUtils.getAppDirectory()+"/java")).waitFor();
-								new File(ServerUtils.getAppDirectory()+"/php7.tar.gz").delete();
-								toast(R.string.message_install_success);
-							}
-							catch(Exception e)
-							{
-								toast(getString(R.string.message_install_fail)+"\n"+e.toString());
-							}
-							runOnUiThread(new Runnable()
+							final ProgressDialog processing_dialog=new ProgressDialog(instance);
+							processing_dialog.setCancelable(false);
+							processing_dialog.setMessage(getString(R.string.message_installing));
+							processing_dialog.show();
+							new Thread(new Runnable()
 							{
 								public void run()
 								{
-									processing_dialog.dismiss();
-									refreshEnabled();
+									try
+									{
+										installBusybox();
+										Runtime.getRuntime().exec("../busybox tar zxf nukkit_library.tar.gz",new String[0],new File(ServerUtils.getAppDirectory()+"/java")).waitFor();
+										new File(ServerUtils.getAppDirectory()+"/php7.tar.gz").delete();
+										toast(R.string.message_install_success);
+									}
+									catch(Exception e)
+									{
+										toast(getString(R.string.message_install_fail)+"\n"+e.toString());
+									}
+									runOnUiThread(new Runnable()
+									{
+										public void run()
+										{
+											processing_dialog.dismiss();
+											refreshEnabled();
+										}
+									});
 								}
-							});
+							}).start();
 						}
-					}).start();
+					});
 				}
 			}).start();
 			break;
