@@ -184,6 +184,7 @@ public class MainActivity extends SherlockActivity
 		radio_nukkit.setEnabled(!isStarted);
 		radio_pocketmine.setEnabled(!isStarted);
 		button_mount.setEnabled(!isStarted);
+		check_ansi.setEnabled(!isStarted);
 		if(menu_install_php!=null)
 		{
 			menu_install_php.setEnabled(!isStarted);

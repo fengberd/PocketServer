@@ -1,7 +1,7 @@
 # MinecraftPEServer
 An Android application to let you run PocketMine or Nukkit on your phone!
 
-# Uage
+# Usage
 Some code from PocketMine-Android,but most of them have been rewrited!
 
 # Abort JRE
