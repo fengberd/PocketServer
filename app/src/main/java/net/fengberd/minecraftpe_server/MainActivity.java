@@ -457,7 +457,7 @@ public class MainActivity extends SherlockActivity
 									try
 									{
 										installBusybox();
-										Runtime.getRuntime().exec("../busybox tar zxf nukkit_library.tar.gz",new String[0],new File(ServerUtils.getAppDirectory()+"/java")).waitFor();
+										Runtime.getRuntime().exec("./busybox tar zxf php7.tar.gz",new String[0],new File(ServerUtils.getAppDirectory())).waitFor();
 										new File(ServerUtils.getAppDirectory()+"/php7.tar.gz").delete();
 										toast(R.string.message_install_success);
 									}
