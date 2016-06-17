@@ -10,12 +10,12 @@ import android.widget.*;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class LogActivity extends SherlockActivity
+public class ConsoleActivity extends SherlockActivity
 {
 	final static int CLEAR_CODE = 143;
 	final static int COPY_CODE = CLEAR_CODE + 1;
 	
-	public static LogActivity logActivity=null;
+	public static ConsoleActivity instance=null;
 	public static ScrollView sv;
 	public static SpannableStringBuilder currentLog = new SpannableStringBuilder();
 	public static Button button_command=null;
@@ -26,9 +26,9 @@ public class LogActivity extends SherlockActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_log);
+		setContentView(R.layout.activity_console);
 		
-		logActivity=this;
+		instance=this;
 		label_log=(TextView) findViewById(R.id.label_log);
 		label_log.setText(currentLog);
 		edit_command=(EditText)findViewById(R.id.edit_command);
@@ -78,7 +78,7 @@ public class LogActivity extends SherlockActivity
 
 	public static void log(String line)
 	{
-		if(HomeActivity.ansiMode)
+		if(MainActivity.ansiMode)
 		{
 			line="<font>" + line.replace("&","&amp;")
 				.replace("<","&lt;")
@@ -91,7 +91,7 @@ public class LogActivity extends SherlockActivity
 				.replace("\u001b[4m","</font><font style=\"text-decoration:underline\">")
 				.replace("\u001b[8m","</font><font>")
 				.replace("\u001b[9m","</font><font style=\"text-decoration:line-through\">");
-			if(HomeActivity.nukkitMode)
+			if(MainActivity.nukkitMode)
 			{
 				line=line.replace("\u001b[0;30m","</font><font color=\"#000000\">")
 					.replace("\u001b[0;34m","</font><font color=\"#0000AA\">")
@@ -131,11 +131,11 @@ public class LogActivity extends SherlockActivity
 			}
 			line=line+ "</font><br />";
 		}
-		final CharSequence result=HomeActivity.ansiMode?Html.fromHtml(line):(line+"\n");
+		final CharSequence result=MainActivity.ansiMode?Html.fromHtml(line):(line+"\n");
 		currentLog.append(result);
-		if(logActivity != null)
+		if(instance != null)
 		{
-			logActivity.runOnUiThread(new Runnable() 
+			instance.runOnUiThread(new Runnable() 
 			{
 				public void run()
 				{

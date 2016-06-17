@@ -50,37 +50,6 @@
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="2dip"
-				android:text="@string/label_assistant"/>
-
-			<LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="10dip"
-				android:orientation="horizontal">
-
-				<Button
-					android:id="@+id/button_install_php"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:gravity="center"
-					android:text="@string/button_install_php"/>
-
-				<Button
-					android:id="@+id/button_install_jre"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:gravity="center"
-					android:text="@string/button_install_jre"/>
-
-			</LinearLayout>
-
-			<TextView
-				style="@style/ListTitleText"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="2dip"
 				android:text="@string/label_type"/>
 
 			<LinearLayout

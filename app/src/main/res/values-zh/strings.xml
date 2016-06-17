@@ -2,15 +2,13 @@
 <resources>
     <string name="application_name">MinecraftPE 服务器</string>
 
-    <string name="activity_home">PE Server</string>
+    <string name="activity_main">PE Server</string>
     <string name="activity_console">控制台</string>
 
     <string name="button_send">发送</string>
     <string name="button_stop">关闭服务器</string>
     <string name="button_start">开启服务器</string>
     <string name="button_mount">挂载Java运行库(ROOT)</string>
-    <string name="button_install_php">安装PHP</string>
-    <string name="button_install_jre">安装Java</string>
 
     <string name="check_nukkit">Nukkit</string>
     <string name="check_pocketmine">PocketMine</string>
@@ -18,19 +16,26 @@
     <string name="check_kusud">使用 ku.sud 请求root权限</string>
 
     <string name="message_copied">已复制.</string>
+    <string name="message_done">操作完成.</string>
     <string name="message_running">正在运行</string>
     <string name="message_tap_open">点击打开 MinecraftPE 服务器</string>
     <string name="message_installing">正在安装,请稍候...</string>
+    <string name="message_downloading">正在下载 %s ...</string>
     <string name="message_install_fail">安装失败:</string>
     <string name="message_install_success">安装成功.</string>
     <string name="message_install_fail_path">安装失败,请将 "nukkit_library.tar.gz" 放入</string>
+    <string name="message_no_artifacts">未找到构建成功的文件</string>
+    <string name="message_select_repository">请选择%s源</string>
 
     <string name="label_management">服务器管理</string>
-	<string name="label_assistant">辅助工具</string>
 	<string name="label_type">服务器类型</string>
 
 	<string name="menu_console">控制台</string>
     <string name="menu_kill">强制停止服务器</string>
     <string name="menu_clear">清空</string>
     <string name="menu_copy">复制</string>
+    <string name="menu_install_php">安装PHP</string>
+    <string name="menu_install_php7">下载并安装PHP7</string>
+    <string name="menu_install_java">安装Java</string>
+    <string name="menu_download">下载服务端</string>
 </resources>

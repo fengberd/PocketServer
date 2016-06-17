@@ -1,10 +1,10 @@
 package net.fengberd.minecraftpe_server;
 
 import java.io.*;
+import java.util.*;
 import java.nio.charset.Charset;
 
 import android.content.Context;
-import java.util.*;
 
 public final class ServerUtils
 {
@@ -26,7 +26,7 @@ public final class ServerUtils
 
 	public static String getDataDirectory()
 	{
-		String dir=android.os.Environment.getExternalStorageDirectory().getPath() + (HomeActivity.nukkitMode?"/Nukkit":"/PocketMine");
+		String dir=android.os.Environment.getExternalStorageDirectory().getPath() + (MainActivity.nukkitMode?"/Nukkit":"/PocketMine");
 		new File(dir).mkdirs();
 		return dir;
 	}
@@ -35,7 +35,7 @@ public final class ServerUtils
 	{
 		try
 		{
-			Runtime.getRuntime().exec(getAppDirectory() + "/busybox killall -9 " +(HomeActivity.nukkitMode?"java":"php")).waitFor();
+			Runtime.getRuntime().exec(getAppDirectory() + "/busybox killall -9 " +(MainActivity.nukkitMode?"java":"php")).waitFor();
 		}
 		catch(Exception e)
 		{
@@ -70,7 +70,7 @@ public final class ServerUtils
 		}
 		setPermission();
 		String file = "/Nukkit.jar";
-		if(!HomeActivity.nukkitMode)
+		if(!MainActivity.nukkitMode)
 		{
 			if(new File(getDataDirectory() + "/PocketMine-MP.phar").exists())
 			{
@@ -82,7 +82,7 @@ public final class ServerUtils
 			}
 		}
 		File ini=new File(getDataDirectory() + "/php.ini");
-		if(!HomeActivity.nukkitMode && !ini.exists())
+		if(!MainActivity.nukkitMode && !ini.exists())
 		{
 			try
 			{
@@ -97,14 +97,14 @@ public final class ServerUtils
 			}
 		}
 		String[] args=null;
-		if(HomeActivity.nukkitMode)
+		if(MainActivity.nukkitMode)
 		{
 			args=new String[]
 			{
 				getAppDirectory() + "/java/jre/bin/java",
 				"-jar",
 				getDataDirectory() + file,
-				HomeActivity.ansiMode?"enable-ansi":"disable-ansi",
+				MainActivity.ansiMode?"enable-ansi":"disable-ansi",
 				"disable-jline"
 			};
 		}
@@ -116,7 +116,7 @@ public final class ServerUtils
 				"-c",
 				getDataDirectory() + "/php.ini",
 				getDataDirectory() + file,
-				HomeActivity.ansiMode?"--enable-ansi":"--disable-ansi"
+				MainActivity.ansiMode?"--enable-ansi":"--disable-ansi"
 			};
 		}
 		ProcessBuilder builder = new ProcessBuilder(args);
@@ -160,7 +160,7 @@ public final class ServerUtils
 										}
 										else
 										{
-											LogActivity.log(line);
+											ConsoleActivity.log(line);
 										}
 										s=new StringBuilder();
 									}
@@ -187,17 +187,17 @@ public final class ServerUtils
 							}
 						}
 					}
-					LogActivity.log("[PE Server] Server was stopped.");
-					HomeActivity.stopNotifyService();
+					ConsoleActivity.log("[PE Server] Server was stopped.");
+					MainActivity.stopNotifyService();
 				}
 			};
 			tMonitor.start();
 		}
 		catch(Exception e)
 		{
-			LogActivity.log("[PE Server] Unable to start "+(HomeActivity.nukkitMode?"Java":"PHP")+".");
-			LogActivity.log(e.toString());
-			HomeActivity.stopNotifyService();
+			ConsoleActivity.log("[PE Server] Unable to start "+(MainActivity.nukkitMode?"Java":"PHP")+".");
+			ConsoleActivity.log(e.toString());
+			MainActivity.stopNotifyService();
 			killServer();
 		}
 		return;
@@ -207,7 +207,7 @@ public final class ServerUtils
 	{
 		try
 		{
-			if(HomeActivity.nukkitMode)
+			if(MainActivity.nukkitMode)
 			{
 				Runtime.getRuntime().exec("./busybox chmod -R 755 java",new String[0],new File(getAppDirectory())).waitFor();
 			}
