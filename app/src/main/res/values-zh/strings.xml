@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="application_name">MinecraftPE 服务器</string>
+    <string name="application_name">口袋服务器</string>
 
-    <string name="activity_main">PE Server</string>
+    <string name="activity_main">口袋服务器</string>
     <string name="activity_console">控制台</string>
 
     <string name="button_send">发送</string>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="application_name">MinecraftPE Server</string>
+    <string name="application_name">Pocket Server</string>
 	
-    <string name="activity_main">PE Server</string>
+    <string name="activity_main">Pocket Server</string>
     <string name="activity_console">Console</string>
 	
     <string name="button_send">Send</string>
