@@ -88,6 +88,39 @@
 				android:id="@+id/check_ansi"
 				android:text="@string/check_ansi"/>
 
+			<TextView
+				style="@style/ListTitleText"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="2dip"
+				android:text="@string/label_console"/>
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_marginBottom="10dp">
+
+				<LinearLayout
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
+					android:orientation="horizontal">
+
+					<TextView
+						android:layout_height="wrap_content"
+						android:text="@string/label_console_fontsize"
+						android:layout_width="wrap_content"
+						android:layout_gravity="center"/>
+
+					<SeekBar
+						android:layout_height="wrap_content"
+						android:layout_width="match_parent"
+						android:id="@+id/seekbar_fontsize"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
 			<Button
 				android:layout_height="wrap_content"
 				android:text="@string/button_mount"

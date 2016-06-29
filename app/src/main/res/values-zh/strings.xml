@@ -29,6 +29,8 @@
 
     <string name="label_management">服务器管理</string>
 	<string name="label_type">服务器类型</string>
+	<string name="label_console">控制台个性化</string>
+	<string name="label_console_fontsize">字体大小:</string>
 
 	<string name="menu_console">控制台</string>
     <string name="menu_kill">强制停止服务器</string>

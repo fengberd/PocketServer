@@ -32,6 +32,7 @@ public class MainActivity extends SherlockActivity
 	public static RadioButton radio_pocketmine=null,radio_nukkit=null;
 	public static CheckBox check_kusud=null,check_ansi=null;
 	public static Button button_start=null,button_stop=null,button_mount=null;
+	public static SeekBar seekbar_fontsize=null;
 	public static MenuItem menu_install_php=null,menu_install_java=null,menu_download_server=null;
 	public static SharedPreferences config=null;
 	
@@ -71,6 +72,13 @@ public class MainActivity extends SherlockActivity
 
 		radio_nukkit=(RadioButton) findViewById(R.id.radio_nukkit);
 		radio_pocketmine=(RadioButton) findViewById(R.id.radio_pocketmine);
+		
+		seekbar_fontsize=(SeekBar)findViewById(R.id.seekbar_fontsize);
+		
+		seekbar_fontsize.setProgress(config.getInt("ConsoleFontSize",18));
+		seekbar_fontsize.setMax(30);
+		
+		ConsoleActivity.font_size=seekbar_fontsize.getProgress();
 		
 		check_ansi.setChecked(ansiMode);
 		check_kusud.setChecked(config.getBoolean("KusudMode",false));
@@ -114,6 +122,28 @@ public class MainActivity extends SherlockActivity
 				nukkitMode=false;
 				config.edit().putBoolean("NukkitMode",nukkitMode).apply();
 				refreshEnabled();
+			}
+		});
+		
+		seekbar_fontsize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+		{
+			@Override
+			public void onProgressChanged(SeekBar p1,int p2,boolean p3)
+			{
+				
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar p1)
+			{
+				
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar p1)
+			{
+				ConsoleActivity.font_size=p1.getProgress();
+				config.edit().putInt("ConsoleFontSize",p1.getProgress()).apply();
 			}
 		});
 		

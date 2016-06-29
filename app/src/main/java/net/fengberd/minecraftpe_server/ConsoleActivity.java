@@ -21,6 +21,7 @@ public class ConsoleActivity extends SherlockActivity
 	public static Button button_command=null;
 	public static TextView label_log=null;
 	public static EditText edit_command=null;
+	public static float font_size=18.0f;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -31,6 +32,7 @@ public class ConsoleActivity extends SherlockActivity
 		instance=this;
 		label_log=(TextView) findViewById(R.id.label_log);
 		label_log.setText(currentLog);
+		label_log.setTextSize(font_size);
 		edit_command=(EditText)findViewById(R.id.edit_command);
 		sv=(ScrollView) findViewById(R.id.logScrollView);
 		button_command = (Button)findViewById(R.id.button_send);
