@@ -75,7 +75,7 @@ public class MainActivity extends SherlockActivity
 		
 		seekbar_fontsize=(SeekBar)findViewById(R.id.seekbar_fontsize);
 		
-		seekbar_fontsize.setProgress(config.getInt("ConsoleFontSize",18));
+		seekbar_fontsize.setProgress(config.getInt("ConsoleFontSize",16));
 		seekbar_fontsize.setMax(30);
 		
 		ConsoleActivity.font_size=seekbar_fontsize.getProgress();

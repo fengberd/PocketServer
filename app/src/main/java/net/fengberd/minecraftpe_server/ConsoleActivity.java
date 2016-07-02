@@ -6,9 +6,9 @@ import com.actionbarsherlock.app.SherlockActivity;
 
 import android.os.*;
 import android.text.*;
+import android.view.*;
 import android.widget.*;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.View.*;
 
 public class ConsoleActivity extends SherlockActivity
 {
@@ -16,12 +16,12 @@ public class ConsoleActivity extends SherlockActivity
 	final static int COPY_CODE = CLEAR_CODE + 1;
 	
 	public static ConsoleActivity instance=null;
-	public static ScrollView sv;
+	public static ScrollView scroll_log;
 	public static SpannableStringBuilder currentLog = new SpannableStringBuilder();
 	public static Button button_command=null;
 	public static TextView label_log=null;
 	public static EditText edit_command=null;
-	public static float font_size=18.0f;
+	public static float font_size=16.0f;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -30,12 +30,29 @@ public class ConsoleActivity extends SherlockActivity
 		setContentView(R.layout.activity_console);
 		
 		instance=this;
-		label_log=(TextView) findViewById(R.id.label_log);
+		
+		label_log=(TextView)findViewById(R.id.label_log);
+		edit_command=(EditText)findViewById(R.id.edit_command);
+		scroll_log=(ScrollView)findViewById(R.id.logScrollView);
+		button_command=(Button)findViewById(R.id.button_send);
+		
 		label_log.setText(currentLog);
 		label_log.setTextSize(font_size);
-		edit_command=(EditText)findViewById(R.id.edit_command);
-		sv=(ScrollView) findViewById(R.id.logScrollView);
-		button_command = (Button)findViewById(R.id.button_send);
+		
+		edit_command.setOnKeyListener(new OnKeyListener()
+		{
+			@Override
+			public boolean onKey(View p1,int keyCode,KeyEvent p3)
+			{
+				if(keyCode==KeyEvent.KEYCODE_ENTER)
+				{
+					button_command.callOnClick();
+					return true;
+				}
+				return false;
+			}
+		});
+		
 		button_command.setOnClickListener(new OnClickListener() 
 		{
 			@Override
@@ -142,7 +159,7 @@ public class ConsoleActivity extends SherlockActivity
 				public void run()
 				{
 					label_log.append(result);
-					sv.fullScroll(ScrollView.FOCUS_DOWN);
+					scroll_log.fullScroll(ScrollView.FOCUS_DOWN);
 				}
 			});
 		}
