@@ -8,7 +8,8 @@
 	<application
         android:configChanges="keyboardHidden|orientation"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/application_name" >
+        android:label="@string/application_name"
+		android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:label="@string/activity_main" >
