@@ -3,6 +3,7 @@ package net.fengberd.minecraftpe_server;
 import android.os.*;
 import android.app.*;
 import android.content.*;
+import android.support.v4.app.*;
 
 public class ServerService extends Service
 {
@@ -33,12 +34,18 @@ public class ServerService extends Service
 		{
 			isRunning=true;
 			Context context = getApplicationContext();
-			Notification note = new Notification(R.drawable.ic_launcher,(MainActivity.nukkitMode?"Nukkit":"PocketMine")+" is running",System.currentTimeMillis());
+		
 			Intent i = new Intent(context,MainActivity.class);
-			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 			PendingIntent pi = PendingIntent.getActivity(this,0,i,0);
-			note.setLatestEventInfo(this,(MainActivity.nukkitMode?"Nukkit":"PocketMine")+" "+MainActivity.instance.getString(R.string.message_running),MainActivity.instance.getString(R.string.message_tap_open),pi);
-			note.flags|=Notification.FLAG_NO_CLEAR;
+			Notification note;
+			
+			NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+				.setContentIntent(pi)
+				.setSmallIcon(R.drawable.ic_launcher)
+				.setContentTitle((MainActivity.nukkitMode?"Nukkit":"PocketMine")+" "+MainActivity.instance.getString(R.string.message_running))
+				.setContentText(MainActivity.instance.getString(R.string.message_tap_open))
+				.setOngoing(true);
+			note = builder.build();
 			startForeground(1337,note);
 		}
 	}

@@ -2,8 +2,11 @@ package net.fengberd.minecraftpe_server;
 
 import java.io.*;
 
-import android.os.*;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
+
 import android.app.*;
+import android.os.*;
 import android.view.*;
 import android.widget.*;
 import android.content.*;
@@ -14,11 +17,7 @@ import org.apache.http.*;
 import org.apache.http.impl.client.*;
 import org.apache.http.client.methods.*;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.app.SherlockActivity;
-
-public class MainActivity extends SherlockActivity
+public class MainActivity extends AppCompatActivity
 {
 	final static int FORCE_CLOSE_CODE = 143,
 		CONSOLE_CODE = FORCE_CLOSE_CODE + 1,

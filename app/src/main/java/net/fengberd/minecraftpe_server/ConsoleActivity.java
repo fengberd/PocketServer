@@ -1,16 +1,15 @@
 package net.fengberd.minecraftpe_server;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.app.SherlockActivity;
+import android.support.v7.app.AppCompatActivity;
 
+import android.app.*;
 import android.os.*;
 import android.text.*;
 import android.view.*;
 import android.widget.*;
 import android.view.View.*;
 
-public class ConsoleActivity extends SherlockActivity
+public class ConsoleActivity extends AppCompatActivity
 {
 	final static int CLEAR_CODE = 143;
 	final static int COPY_CODE = CLEAR_CODE + 1;

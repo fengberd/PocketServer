@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
+	<style name="AppTheme" parent="@style/Theme.AppCompat">	
+	</style>
+	
     <style name="ListTitleText">
         <item name="android:textSize">17sp</item>
         <item name="android:paddingBottom">2dp</item>
