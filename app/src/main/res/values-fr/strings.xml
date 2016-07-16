@@ -2,6 +2,8 @@
 <!--
 French translated by:
 	sxmtrippy971@gmail.com
+Corrected by:
+	taffou2a@gmail.com
 Thank for everyone above!
 -->
 <resources>
@@ -18,27 +20,27 @@ Thank for everyone above!
     <string name="check_nukkit">Nukkit</string>
     <string name="check_pocketmine">PocketMine</string>
     <string name="check_ansi">Activer le support ANSI</string>
-    <string name="check_kusud">Utiliser (ku.sud) pour demande l\'accès root</string>
+    <string name="check_kusud">Utiliser (ku.sud) pour demander l\'accès root</string>
 
     <string name="message_copied">Copié.</string>
     <string name="message_done">Fini.</string>
     <string name="message_running">est en cours d’exécution</string>
     <string name="message_tap_open">Appuyez pour ouvrir le serveur MinecraftPE</string>
-    <string name="message_installing">Installation, s’il vous plaît patienter...</string>
+    <string name="message_installing">Installation, s’il vous plaît patientez...</string>
     <string name="message_downloading">Téléchargement de %s ...</string>
     <string name="message_install_fail">L\'installation a échoué:</string>
-    <string name="message_install_success">Installez avec succès.</string>
-    <string name="message_install_fail_path">L\'installation a échoué,s’il vous plaît mes "nukkit_library.tar.gz" à</string>
+    <string name="message_install_success">Installé avec succès.</string>
+    <string name="message_install_fail_path">L\'installation a échoué, s’il vous plaît mettez "nukkit_library.tar.gz" dans</string>
     <string name="message_no_artifacts">Aucun artefact trouvé.</string>
-    <string name="message_select_repository">S\'il vous plaît sélectionner un référentiel %s</string>
+    <string name="message_select_repository">S\'il vous plaît sélectionnez un référentiel %s</string>
 	
     <string name="label_management">Gestion du serveur</string>
-	<string name="label_type">Type de server</string>
-	<string name="label_console">Personnaliser le console</string>
+	<string name="label_type">Type de serveur</string>
+	<string name="label_console">Personnaliser la console</string>
 	<string name="label_console_fontsize">Taille de police:</string>
 	
 	<string name="menu_console">Console</string>
-    <string name="menu_kill">Arrêter le server</string>
+    <string name="menu_kill">Arrêter le serveur</string>
     <string name="menu_clear">Effacer</string>
     <string name="menu_copy">Copié</string>
     <string name="menu_install_php">Installer PHP</string>
