@@ -18,7 +18,7 @@
     <string name="message_copied">Copied.</string>
     <string name="message_done">Done.</string>
     <string name="message_running">is running</string>
-    <string name="message_tap_open">Tap to open MinecraftPE Server</string>
+    <string name="message_tap_open">Tap to open Pocket Server</string>
     <string name="message_installing">Installing,Please wait...</string>
     <string name="message_downloading">Downloading %s ...</string>
     <string name="message_install_fail">Install failed:</string>

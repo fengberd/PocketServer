@@ -3,6 +3,7 @@ package net.fengberd.minecraftpe_server;
 import android.os.*;
 import android.app.*;
 import android.content.*;
+import android.support.v4.app.*;
 
 public class ServerService extends Service
 {
@@ -32,14 +33,13 @@ public class ServerService extends Service
 		if(!isRunning)
 		{
 			isRunning=true;
-			Context context = getApplicationContext();
-			Notification note = new Notification(R.drawable.ic_launcher,(MainActivity.nukkitMode?"Nukkit":"PocketMine")+" is running",System.currentTimeMillis());
-			Intent i = new Intent(context,MainActivity.class);
-			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-			PendingIntent pi = PendingIntent.getActivity(this,0,i,0);
-			note.setLatestEventInfo(this,(MainActivity.nukkitMode?"Nukkit":"PocketMine")+" "+MainActivity.instance.getString(R.string.message_running),MainActivity.instance.getString(R.string.message_tap_open),pi);
-			note.flags|=Notification.FLAG_NO_CLEAR;
-			startForeground(1337,note);
+			NotificationCompat.Builder builder=new NotificationCompat.Builder(getApplicationContext());
+			builder.setContentTitle((MainActivity.nukkitMode?"Nukkit":"PocketMine")+" "+MainActivity.instance.getString(R.string.message_running));
+			builder.setContentText(MainActivity.instance.getString(R.string.message_tap_open));
+			builder.setOngoing(true);
+			builder.setSmallIcon(R.drawable.ic_launcher);
+			builder.setContentIntent(PendingIntent.getActivity(this,0,new Intent(getApplicationContext(),MainActivity.class),0));
+			startForeground(1337,builder.getNotification());
 		}
 	}
 
