@@ -564,12 +564,11 @@ public class MainActivity extends SherlockActivity
 			break;
 		case DOWNLOAD_SERVER_CODE:
 			AlertDialog.Builder download_dialog_builder=new AlertDialog.Builder(this);
-			final String[] jenkins=nukkitMode?jenkins_nukkit:jenkins_pocketmine,values=new String[jenkins.length];
+			String[] jenkins=nukkitMode?jenkins_nukkit:jenkins_pocketmine,values=new String[jenkins.length];
 			for(int i=0;i<jenkins.length;i++)
 			{
 				String[] split=jenkins[i].split("\\|",2);
 				values[i]=split[0];
-				jenkins[i]=split[1];
 			}
 			download_dialog_builder.setTitle(getString(R.string.message_select_repository).replace("%s",nukkitMode?"Nukkit":"PocketMine"));
 			download_dialog_builder.setItems(values,new DialogInterface.OnClickListener()
@@ -587,7 +586,9 @@ public class MainActivity extends SherlockActivity
 					{
 						public void run()
 						{
-							downloadServer(jenkins[p2],new File(ServerUtils.getDataDirectory()+"/"+(nukkitMode?"Nukkit.jar":"PocketMine-MP.phar")),processing_dialog);
+							String[] wtf=nukkitMode?jenkins_nukkit:jenkins_pocketmine;
+							wtf=wtf[p2].split("\\|");
+							downloadServer(wtf[1],new File(ServerUtils.getDataDirectory()+"/"+(nukkitMode?"Nukkit.jar":"PocketMine-MP.phar")),processing_dialog);
 							runOnUiThread(new Runnable()
 							{
 								public void run()

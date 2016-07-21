@@ -26,7 +26,7 @@
     <string name="message_install_fail_path">安装失败,请将 "nukkit_library.tar.gz" 放入</string>
     <string name="message_no_artifacts">未找到构建成功的文件</string>
     <string name="message_select_repository">请选择%s源</string>
-
+    
     <string name="label_management">服务器管理</string>
 	<string name="label_type">服务器类型</string>
 	<string name="label_console">控制台个性化</string>
