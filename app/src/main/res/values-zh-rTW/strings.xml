@@ -31,6 +31,8 @@
 	<string name="label_type">伺服器類型</string>
 	<string name="label_console">控制台個性化</string>
 	<string name="label_console_fontsize">字體大小:</string>
+	<string name="label_pocketMine_to">把 PocketMine-MP.phar 或 src 資料夾放至 /sdcard/PocketMine</string>
+	<string name="label_nukkit_to">把您的 Nukkit.jar 放至 /sdcard/Nukkit</string>
 
 	<string name="menu_console">控制台</string>
     <string name="menu_kill">強制停止伺服器</string>
