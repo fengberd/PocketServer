@@ -1,6 +1,10 @@
 package net.fengberd.minecraftpe_server;
 
 import java.io.*;
+import java.net.*;
+import java.net.ssl.*;
+
+import javax.security.cert.*;
 
 import android.os.*;
 import android.app.*;
@@ -10,9 +14,6 @@ import android.content.*;
 import android.view.View.*;
 
 import org.json.*;
-import org.apache.http.*;
-import org.apache.http.impl.client.*;
-import org.apache.http.client.methods.*;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -42,10 +43,15 @@ public class MainActivity extends SherlockActivity
 	{
 		"Angelic47|http://ci.angelic47.com:30001/job/Nukkit/",
 		"MengCraft|http://ci.mengcraft.com:8080/job/nukkit/",
-		"RegularBox|http://ci.regularbox.com/job/Nukkit/"
+		"RegularBox|http://ci.regularbox.com/job/Nukkit/",
+		"ZXDA|https://jenkins.zxda.net/job/Nukkit/"
 	},jenkins_pocketmine=new String[]
 	{
-		"iTX-Genisys|http://jenkins.mcper.cn/job/Genisys-master/"
+		"Genisys(iTX Technologies)|https://ci.itxtech.org/job/Genisys/",
+		"Genisys(ZXDA,Not suggested)|https://jenkins.zxda.net/job/Genisys/",
+		"ClearSky-PHP7(ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP7/",
+		"ClearSky-PHP5(ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP5/",
+		"PocketMine-MP(ZXDA)|https://jenkins.zxda.net/job/PocketMine-MP/"
 	};
 	
 	@Override
@@ -314,23 +320,50 @@ public class MainActivity extends SherlockActivity
 		InputStream input=null;
 		try
 		{
+			final SSLContext sc=SSLContext.getInstance("SSL");
+			sc.init(null,new TrustManager[]
+			{
+				new X509TrustManager()
+				{
+					public X509Certificate[] getAcceptedIssuers()
+					{
+						return null;
+					}
+					
+					public void checkClientTrusted(X509Certificate[] certs,String authType)
+					{
+						
+					}
+					
+					public void checkServerTrusted(X509Certificate[] certs,String authType)
+					{
+						
+					}
+				}
+			},new java.security.SecureRandom());
+			HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+			HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier()
+			{
+				public boolean verify(String hostname,SSLSession session)
+				{
+					return true;
+				}
+			});
+			
 			if(saveTo.exists())
 			{
 				saveTo.delete();
 			}
+			URL url=new URL(url);
+			URLConnection connection=url.openConnection();
+			connection.connect();
+			input=new BufferedInputStream(url.openStream());
 			output=new FileOutputStream(saveTo);
-			HttpResponse response=new DefaultHttpClient().execute(new HttpGet(url));
-			if(response.getStatusLine().getStatusCode()!=200)
-			{
-				throw new Exception(response.getStatusLine().toString());
-			}
-			HttpEntity entry=response.getEntity();
-			input=entry.getContent();
 			int count=0;
 			long read=0;
 			if(dialog!=null)
 			{
-				final long max=entry.getContentLength();
+				final long max=connection.getContentLength();
 				instance.runOnUiThread(new Runnable()
 				{
 					public void run()
