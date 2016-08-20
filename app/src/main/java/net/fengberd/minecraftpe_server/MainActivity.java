@@ -2,9 +2,9 @@ package net.fengberd.minecraftpe_server;
 
 import java.io.*;
 import java.net.*;
-import java.net.ssl.*;
+import java.security.cert.*;
 
-import javax.security.cert.*;
+import javax.net.ssl.*;
 
 import android.os.*;
 import android.app.*;
@@ -18,6 +18,7 @@ import org.json.*;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.app.SherlockActivity;
+import java.security.cert.*;
 
 public class MainActivity extends SherlockActivity
 {
@@ -278,10 +279,10 @@ public class MainActivity extends SherlockActivity
 	{
 		try
 		{
-			BufferedReader reader=new BufferedReader(new InputStreamReader(new DefaultHttpClient().execute(new HttpGet(url)).getEntity().getContent()));
-			StringBuilder sb = new StringBuilder();
-			String line = null;
-			while ((line = reader.readLine()) != null)
+			BufferedReader reader=new BufferedReader(new InputStreamReader(openNetConnection(url).getInputStream()));
+			StringBuilder sb=new StringBuilder();
+			String line=null;
+			while((line=reader.readLine())!=null)
 			{
 				sb.append(line).append('\r');
 			}
@@ -320,44 +321,12 @@ public class MainActivity extends SherlockActivity
 		InputStream input=null;
 		try
 		{
-			final SSLContext sc=SSLContext.getInstance("SSL");
-			sc.init(null,new TrustManager[]
-			{
-				new X509TrustManager()
-				{
-					public X509Certificate[] getAcceptedIssuers()
-					{
-						return null;
-					}
-					
-					public void checkClientTrusted(X509Certificate[] certs,String authType)
-					{
-						
-					}
-					
-					public void checkServerTrusted(X509Certificate[] certs,String authType)
-					{
-						
-					}
-				}
-			},new java.security.SecureRandom());
-			HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-			HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier()
-			{
-				public boolean verify(String hostname,SSLSession session)
-				{
-					return true;
-				}
-			});
-			
 			if(saveTo.exists())
 			{
 				saveTo.delete();
 			}
-			URL url=new URL(url);
-			URLConnection connection=url.openConnection();
-			connection.connect();
-			input=new BufferedInputStream(url.openStream());
+			URLConnection connection=openNetConnection(url);
+			input=new BufferedInputStream(connection.getInputStream());
 			output=new FileOutputStream(saveTo);
 			int count=0;
 			long read=0;
@@ -409,6 +378,46 @@ public class MainActivity extends SherlockActivity
 				
 			}
 		}
+	}
+	
+	public static URLConnection openNetConnection(String url) throws Exception
+	{
+		final SSLContext sc=SSLContext.getInstance("SSL");
+		sc.init(null,new TrustManager[]
+		{
+			new X509TrustManager()
+			{
+				@Override
+				public void checkClientTrusted(X509Certificate[] p1,String p2) throws CertificateException
+				{
+					
+				}
+				
+				@Override
+				public void checkServerTrusted(X509Certificate[] p1,String p2) throws CertificateException
+				{
+					
+				}
+				
+				@Override
+				public X509Certificate[] getAcceptedIssuers()
+				{
+					return null;
+				}
+			}
+		},new java.security.SecureRandom());
+		HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+		HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier()
+		{
+			public boolean verify(String hostname,SSLSession session)
+			{
+				return true;
+			}
+		});
+		URL req=new URL(url);
+		URLConnection connection=req.openConnection();
+		connection.connect();
+		return connection;
 	}
 	
 	public void toast(int text)
