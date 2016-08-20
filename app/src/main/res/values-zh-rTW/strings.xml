@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="application_name">口袋伺服器</string>
+
+    <string name="activity_main">口袋伺服器</string>
+    <string name="activity_console">控制台</string>
+
+    <string name="button_send">發送</string>
+    <string name="button_stop">關閉伺服器</string>
+    <string name="button_start">開啟伺服器</string>
+    <string name="button_mount">掛載Java運行庫(ROOT)</string>
+
+    <string name="check_nukkit">Nukkit</string>
+    <string name="check_pocketmine">PocketMine</string>
+    <string name="check_ansi">啟用ANSI支持</string>
+    <string name="check_kusud">使用 ku.sud 請求root權限</string>
+
+    <string name="message_copied">已複製.</string>
+    <string name="message_done">操作完成.</string>
+    <string name="message_running">正在運行</string>
+    <string name="message_tap_open">點擊打開口袋伺服器</string>
+    <string name="message_installing">正在安裝,請稍候...</string>
+    <string name="message_downloading">正在下載 %s ...</string>
+    <string name="message_install_fail">安裝失敗:</string>
+    <string name="message_install_success">安裝成功.</string>
+    <string name="message_install_fail_path">安裝失敗,請將 "nukkit_library.tar.gz" 放入</string>
+    <string name="message_no_artifacts">未找到構建成功的文件</string>
+    <string name="message_select_repository">請選擇%s源</string>
+    
+    <string name="label_management">伺服器管理</string>
+	<string name="label_type">伺服器類型</string>
+	<string name="label_console">控制台個性化</string>
+	<string name="label_console_fontsize">字體大小:</string>
+	<string name="label_pocketMine_to">把 PocketMine-MP.phar 或 src 資料夾放至 /sdcard/PocketMine</string>
+	<string name="label_nukkit_to">把您的 Nukkit.jar 放至 /sdcard/Nukkit</string>
+
+	<string name="menu_console">控制台</string>
+    <string name="menu_kill">強制停止伺服器</string>
+    <string name="menu_clear">清空</string>
+    <string name="menu_copy">複製</string>
+    <string name="menu_install_php">安裝PHP</string>
+    <string name="menu_install_php7">下載並安裝PHP7</string>
+    <string name="menu_install_java">安裝Java</string>
+    <string name="menu_download">下載服務端</string>
+</resources>

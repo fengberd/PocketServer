@@ -137,11 +137,11 @@
 			<TextView
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
-				android:text="Put PocketMine-MP.phar or src folder to /sdcard/PocketMine"/>
+				android:text="@string/label_pocketMine_to"/>
 
 			<TextView
 				android:layout_height="wrap_content"
-				android:text="Put your Nukkit.jar to /sdcard/Nukkit"
+				android:text="@string/label_nukkit_to"
 				android:layout_width="wrap_content"/>
 
 		</LinearLayout>

@@ -31,6 +31,8 @@
 	<string name="label_type">Server Type</string>
 	<string name="label_console">Console Customize</string>
 	<string name="label_console_fontsize">Font Size:</string>
+	<string name="label_pocketMine_to">Put PocketMine-MP.phar or src folder to /sdcard/PocketMine</string>
+	<string name="label_nukkit_to">Put your Nukkit.jar to /sdcard/Nukkit</string>
 	
 	<string name="menu_console">Console</string>
     <string name="menu_kill">Kill server</string>
