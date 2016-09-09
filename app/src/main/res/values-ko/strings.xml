@@ -5,41 +5,41 @@
     <string name="activity_main">Pocket Server</string>
     <string name="activity_console">콘솔</string>
 	
-    <string name="button_send">보내기</string>
-    <string name="button_stop">서버 정지</string>
-    <string name="button_start">서버 가동</string>
-    <string name="button_mount">자바 라이브러리 마운트(루트 권한 필요)</string>
+    <string name="button_send">전송</string>
+    <string name="button_stop">서버 중지</string>
+    <string name="button_start">서버 시작</string>
+    <string name="button_mount">Java 라이브러리 마운트(루트)</string>
 
     <string name="check_nukkit">Nukkit</string>
     <string name="check_pocketmine">PocketMine</string>
     <string name="check_ansi">ANSI 지원 활성화</string>
-    <string name="check_kusud">ku.sud를 사용해서 루트 권한 획득 (Kingroot 유저)</string>
+    <string name="check_kusud">ku.sud를 사용하여 루트 권한을 요청하세요</string>
 
-    <string name="message_copied">복사됨</string>
-    <string name="message_done">완료</string>
-    <string name="message_running">서버 구동 시작....</string>
-    <string name="message_tap_open">탭하여 Pocket Server 열기</string>
-    <string name="message_installing">설치중입니다..조금만 기다려주세요...</string>
-    <string name="message_downloading">%s 다운로드중....</string>
+    <string name="message_copied">복사되었습니다.</string>
+    <string name="message_done">완료.</string>
+    <string name="message_running">(이)가 실행 중 입니다</string>
+    <string name="message_tap_open">Pocket Server를 열려면 누르세요</string>
+    <string name="message_installing">설치 중입니다,잠시만 기다리세요...</string>
+    <string name="message_downloading">%s를 다운로드 하는 중 ...</string>
     <string name="message_install_fail">설치 실패:</string>
-    <string name="message_install_success">설치가 성공적으로 완료됬습니다.</string>
-    <string name="message_install_fail_path">설치하는데에 실패했습니다. "nukkit_library.tar.gz"를 옆에 나오는 경로에 넣어주세요:</string>
-    <string name="message_no_artifacts">발견된 서버가 없습니다.</string>
-    <string name="message_select_repository">%s 서버 종류를 선택하세요.</string>
+    <string name="message_install_success">설치를 성공하였습니다.</string>
+    <string name="message_install_fail_path">설치 실패,"nukkit_library.tar.gz"를 넣어주세요. 경로:</string>
+    <string name="message_no_artifacts">No artifacts found.</string>
+    <string name="message_select_repository">Please select %s repository</string>
     
     <string name="label_management">서버 관리</string>
-	<string name="label_type">서버 타입</string>
-	<string name="label_console">콘솔 설정</string>
+	<string name="label_type">서버 형식</string>
+	<string name="label_console">콘솔 사용자 지정</string>
 	<string name="label_console_fontsize">폰트 크기:</string>
-	<string name="label_pocketMine_to">PocketMine-MP.phar 또는 src폴더를 /sdcard/PocketMine에 넣어주세요.</string>
-	<string name="label_nukkit_to">Nukkit.jar를 /sdcard/Nukkit에 넣어주세요.</string>
+	<string name="label_pocketMine_to">PocketMine-MP.phar 또는 src 폴더를 /sdcard/PocketMine에 넣으세요</string>
+	<string name="label_nukkit_to">Nukkit.jar를 /sdcard/Nukkit에 넣으세요</string>
 	
 	<string name="menu_console">콘솔</string>
-    <string name="menu_kill">서버 강제종료</string>
-    <string name="menu_clear">지우기</string>
+    <string name="menu_kill">Kill server</string>
+    <string name="menu_clear">Clear</string>
     <string name="menu_copy">복사</string>
-    <string name="menu_install_php">PHP설치</string>
-    <string name="menu_install_php7">다운로드 &amp; PHP7 설치</string>
-    <string name="menu_install_java">자바 설치</string>
+    <string name="menu_install_php">PHP 설치</string>
+    <string name="menu_install_php7">&amp 다운로드; PHP7 설치</string>
+    <string name="menu_install_java">Java 설치</string>
     <string name="menu_download">서버 다운로드</string>
 </resources>
