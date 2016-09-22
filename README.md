@@ -8,5 +8,5 @@ Some code from PocketMine-Android,but most of them have been rewrited!
 You can get "nukkit_library.tar.gz" from <a href="https://www.dropbox.com/s/c6xnyehgdtwobct/nukkit_library.tar.gz?dl=0">Here</a>
 
 # Download
-You can download at the <a herf="https://play.google.com/store/apps/details?id=net.fengberd.minecraftpe_server">Google Play</a>
+You can download at the <a href="https://play.google.com/store/apps/details?id=net.fengberd.minecraftpe_server">Google Play</a>
 
