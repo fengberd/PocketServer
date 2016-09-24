@@ -6,6 +6,7 @@ Some code from PocketMine-Android,but most of them have been rewrited!
 
 # Usage
 Genisys = Install App -> Press Install PHP -> Press Download & Install PHP7 -> Press Download Server, then press iTX-Genisys -> Check PocketMine at Server Type -> Press Start Server
+
 Nukkit = Install App -> Looting -> Put Nukkit.jar to /sdcard/Nukkit -> Check Nukkit at Server Type -> Install Java -> Press Download Server, then press anything -> Press Java Library(ROOT), if you use KingRoot, you check Use ku.sud to request root -> Start Server
 
 # Abort JRE
