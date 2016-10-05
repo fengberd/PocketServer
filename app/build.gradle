@@ -8,8 +8,8 @@ android {
         applicationId "net.fengberd.minecraftpe_server"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 1073
-        versionName "1.0.7.3"
+        versionCode 1074
+        versionName "1.0.7.4"
     }
     buildTypes {
         release {

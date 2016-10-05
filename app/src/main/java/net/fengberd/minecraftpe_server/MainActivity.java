@@ -48,11 +48,11 @@ public class MainActivity extends SherlockActivity
 		"ZXDA|https://jenkins.zxda.net/job/Nukkit/"
 	},jenkins_pocketmine=new String[]
 	{
-		"Genisys(iTX Technologies)|https://ci.itxtech.org/job/Genisys/",
-		"Genisys(ZXDA,Not suggested)|https://jenkins.zxda.net/job/Genisys/",
-		"ClearSky-PHP7(ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP7/",
-		"ClearSky-PHP5(ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP5/",
-		"PocketMine-MP(ZXDA)|https://jenkins.zxda.net/job/PocketMine-MP/"
+		"Genisys (iTX Tech)|https://ci.itxtech.org/job/Genisys/",
+		"Genisys (ZXDA,Not suggested)|https://jenkins.zxda.net/job/Genisys/",
+		"ClearSky-PHP7 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP7/",
+		"ClearSky-PHP5 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP5/",
+		"PocketMine-MP (ZXDA)|https://jenkins.zxda.net/job/PocketMine-MP/"
 	};
 	
 	@Override
