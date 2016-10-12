@@ -36,7 +36,7 @@
 	
 	<string name="menu_console">콘솔</string>
     <string name="menu_kill">Kill server</string>
-    <string name="menu_clear">콘솔 내 지우기</string>
+    <string name="menu_clear">콘솔 내용 지우기</string>
 	<string name="menu_copy">복사</string>
     <string name="menu_install_php">PHP 설치</string>
     <string name="menu_install_php7">&amp; 다운로드 PHP7 설치</string>
