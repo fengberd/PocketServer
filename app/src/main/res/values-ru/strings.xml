@@ -1,0 +1,46 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="application_name">Pocket Server</string>
+	
+    <string name="activity_main">Pocket Server</string>
+    <string name="activity_console">Консоль</string>
+	
+    <string name="button_send">Отправить</string>
+    <string name="button_stop">Остановить сервер</string>
+    <string name="button_start">Запусть сервер</string>
+    <string name="button_mount">Установить Java (ROOT)</string>
+
+    <string name="check_nukkit">Nukkit</string>
+    <string name="check_pocketmine">PocketMine</string>
+    <string name="check_ansi">Включить подержку ANSI</string>
+    <string name="check_kusud">Использывать ku.sud чтобы запросить root</string>
+
+    <string name="message_copied">Скопирывать.</string>
+    <string name="message_done">Готово.</string>
+    <string name="message_running">запущено</string>
+    <string name="message_tap_open">Нажми чтобы открыть Pocket Server</string>
+    <string name="message_installing">Установка, Пожалуйста подождите...</string>
+    <string name="message_downloading">Скачивание %s ...</string>
+    <string name="message_install_fail">Установка не удалась:</string>
+    <string name="message_install_success">Установка удалась.</string>
+    <string name="message_install_fail_path">Ошибка установки, пожалуйста поместите "nukkit_library.tar.gz" в</string>
+    <string name="message_no_artifacts">Артифакты не найдины.</string>
+    <string name="message_select_repository">Пожалуйста выберите %s хранилише</string>
+    
+    <string name="label_management">Управление сервером</string>
+	<string name="label_type">Тип Сервера</string>
+	<string name="label_console">Настроить Консоль</string>
+	<string name="label_console_fontsize">Размер шрифта:</string>
+	<string name="label_pocketMine_to">Помистите PocketMine-MP.phar илиже папку src в /sdcard/PocketMine</string>
+	<string name="label_nukkit_to">Помистите Nukkit.jar в /sdcard/Nukkit</string>
+	
+	<string name="menu_console">Консоль</string>
+    <string name="menu_kill">Убить сервер</string>
+    <string name="menu_clear">Очистка</string>
+    <string name="menu_copy">Копирывание</string>
+    <string name="menu_install_php">Установить PHP</string>
+    <string name="menu_install_php7">Скачать &amp; Установить PHP7</string>
+    <string name="menu_install_java">Скачать Java</string>
+    <string name="menu_download">Скачать ядро сервера</string>
+</resources>
