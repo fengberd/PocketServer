@@ -14,3 +14,6 @@ You can get "nukkit_library.tar.gz" from <a href="https://www.dropbox.com/s/c6xn
 
 # Download
 You can download at the <a href="https://play.google.com/store/apps/details?id=net.fengberd.minecraftpe_server">Google Play</a>
+
+# LICENSE
+GPLv3 (GNU Public License version 3)
