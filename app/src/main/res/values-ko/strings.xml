@@ -41,7 +41,7 @@
     <string name="menu_clear">콘솔 내용 지우기</string>
 	<string name="menu_copy">복사</string>
     <string name="menu_install_php">PHP 설치</string>
-    <string name="menu_install_php7">PHP7 로드 &amp; 설치</string>
+    <string name="menu_install_php7">PHP7 다운 &amp; 설치</string>
     <string name="menu_install_java">Java 설치</string>
     <string name="menu_download">서버 다운로드</string>
 </resources>
