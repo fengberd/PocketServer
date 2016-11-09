@@ -53,6 +53,7 @@ public class MainActivity extends SherlockActivity
 		"ClearSky-PHP7 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP7/",
 		"ClearSky-PHP5 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP5/",
 		"PocketMine-MP (ZXDA)|https://jenkins.zxda.net/job/PocketMine-MP/"
+		"PocketMine-MP (pmmp)|https://jenkins.pmmp.gq/job/PocketMine-MP/"
 	};
 	
 	@Override

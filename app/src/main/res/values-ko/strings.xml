@@ -19,13 +19,13 @@
     <string name="message_done">완료.</string>
     <string name="message_running">(이)가 실행 중 입니다</string>
     <string name="message_tap_open">Pocket Server를 열려면 누르세요</string>
-    <string name="message_installing">설치 중입니다,잠시만 기다리세요...</string>
+    <string name="message_installing">설치 중입니다, 잠시만 기다리세요...</string>
     <string name="message_downloading">%s를 다운로드 하는 중 ...</string>
     <string name="message_install_fail">설치 실패:</string>
     <string name="message_install_success">설치를 성공하였습니다.</string>
-    <string name="message_install_fail_path">설치 실패,"nukkit_library.tar.gz"를 넣어주세요. 경로:</string>
-    <string name="message_no_artifacts">No artifacts found.</string>
-    <string name="message_select_repository">Please select %s repository</string>
+    <string name="message_install_fail_path">설치 실패, "nukkit_library.tar.gz"를 넣어주세요. 경로:</string>
+    <string name="message_no_artifacts">서버 구동에 필요한 파일이 없습니다.</string>
+    <string name="message_select_repository">%s의 저장소를 선택해주세요.</string>
     
     <string name="label_management">서버 관리</string>
 	<string name="label_type">서버 형식</string>
@@ -35,9 +35,9 @@
 	<string name="label_nukkit_to">Nukkit.jar를 /sdcard/Nukkit에 넣으세요</string>
 	
 	<string name="menu_console">콘솔</string>
-    <string name="menu_kill">Kill server</string>
-    <string name="menu_clear">Clear</string>
-    <string name="menu_copy">복사</string>
+    <string name="menu_kill">서버 강제 종료</string>
+    <string name="menu_clear">콘솔 내용 지우기</string>
+	<string name="menu_copy">복사</string>
     <string name="menu_install_php">PHP 설치</string>
     <string name="menu_install_php7">&amp; 다운로드 PHP7 설치</string>
     <string name="menu_install_java">Java 설치</string>
