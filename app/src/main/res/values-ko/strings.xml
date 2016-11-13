@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Translated By. Moon Night(cws06099@gmail.com) -->
+<!-- Last Update Date : UTC+9 2016.11.10 AM 01:20 -->
 <resources>
     <string name="application_name">Pocket Server</string>
 	
@@ -39,7 +41,7 @@
     <string name="menu_clear">콘솔 내용 지우기</string>
 	<string name="menu_copy">복사</string>
     <string name="menu_install_php">PHP 설치</string>
-    <string name="menu_install_php7">&amp; 다운로드 PHP7 설치</string>
+    <string name="menu_install_php7">PHP7 다운로드&amp;설치</string>
     <string name="menu_install_java">Java 설치</string>
     <string name="menu_download">서버 다운로드</string>
 </resources>
