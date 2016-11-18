@@ -26,6 +26,7 @@
     <string name="message_install_fail_path">Install failed,please put "nukkit_library.tar.gz" to</string>
     <string name="message_no_artifacts">No artifacts found.</string>
     <string name="message_select_repository">Please select %s repository</string>
+    <string name="message_choose_php">Choose your PHP binary</string>
     
     <string name="label_management">Server Management</string>
 	<string name="label_type">Server Type</string>
@@ -39,7 +40,7 @@
     <string name="menu_clear">Clear</string>
     <string name="menu_copy">Copy</string>
     <string name="menu_install_php">Install PHP</string>
-    <string name="menu_install_php7">Download &amp; Install PHP7</string>
+    <string name="menu_install_php7">Install PHP Manually</string>
     <string name="menu_install_java">Install Java</string>
     <string name="menu_download">Download server</string>
 </resources>

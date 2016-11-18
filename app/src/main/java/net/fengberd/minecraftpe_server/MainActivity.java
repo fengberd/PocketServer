@@ -1,33 +1,33 @@
 package net.fengberd.minecraftpe_server;
 
+import android.app.*;
+import android.content.*;
+import android.net.*;
+import android.os.*;
+import android.view.*;
+import android.view.View.*;
+import android.widget.*;
+import com.actionbarsherlock.app.*;
+import com.actionbarsherlock.view.*;
 import java.io.*;
 import java.net.*;
 import java.security.cert.*;
-
 import javax.net.ssl.*;
-
-import android.os.*;
-import android.app.*;
-import android.view.*;
-import android.widget.*;
-import android.content.*;
-import android.view.View.*;
-
 import org.json.*;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.app.SherlockActivity;
-import java.security.cert.*;
 
 public class MainActivity extends SherlockActivity
 {
 	final static int FORCE_CLOSE_CODE = 143,
-		CONSOLE_CODE = FORCE_CLOSE_CODE + 1,
-		INSTALL_PHP_CODE = CONSOLE_CODE + 1,
-		INSTALL_PHP7_CODE = INSTALL_PHP_CODE + 1,
-		INSTALL_JAVA_CODE = INSTALL_PHP7_CODE + 1,
-		DOWNLOAD_SERVER_CODE = INSTALL_JAVA_CODE + 1;
+	CONSOLE_CODE = FORCE_CLOSE_CODE+1,
+	INSTALL_PHP_CODE = CONSOLE_CODE+1,
+	INSTALL_PHP7_CODE = INSTALL_PHP_CODE+1,
+	INSTALL_JAVA_CODE = INSTALL_PHP7_CODE+1,
+	DOWNLOAD_SERVER_CODE = INSTALL_JAVA_CODE+1;
+	final static int CHOOSE_PHP7_CODE=1,
+	CHOOSE_JAVA_LIBRARY_CODE=CHOOSE_PHP7_CODE+1;
 
 	public static Intent serverIntent=null;
 	public static MainActivity instance = null;
@@ -52,7 +52,7 @@ public class MainActivity extends SherlockActivity
 		"Genisys (ZXDA,Not suggested)|https://jenkins.zxda.net/job/Genisys/",
 		"ClearSky-PHP7 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP7/",
 		"ClearSky-PHP5 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP5/",
-		"PocketMine-MP (ZXDA)|https://jenkins.zxda.net/job/PocketMine-MP/"
+		"PocketMine-MP (ZXDA)|https://jenkins.zxda.net/job/PocketMine-MP/",
 		"PocketMine-MP (pmmp)|https://jenkins.pmmp.gq/job/PocketMine-MP/"
 	};
 	
@@ -276,6 +276,33 @@ public class MainActivity extends SherlockActivity
 		}
 	}
 	
+	public void chooseFile(int code,String title)
+	{
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        Intent sIntent = new Intent("com.sec.android.app.myfiles.PICK_DATA");
+		sIntent.addCategory(Intent.CATEGORY_DEFAULT);
+        Intent chooserIntent;
+        if(getPackageManager().resolveActivity(sIntent,0)!=null)
+		{
+            chooserIntent=Intent.createChooser(sIntent,title);
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,new Intent[] { intent});
+        }
+		else
+		{
+            chooserIntent=Intent.createChooser(intent,title);
+        }
+        try
+		{
+            startActivityForResult(chooserIntent,code);
+        }
+		catch(ActivityNotFoundException e)
+		{
+            toast("No suitable file chooser.");
+        }
+    }
+
 	public static String getInternetString(String url)
 	{
 		try
@@ -441,6 +468,70 @@ public class MainActivity extends SherlockActivity
 	}
 
 	@Override
+	protected void onActivityResult(int requestCode,int resultCode,Intent data)
+	{
+		switch(requestCode)
+		{
+		case CHOOSE_PHP7_CODE:
+			if(data==null)
+			{
+				return;
+			}
+			final Uri choosed=data.getData();
+			final ProgressDialog processing_dialog=new ProgressDialog(instance);
+			processing_dialog.setCancelable(false);
+			processing_dialog.setMessage(getString(R.string.message_installing));
+			processing_dialog.show();
+			new Thread(new Runnable()
+			{
+				public void run()
+				{
+					try
+					{
+						File inside=new File(ServerUtils.getAppDirectory()+"/php");
+						inside.delete();
+						OutputStream os=new FileOutputStream(inside);
+						InputStream is=getContentResolver().openInputStream(choosed);
+						int cou=0;
+						byte[] buffer=new byte[8192];
+						while((cou=is.read(buffer))!=-1)
+						{
+							os.write(buffer,0,cou);
+						}
+						is.close();
+						os.close();
+						runOnUiThread(new Runnable()
+						{
+							public void run()
+							{
+								processing_dialog.dismiss();
+								refreshEnabled();
+								toast(R.string.message_install_success);
+							}
+						});
+					}
+					catch(Exception e)
+					{
+						final String ex=e.getMessage();
+						runOnUiThread(new Runnable()
+						{
+							public void run()
+							{
+								processing_dialog.dismiss();
+								toast(getString(R.string.message_install_fail)+ex);
+							}
+						});
+					}
+				}
+			}).start();
+			break;
+		default:
+			super.onActivityResult(requestCode,resultCode,data);
+			break;
+		}
+	}
+	
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		menu.add(0,CONSOLE_CODE,0,getString(R.string.menu_console))
@@ -453,7 +544,7 @@ public class MainActivity extends SherlockActivity
 		menu.add(0,FORCE_CLOSE_CODE,0,getString(R.string.menu_kill));
 		return true;
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
@@ -505,54 +596,7 @@ public class MainActivity extends SherlockActivity
 			}).start();
 			break;
 		case INSTALL_PHP7_CODE:
-			processing_dialog.setCancelable(false);
-			processing_dialog.setMessage(getString(R.string.message_downloading).replace("%s","php7.tar.gz"));
-			processing_dialog.setIndeterminate(false);
-			processing_dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			processing_dialog.show();
-			new Thread(new Runnable()
-			{
-				public void run()
-				{
-					downloadFile("https://raw.githubusercontent.com/FENGberd/MinecraftPEServer/master/_DOWNLOAD/php7.tar.gz",new File(ServerUtils.getAppDirectory()+"/php7.tar.gz"),processing_dialog);
-					runOnUiThread(new Runnable()
-					{
-						public void run()
-						{
-							processing_dialog.dismiss();
-							final ProgressDialog processing_dialog=new ProgressDialog(instance);
-							processing_dialog.setCancelable(false);
-							processing_dialog.setMessage(getString(R.string.message_installing));
-							processing_dialog.show();
-							new Thread(new Runnable()
-							{
-								public void run()
-								{
-									try
-									{
-										installBusybox();
-										Runtime.getRuntime().exec("./busybox tar zxf php7.tar.gz",new String[0],new File(ServerUtils.getAppDirectory())).waitFor();
-										new File(ServerUtils.getAppDirectory()+"/php7.tar.gz").delete();
-										toast(R.string.message_install_success);
-									}
-									catch(Exception e)
-									{
-										toast(getString(R.string.message_install_fail)+"\n"+e.toString());
-									}
-									runOnUiThread(new Runnable()
-									{
-										public void run()
-										{
-											processing_dialog.dismiss();
-											refreshEnabled();
-										}
-									});
-								}
-							}).start();
-						}
-					});
-				}
-			}).start();
+			chooseFile(CHOOSE_PHP7_CODE,getString(R.string.message_choose_php));
 			break;
 		case INSTALL_JAVA_CODE:
 			processing_dialog.setCancelable(false);
