@@ -4,7 +4,9 @@
 	
     <string name="activity_main">Pocket Server</string>
     <string name="activity_console">Console</string>
-	
+
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancel</string>
     <string name="button_send">Send</string>
     <string name="button_stop">Stop Server</string>
     <string name="button_start">Start Server</string>
@@ -40,7 +42,10 @@
     <string name="menu_clear">Clear</string>
     <string name="menu_copy">Copy</string>
     <string name="menu_install_php">Install PHP</string>
-    <string name="menu_install_php7">Install PHP Manually</string>
+    <string name="menu_install_php_manually">Install PHP manually</string>
     <string name="menu_install_java">Install Java</string>
-    <string name="menu_download">Download server</string>
+    <string name="menu_download_server">Download server</string>
+
+    <string name="alert_install_php_title">Be careful</string>
+    <string name="alert_install_php_message">Install php manually is an advanced action.You should choose the php binary by yourself,don\'t choose any binary provided by someone you can\'t trust,it may be harmful for you device.\nIf you have an archived PHP binary,please extract it first.</string>
 </resources>

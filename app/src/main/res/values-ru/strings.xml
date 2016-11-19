@@ -39,7 +39,7 @@
     <string name="menu_clear">Очистка</string>
     <string name="menu_copy">Копирование</string>
     <string name="menu_install_php">Установить PHP</string>
-    <string name="menu_install_php7">Скачать &amp; Установить PHP7</string>
+    <!--string name="menu_install_php_manually">Translate required</string-->
     <string name="menu_install_java">Скачать Java</string>
-    <string name="menu_download">Скачать ядро сервера</string>
+    <string name="menu_download_server">Скачать ядро сервера</string>
 </resources>
