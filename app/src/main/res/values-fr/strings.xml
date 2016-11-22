@@ -44,7 +44,7 @@ Thank for everyone above!
     <string name="menu_clear">Effacer</string>
     <string name="menu_copy">Copié</string>
     <string name="menu_install_php">Installer PHP</string>
-    <string name="menu_install_php7">Télécharger &amp; Installer PHP7</string>
+    <!--string name="menu_install_php_manually">Translate required</string-->
     <string name="menu_install_java">Installer Java</string>
-    <string name="menu_download">Télécharger le serveur</string>
+    <string name="menu_download_server">Télécharger le serveur</string>
 </resources>

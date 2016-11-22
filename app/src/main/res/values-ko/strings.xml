@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="application_name">Pocket Server</string>
+	
+    <string name="activity_main">Pocket Server</string>
+    <string name="activity_console">콘솔</string>
+
+    <string name="button_ok">확인</string>
+    <string name="button_cancel">닫기</string>
+    <string name="button_send">전송</string>
+    <string name="button_stop">서버 중지</string>
+    <string name="button_start">서버 시작</string>
+    <string name="button_mount">Java 라이브러리 마운트(루트)</string>
+
+    <string name="check_nukkit">Nukkit</string>
+    <string name="check_pocketmine">PocketMine</string>
+    <string name="check_ansi">ANSI 지원 활성화</string>
+    <string name="check_kusud">ku.sud를 사용하여 루트 권한 요청</string>
+
+    <string name="message_copied">복사되었습니다.</string>
+    <string name="message_done">완료.</string>
+    <string name="message_running">가 실행 중입니다</string>
+    <string name="message_tap_open">Pocket Server를 열려면 누르세요</string>
+    <string name="message_installing">설치 중입니다, 잠시만 기다리세요...</string>
+    <string name="message_downloading">%s(을)를 다운로드 하는 중 ...</string>
+    <string name="message_install_fail">설치 실패:</string>
+    <string name="message_install_success">설치에 성공하였습니다.</string>
+    <string name="message_install_fail_path">설치 실패, "nukkit_library.tar.gz"를 넣어주세요. 경로:</string>
+    <string name="message_no_artifacts">서버 구동에 필요한 파일이 없습니다.</string>
+    <string name="message_select_repository">%s의 저장소를 선택해주세요.</string>
+	<string name="message_choose_php">PHP 바이너리 선택</string>
+    
+    <string name="label_management">서버 관리</string>
+	<string name="label_type">서버 형식</string>
+	<string name="label_console">콘솔 사용자 지정</string>
+	<string name="label_console_fontsize">폰트 크기:</string>
+	<string name="label_pocketMine_to">PocketMine-MP.phar 또는 src 폴더를 /sdcard/PocketMine에 넣으세요</string>
+	<string name="label_nukkit_to">Nukkit.jar를 /sdcard/Nukkit에 넣으세요</string>
+	
+	<string name="menu_console">콘솔</string>
+    <string name="menu_kill">서버 강제 종료</string>
+    <string name="menu_clear">콘솔 내용 지우기</string>
+	<string name="menu_copy">복사</string>
+    <string name="menu_install_php">PHP 설치</string>
+	<string name="menu_install_php_manually">수동으로 PHP 설치</string>
+    <string name="menu_install_java">Java 설치</string>
+    <string name="menu_download_server">서버 다운로드</string>
+
+	<string name="alert_install_php_title">조심하세요</string>
+	<string name="alert_install_php_message">수동으로 PHP를 설치하는 것은 고급 작업입니다. PHP 바이너리를 직접 선택해야 하며 신뢰할 수 없는 다른 사람으로부터 받은 바이너리는 선택하지 마세요. 장치에 해를 끼칠 수 있습니다.\n압축된 PHP 바이너리를 가지고 있는 경우, 먼저 압축을 해제해 주세요.</string>
+</resources>
