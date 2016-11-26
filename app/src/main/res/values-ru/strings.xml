@@ -29,7 +29,7 @@
     
     <string name="label_management">Управление сервером</string>
 	<string name="label_type">Тип Сервера</string>
-	<string name="label_console">Настроить консоль</string>
+	<string name="label_console">Настройки консоли:</string>
 	<string name="label_console_fontsize">Размер шрифта:</string>
 	<string name="label_pocketMine_to">Поместите PocketMine-MP.phar или же папку src в /sdcard/PocketMine</string>
 	<string name="label_nukkit_to">Поместите Nukkit.jar в /sdcard/Nukkit</string>
