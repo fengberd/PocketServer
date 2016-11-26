@@ -5,6 +5,8 @@
     <string name="activity_main">口袋伺服器</string>
     <string name="activity_console">控制台</string>
 
+    <string name="button_ok">確定</string>
+    <string name="button_cancel">取消</string>
     <string name="button_send">發送</string>
     <string name="button_stop">關閉伺服器</string>
     <string name="button_start">開啟伺服器</string>
@@ -41,5 +43,8 @@
     <string name="menu_install_php">安裝PHP</string>
     <string name="menu_install_php_manually">手動安裝PHP7</string>
     <string name="menu_install_java">安裝Java</string>
-    <string name="menu_download_server">下載服務端</string>
+    <string name="menu_download_server">下載伺服端</string>
+    
+    <string name="alert_install_php_title">注意</string>
+    <string name="alert_install_php_message">手動安裝PHP是一個高級操作,你需要自己選擇PHP可執行文件,不要選擇任何你不能信任的人提供的PHP可執行文件,它們可能會對你的設備造成損害.\n如果你的PHP文件是壓縮包,請先解壓它</string>
 </resources>
