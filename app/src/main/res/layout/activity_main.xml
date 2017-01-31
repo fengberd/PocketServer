@@ -150,7 +150,7 @@
 
 	<TextView
 		android:layout_height="wrap_content"
-		android:text="Copyright 2016-2017 © FENGberd.All rights reserved."
+		android:text="Copyright 2016-2017 © FENGberd. All rights reserved."
 		android:layout_width="match_parent"
 		android:layout_alignParentBottom="true"
 		android:gravity="center"
