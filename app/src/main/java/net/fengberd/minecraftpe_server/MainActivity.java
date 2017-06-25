@@ -28,19 +28,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 
 	public static boolean isStarted=false, nukkitMode=false, ansiMode=false;
 
-	public static final String[] jenkins_nukkit=new String[]{
-			"Angelic47|http://ci.angelic47.com:30001/job/Nukkit/",
-			"MengCraft|http://ci.mengcraft.com:8080/job/nukkit/",
-			"RegularBox|http://ci.regularbox.com/job/Nukkit/",
-			"ZXDA|https://jenkins.zxda.net/job/Nukkit/"
-	}, jenkins_pocketmine=new String[]{
-			"Genisys (iTX Tech)|https://ci.itxtech.org/job/Genisys/",
-			"Genisys (ZXDA,Not suggested)|https://jenkins.zxda.net/job/Genisys/",
-			"ClearSky-PHP7 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP7/",
-			"ClearSky-PHP5 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP5/",
-			"PocketMine-MP (ZXDA)|https://jenkins.zxda.net/job/PocketMine-MP/",
-			"PocketMine-MP (pmmp)|https://jenkins.pmmp.gq/job/PocketMine-MP/"
-	};
+	public static String[] jenkins_nukkit, jenkins_pocketmine;
 
 	public static void postMessage(int arg1,int arg2,Object obj)
 	{
@@ -127,6 +115,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		ServerUtils.setAppDirectory(this);
 		ConsoleActivity.font_size=seekbar_fontsize.getProgress();
 
+		reloadUrls();
 		refreshEnabled();
 	}
 
@@ -366,6 +355,28 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 			});
 			download_dialog_builder.show();
 			break;
+		case R.id.menu_update_repos:
+			processing_dialog.setCancelable(false);
+			processing_dialog.setMessage(getString(R.string.message_downloading).replace("%s",""));
+			processing_dialog.setIndeterminate(false);
+			processing_dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			processing_dialog.show();
+			new Thread(new Runnable()
+			{
+				public void run()
+				{
+					downloadFile("https://github.com/fengberd/MinecraftPEServer/raw/master/app/src/main/assets/urls.json",new File(ServerUtils.getAppDirectory(),"urls.json"),processing_dialog);
+					runOnUiThread(new Runnable()
+					{
+						public void run()
+						{
+							reloadUrls();
+							processing_dialog.dismiss();
+						}
+					});
+				}
+			}).start();
+			break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -545,6 +556,52 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 				Toast.makeText(instance,text,Toast.LENGTH_SHORT).show();
 			}
 		});
+	}
+
+	public void reloadUrls()
+	{
+		try
+		{
+			File jfile=new File(getFilesDir(),"urls.json");
+			if(!jfile.exists())
+			{
+				copyAsset("urls.json",jfile);
+			}
+			FileInputStream fis=new FileInputStream(jfile);
+			byte[] data=new byte[(int)jfile.length()];
+			fis.read(data);
+			fis.close();
+			if(data.length<2)
+			{
+				jfile.delete();
+				reloadUrls();
+				return;
+			}
+			JSONObject json=new JSONObject(new String(data,"UTF-8"));
+			JSONObject jenkins=json.getJSONObject("jenkins");
+			{
+				JSONArray nukkit=jenkins.getJSONArray("nukkit");
+				{
+					jenkins_nukkit=new String[nukkit.length()];
+					for(int i=0;i<jenkins_nukkit.length;i++)
+					{
+						jenkins_nukkit[i]=nukkit.getString(i);
+					}
+				}
+				JSONArray pocketmine=jenkins.getJSONArray("pocketmine");
+				{
+					jenkins_pocketmine=new String[pocketmine.length()];
+					for(int i=0;i<jenkins_pocketmine.length;i++)
+					{
+						jenkins_pocketmine[i]=pocketmine.getString(i);
+					}
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			toast(getString(R.string.message_install_fail) + "\n" + e.toString());
+		}
 	}
 
 	public void downloadServer(String jenkins,File saveTo,final ProgressDialog dialog)

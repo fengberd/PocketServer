@@ -18,6 +18,9 @@
         android:id="@+id/menu_download_server"
         android:title="@string/menu_download_server"/>
     <item
+        android:id="@+id/menu_update_repos"
+        android:title="@string/menu_update_repos"/>
+    <item
         android:id="@+id/menu_kill"
         android:title="@string/menu_kill"/>
 </menu>
