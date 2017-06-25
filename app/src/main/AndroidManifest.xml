@@ -8,9 +8,10 @@
 	<application
         android:configChanges="keyboardHidden|orientation"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/application_name" >
+        android:label="@string/application_name"
+        android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="moe.berd.pocket_server.activity.MainActivity"
             android:label="@string/activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,12 +19,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ConsoleActivity"
+            android:name="moe.berd.pocket_server.activity.ConsoleActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/activity_console" >
         </activity>
         <service
-            android:name=".ServerService"
+            android:name="moe.berd.pocket_server.service.ServerService"
             android:icon="@drawable/ic_launcher"
             android:label="Server Service" >
         </service>

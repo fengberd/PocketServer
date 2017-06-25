@@ -1,4 +1,4 @@
-package net.fengberd.minecraftpe_server;
+package moe.berd.pocket_server.activity;
 
 import android.annotation.*;
 import android.app.*;
@@ -8,6 +8,8 @@ import android.os.*;
 import android.view.*;
 import android.widget.*;
 
+import net.fengberd.minecraftpe_server.*;
+
 import org.json.*;
 
 import java.io.*;
@@ -15,6 +17,9 @@ import java.net.*;
 import java.security.cert.*;
 
 import javax.net.ssl.*;
+
+import moe.berd.pocket_server.service.*;
+import moe.berd.pocket_server.utils.*;
 
 public class MainActivity extends Activity implements Handler.Callback, View.OnClickListener
 {
@@ -246,18 +251,18 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 			break;
 		case R.id.menu_install_php_manually:
 			new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
-					.setTitle(R.string.alert_install_php_title)
-					.setMessage(R.string.alert_install_php_message)
-					.setPositiveButton(R.string.button_ok,new DialogInterface.OnClickListener()
+				.setTitle(R.string.alert_install_php_title)
+				.setMessage(R.string.alert_install_php_message)
+				.setPositiveButton(R.string.button_ok,new DialogInterface.OnClickListener()
+				{
+					@Override
+					public void onClick(DialogInterface dialog,int which)
 					{
-						@Override
-						public void onClick(DialogInterface dialog,int which)
-						{
-							chooseFile(CHOOSE_PHP_CODE,getString(R.string.message_choose_php));
-						}
-					})
-					.setNegativeButton(R.string.button_cancel,null)
-					.show();
+						chooseFile(CHOOSE_PHP_CODE,getString(R.string.message_choose_php));
+					}
+				})
+				.setNegativeButton(R.string.button_cancel,null)
+				.show();
 			break;
 		case R.id.menu_install_java:
 			processing_dialog.setCancelable(false);
@@ -269,12 +274,11 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 				{
 					try
 					{
-						File libData=new File(Environment.getExternalStorageDirectory()
-								.toString() + "/nukkit_library.tar.gz");
+						File libData=new File(Environment.getExternalStorageDirectory().toString() + "/nukkit_library.tar.gz");
 						if(!libData.exists())
 						{
 							toast(getString(R.string.message_install_fail_path) + " " + Environment.getExternalStorageDirectory()
-									.toString());
+								.toString());
 						}
 						else
 						{
@@ -293,9 +297,9 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 							os.close();
 							installBusybox();
 							Runtime.getRuntime()
-									.exec("../busybox tar zxf nukkit_library.tar.gz",new String[0],new File(ServerUtils
-											.getAppDirectory() + "/java"))
-									.waitFor();
+								.exec("../busybox tar zxf nukkit_library.tar.gz",new String[0],new File(ServerUtils
+									.getAppDirectory() + "/java"))
+								.waitFor();
 							inside.delete();
 							toast(R.string.message_install_success);
 						}
@@ -365,7 +369,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 			{
 				public void run()
 				{
-					downloadFile("https://github.com/fengberd/MinecraftPEServer/raw/master/app/src/main/assets/urls.json",new File(ServerUtils.getAppDirectory(),"urls.json"),processing_dialog);
+					downloadFile("https://raw.githubusercontent.com/fengberd/MinecraftPEServer/master/app/src/main/assets/urls.json",new File(getFilesDir(),"urls.json"),processing_dialog);
 					runOnUiThread(new Runnable()
 					{
 						public void run()
@@ -431,8 +435,8 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 					Runtime.getRuntime().exec(binary + " -c " + busybox + "umount /lib").waitFor();
 				}
 				Runtime.getRuntime()
-						.exec(binary + " -c " + busybox + "mount -o bind " + ServerUtils.getAppDirectory() + "/java/lib /lib")
-						.waitFor();
+					.exec(binary + " -c " + busybox + "mount -o bind " + ServerUtils.getAppDirectory() + "/java/lib /lib")
+					.waitFor();
 				toast(R.string.message_done);
 			}
 			catch(Exception e)
@@ -642,28 +646,28 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 	{
 		final SSLContext sc=SSLContext.getInstance("SSL");
 		sc.init(null,new TrustManager[]{
-				new X509TrustManager()
+			new X509TrustManager()
+			{
+				@Override
+				@SuppressLint("TrustAllX509TrustManager")
+				public void checkClientTrusted(X509Certificate[] p1,String p2) throws CertificateException
 				{
-					@Override
-					@SuppressLint("TrustAllX509TrustManager")
-					public void checkClientTrusted(X509Certificate[] p1,String p2) throws CertificateException
-					{
 
-					}
-
-					@Override
-					@SuppressLint("TrustAllX509TrustManager")
-					public void checkServerTrusted(X509Certificate[] p1,String p2) throws CertificateException
-					{
-
-					}
-
-					@Override
-					public X509Certificate[] getAcceptedIssuers()
-					{
-						return null;
-					}
 				}
+
+				@Override
+				@SuppressLint("TrustAllX509TrustManager")
+				public void checkServerTrusted(X509Certificate[] p1,String p2) throws CertificateException
+				{
+
+				}
+
+				@Override
+				public X509Certificate[] getAcceptedIssuers()
+				{
+					return null;
+				}
+			}
 		},new java.security.SecureRandom());
 		HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 		HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier()

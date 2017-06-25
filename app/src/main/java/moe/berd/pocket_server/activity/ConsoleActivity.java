@@ -1,4 +1,4 @@
-package net.fengberd.minecraftpe_server;
+package moe.berd.pocket_server.activity;
 
 import android.app.*;
 import android.content.*;
@@ -7,6 +7,10 @@ import android.os.*;
 import android.text.*;
 import android.view.*;
 import android.widget.*;
+
+import net.fengberd.minecraftpe_server.*;
+
+import moe.berd.pocket_server.utils.*;
 
 public class ConsoleActivity extends Activity implements Handler.Callback
 {
@@ -117,56 +121,12 @@ public class ConsoleActivity extends Activity implements Handler.Callback
 	{
 		if(MainActivity.ansiMode)
 		{
-			line="<font>" + line.replace("&","&amp;")
-					.replace("<","&lt;")
-					.replace(">","&gt;")
-					.replace(" ","&nbsp;")
-					.replace("\u001b[m","</font>")
-					.replace("\u001b[0m","</font>")
-					.replace("\u001b[1m","</font><font style=\"font-weight:bold\">")
-					.replace("\u001b[3m","</font><font style=\"font-style:italic\">")
-					.replace("\u001b[4m","</font><font style=\"text-decoration:underline\">")
-					.replace("\u001b[8m","</font><font>")
-					.replace("\u001b[9m","</font><font style=\"text-decoration:line-through\">");
-			if(MainActivity.nukkitMode)
-			{
-				line=line.replace("\u001b[0;30m","</font><font color=\"#000000\">")
-						.replace("\u001b[0;34m","</font><font color=\"#0000AA\">")
-						.replace("\u001b[0;32m","</font><font color=\"#00AA00\">")
-						.replace("\u001b[0;36m","</font><font color=\"#00AAAA\">")
-						.replace("\u001b[0;31m","</font><font color=\"#AA0000\">")
-						.replace("\u001b[0;35m","</font><font color=\"#AA00AA\">")
-						.replace("\u001b[0;33m","</font><font color=\"#FFAA00\">")
-						.replace("\u001b[0;37m","</font><font color=\"#AAAAAA\">")
-						.replace("\u001b[30;1m","</font><font color=\"#555555\">")
-						.replace("\u001b[34;1m","</font><font color=\"#5555FF\">")
-						.replace("\u001b[32;1m","</font><font color=\"#55FF55\">")
-						.replace("\u001b[36;1m","</font><font color=\"#55FFFF\">")
-						.replace("\u001b[31;1m","</font><font color=\"#FF5555\">")
-						.replace("\u001b[35;1m","</font><font color=\"#FF55FF\">")
-						.replace("\u001b[33;1m","</font><font color=\"#FFFF55\">")
-						.replace("\u001b[37;1m","</font><font color=\"#FFFFFF\">");
-			}
-			else
-			{
-				line=line.replace("\u001b[38;5;16m","</font><font color=\"#000000\">")
-						.replace("\u001b[38;5;19m","</font><font color=\"#0000AA\">")
-						.replace("\u001b[38;5;34m","</font><font color=\"#00AA00\">")
-						.replace("\u001b[38;5;37m","</font><font color=\"#00AAAA\">")
-						.replace("\u001b[38;5;124m","</font><font color=\"#AA0000\">")
-						.replace("\u001b[38;5;127m","</font><font color=\"#AA00AA\">")
-						.replace("\u001b[38;5;214m","</font><font color=\"#FFAA00\">")
-						.replace("\u001b[38;5;145m","</font><font color=\"#AAAAAA\">")
-						.replace("\u001b[38;5;59m","</font><font color=\"#555555\">")
-						.replace("\u001b[38;5;63m","</font><font color=\"#5555FF\">")
-						.replace("\u001b[38;5;83m","</font><font color=\"#55FF55\">")
-						.replace("\u001b[38;5;87m","</font><font color=\"#55FFFF\">")
-						.replace("\u001b[38;5;203m","</font><font color=\"#FF5555\">")
-						.replace("\u001b[38;5;207m","</font><font color=\"#FF55FF\">")
-						.replace("\u001b[38;5;227m","</font><font color=\"#FFFF55\">")
-						.replace("\u001b[38;5;231m","</font><font color=\"#FFFFFF\">");
-			}
-			line=line + "</font><br />";
+			line=TerminalColorConverter.control2html(line.replace("&","&amp;")
+				.replace("<","&lt;")
+				.replace(">","&gt;")
+				.replace(" ","&nbsp;")
+				.replace("\u001b[1G","")
+				.replace("\u001b[K","")) + "<br />";
 		}
 		CharSequence result=MainActivity.ansiMode ? Html.fromHtml(line) : (line + "\n");
 		currentLog.append(result);

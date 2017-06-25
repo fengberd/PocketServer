@@ -1,4 +1,4 @@
-package net.fengberd.minecraftpe_server;
+package moe.berd.pocket_server.utils;
 
 import android.content.*;
 import android.os.*;
@@ -6,10 +6,13 @@ import android.os.*;
 import java.io.*;
 import java.lang.Process;
 
+import moe.berd.pocket_server.activity.*;
+
 public class ServerUtils
 {
 	private static File appDirectory=null;
-	private static File nukkitDataDirectory=new File(Environment.getExternalStorageDirectory(),"Nukkit"),pocketmineDataDirectory=new File(Environment.getExternalStorageDirectory(),"PocketMine");
+	private static File nukkitDataDirectory=new File(Environment.getExternalStorageDirectory(),"Nukkit"), pocketmineDataDirectory=new File(Environment
+		.getExternalStorageDirectory(),"PocketMine");
 
 	private static Process serverProcess=null;
 	private static InputStreamReader stdout=null;
@@ -38,8 +41,8 @@ public class ServerUtils
 		{
 			// TODO: This might kill other processes?
 			Runtime.getRuntime()
-					.exec(getAppDirectory() + "/busybox killall -9 " + (MainActivity.nukkitMode ? "java" : "php"))
-					.waitFor();
+				.exec(getAppDirectory() + "/busybox killall -9 " + (MainActivity.nukkitMode ? "java" : "php"))
+				.waitFor();
 		}
 		catch(Exception ignored)
 		{
@@ -70,7 +73,7 @@ public class ServerUtils
 		f.mkdirs();
 		setPermission();
 		String file=MainActivity.nukkitMode ? "/Nukkit.jar" : (new File(getDataDirectory(),"/PocketMine-MP.phar")
-				.exists() ? "/PocketMine-MP.phar" : "/src/pocketmine/PocketMine.php");
+			.exists() ? "/PocketMine-MP.phar" : "/src/pocketmine/PocketMine.php");
 		File ini=new File(getDataDirectory() + "/php.ini");
 		if(!MainActivity.nukkitMode && !ini.exists())
 		{
@@ -79,7 +82,7 @@ public class ServerUtils
 				ini.createNewFile();
 				FileOutputStream os=new FileOutputStream(ini);
 				os.write("phar.readonly=0\nphar.require_hash=1\ndate.timezone=Asia/Shanghai\nshort_open_tag=0\nasp_tags=0\nopcache.enable=1\nopcache.enable_cli=1\nopcache.save_comments=1\nopcache.fast_shutdown=0\nopcache.max_accelerated_files=4096\nopcache.interned_strings_buffer=8\nopcache.memory_consumption=128\nopcache.optimization_level=0xffffffff"
-						.getBytes("UTF8"));
+					.getBytes("UTF8"));
 				os.close();
 			}
 			catch(Exception ignored)
@@ -91,21 +94,14 @@ public class ServerUtils
 		if(MainActivity.nukkitMode)
 		{
 			args=new String[]{
-					getAppDirectory() + "/java/jre/bin/java",
-					"-jar",
-					getDataDirectory() + file,
-					MainActivity.ansiMode ? "enable-ansi" : "disable-ansi",
-					"disable-jline"
+				getAppDirectory() + "/java/jre/bin/java","-Djline.terminal=off","-jar",
+				getDataDirectory() + file,MainActivity.ansiMode ? "enable-ansi" : "disable-ansi"
 			};
 		}
 		else
 		{
 			args=new String[]{
-					getAppDirectory() + "/php",
-					"-c",
-					getDataDirectory() + "/php.ini",
-					getDataDirectory() + file,
-					MainActivity.ansiMode ? "--enable-ansi" : "--disable-ansi"
+				getAppDirectory() + "/php","-c",getDataDirectory() + "/php.ini",getDataDirectory() + file,MainActivity.ansiMode ? "--enable-ansi" : "--disable-ansi"
 			};
 		}
 		ProcessBuilder builder=new ProcessBuilder(args);
@@ -141,7 +137,7 @@ public class ServerUtils
 										continue;
 									case '\n':
 										String line=s.toString();
-										if(!line.startsWith("\u001B]0;"))
+										if(!line.startsWith("\u001b]0;"))
 										{
 											ConsoleActivity.log(line);
 										}
@@ -196,9 +192,7 @@ public class ServerUtils
 		{
 			if(MainActivity.nukkitMode)
 			{
-				Runtime.getRuntime()
-						.exec("./busybox chmod -R 755 java",new String[0],appDirectory)
-						.waitFor();
+				Runtime.getRuntime().exec("./busybox chmod -R 755 java",new String[0],appDirectory).waitFor();
 			}
 			else
 			{
