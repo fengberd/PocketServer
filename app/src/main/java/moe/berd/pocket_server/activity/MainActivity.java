@@ -25,16 +25,16 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 {
 	public static Handler actionHandler=null;
 	public final static int ACTION_STOP_SERVICE=1;
-
+	
 	public final static int CHOOSE_PHP_CODE=1;
-
+	
 	public static Intent serverIntent=null;
 	public static SharedPreferences config=null;
-
+	
 	public static boolean isStarted=false, nukkitMode=false, ansiMode=false;
-
+	
 	public static String[] jenkins_nukkit, jenkins_pocketmine;
-
+	
 	public static void postMessage(int arg1,int arg2,Object obj)
 	{
 		if(actionHandler!=null)
@@ -46,46 +46,46 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 			actionHandler.sendMessage(msg);
 		}
 	}
-
+	
 	static
 	{
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
 	}
-
+	
 	public RadioButton radio_pocketmine=null, radio_nukkit=null;
 	public CheckBox check_kusud=null, check_ansi=null;
 	public Button button_start=null, button_stop=null;
 	public SeekBar seekbar_fontsize=null;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
 		actionHandler=new Handler(this);
 		serverIntent=new Intent(this,ServerService.class);
-
+		
 		config=getSharedPreferences("config",0);
 		ansiMode=config.getBoolean("ANSIMode",ansiMode);
 		nukkitMode=config.getBoolean("NukkitMode",nukkitMode);
-
+		
 		button_stop=(Button)findViewById(R.id.button_stop);
 		button_stop.setOnClickListener(this);
 		button_start=(Button)findViewById(R.id.button_start);
 		button_start.setOnClickListener(this);
 		findViewById(R.id.button_mount).setOnClickListener(this);
-
+		
 		check_ansi=(CheckBox)findViewById(R.id.check_ansi);
 		check_ansi.setOnClickListener(this);
 		check_kusud=(CheckBox)findViewById(R.id.check_kusud);
 		check_kusud.setOnClickListener(this);
-
+		
 		radio_nukkit=(RadioButton)findViewById(R.id.radio_nukkit);
 		radio_nukkit.setOnClickListener(this);
 		radio_pocketmine=(RadioButton)findViewById(R.id.radio_pocketmine);
 		radio_pocketmine.setOnClickListener(this);
-
+		
 		seekbar_fontsize=(SeekBar)findViewById(R.id.seekbar_fontsize);
 		seekbar_fontsize.setProgress(config.getInt("ConsoleFontSize",16));
 		seekbar_fontsize.setMax(30);
@@ -94,15 +94,15 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 			@Override
 			public void onProgressChanged(SeekBar p1,int p2,boolean p3)
 			{
-
+				
 			}
-
+			
 			@Override
 			public void onStartTrackingTouch(SeekBar p1)
 			{
-
+				
 			}
-
+			
 			@Override
 			public void onStopTrackingTouch(SeekBar p1)
 			{
@@ -110,20 +110,20 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 				config.edit().putInt("ConsoleFontSize",p1.getProgress()).apply();
 			}
 		});
-
+		
 		check_ansi.setChecked(ansiMode);
 		check_kusud.setChecked(config.getBoolean("KusudMode",false));
-
+		
 		radio_nukkit.setChecked(nukkitMode);
 		radio_pocketmine.setChecked(!nukkitMode);
-
+		
 		ServerUtils.setAppDirectory(this);
 		ConsoleActivity.font_size=seekbar_fontsize.getProgress();
-
+		
 		reloadUrls();
 		refreshEnabled();
 	}
-
+	
 	@Override
 	protected void onActivityResult(int requestCode,int resultCode,Intent data)
 	{
@@ -188,14 +188,14 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 			break;
 		}
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		getMenuInflater().inflate(R.menu.main,menu);
 		return true;
 	}
-
+	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu)
 	{
@@ -205,7 +205,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		menu.findItem(R.id.menu_download_server).setEnabled(!isStarted);
 		return true;
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
@@ -386,7 +386,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		}
 		return true;
 	}
-
+	
 	@Override
 	public boolean handleMessage(Message msg)
 	{
@@ -400,7 +400,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		}
 		return false;
 	}
-
+	
 	@Override
 	public void onClick(View v)
 	{
@@ -464,7 +464,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		}
 		refreshEnabled();
 	}
-
+	
 	public void installBusybox() throws Exception
 	{
 		File busybox=new File(ServerUtils.getAppDirectory() + "/busybox");
@@ -475,7 +475,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		copyAsset("busybox",busybox);
 		busybox.setExecutable(true,true);
 	}
-
+	
 	public void refreshEnabled()
 	{
 		radio_nukkit.setEnabled(!isStarted);
@@ -496,7 +496,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		}
 		button_stop.setEnabled(isStarted);
 	}
-
+	
 	public void chooseFile(int code,String title)
 	{
 		Intent intent=new Intent(Intent.ACTION_GET_CONTENT);
@@ -523,7 +523,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 			toast("No suitable file chooser.");
 		}
 	}
-
+	
 	public String getInternetString(String url)
 	{
 		try
@@ -544,12 +544,12 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		}
 		return null;
 	}
-
+	
 	public void toast(int text)
 	{
 		toast(getString(text));
 	}
-
+	
 	public void toast(final String text)
 	{
 		final MainActivity instance=this;
@@ -561,7 +561,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 			}
 		});
 	}
-
+	
 	public void reloadUrls()
 	{
 		try
@@ -607,7 +607,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 			toast(getString(R.string.message_install_fail) + "\n" + e.toString());
 		}
 	}
-
+	
 	public void downloadServer(String jenkins,File saveTo,final ProgressDialog dialog)
 	{
 		try
@@ -626,7 +626,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 			toast(e.getMessage());
 		}
 	}
-
+	
 	public void copyAsset(String name,File target) throws Exception
 	{
 		target.delete();
@@ -641,7 +641,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		is.close();
 		os.close();
 	}
-
+	
 	public URLConnection openNetConnection(String url) throws Exception
 	{
 		final SSLContext sc=SSLContext.getInstance("SSL");
@@ -652,16 +652,16 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 				@SuppressLint("TrustAllX509TrustManager")
 				public void checkClientTrusted(X509Certificate[] p1,String p2) throws CertificateException
 				{
-
+					
 				}
-
+				
 				@Override
 				@SuppressLint("TrustAllX509TrustManager")
 				public void checkServerTrusted(X509Certificate[] p1,String p2) throws CertificateException
 				{
-
+					
 				}
-
+				
 				@Override
 				public X509Certificate[] getAcceptedIssuers()
 				{
@@ -683,7 +683,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		connection.connect();
 		return connection;
 	}
-
+	
 	public void downloadFile(String url,File saveTo,final ProgressDialog dialog)
 	{
 		OutputStream output=null;
@@ -750,7 +750,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 			}
 			catch(Exception ignored)
 			{
-
+				
 			}
 		}
 	}

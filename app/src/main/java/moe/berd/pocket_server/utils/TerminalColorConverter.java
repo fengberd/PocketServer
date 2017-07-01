@@ -44,11 +44,12 @@ public class TerminalColorConverter
 		"#626262","#6c6c6c","#767676","#808080","#8a8a8a","#949494","#9e9e9e","#a8a8a8","#b2b2b2",
 		"#bcbcbc","#c6c6c6","#d0d0d0","#dadada","#e4e4e4","#eeeeee"
 	};
-
+	
 	public static String control2html(String input)
 	{
-		Matcher match=pattern_SGR.matcher(input);
 		String foreground="", background="";
+		Matcher match=pattern_SGR.matcher(input);
+		StringBuffer sb=new StringBuffer(input.length());
 		boolean need_close=false, bright=false, dim=false, italic=false, underscore=false, reverse=false;
 		while(match.find())
 		{
@@ -81,28 +82,18 @@ public class TerminalColorConverter
 				case 38: // RGB foreground
 					if(i<codes.length - 1)
 					{
-						switch(Integer.parseInt(codes[++i]))
+						if(Integer.parseInt(codes[++i])==5)
 						{
-						case 2:
-							// ISO/IEC International Standard 8613-6,Damn it
-							break;
-						case 5:
 							foreground=ColorTable256[Integer.parseInt(codes[++i])];
-							break;
 						}
 					}
 					break;
 				case 48: // RGB background
 					if(i<codes.length - 1)
 					{
-						switch(Integer.parseInt(codes[++i]))
+						if(Integer.parseInt(codes[++i])==5)
 						{
-						case 2:
-							// ISO/IEC International Standard 8613-6,Damn it
-							break;
-						case 5:
 							background=ColorTable256[Integer.parseInt(codes[++i])];
-							break;
 						}
 					}
 					break;
@@ -118,9 +109,14 @@ public class TerminalColorConverter
 					break;
 				}
 			}
-			match=pattern_SGR.matcher(input=match.replaceFirst((need_close ? "</font>" : "") + "<font color='" + foreground + "' style='background: " + background + (italic ? ";font-style: italic" : "") + (underscore ? ";text-decoration: underline" : "") + ";'>"));
+			match.appendReplacement(sb,String.format("%s<font color='%s' style='background: %s%s%s;'>",(need_close ? "</font>" : ""),foreground,background,(italic ? ";font-style: italic" : ""),(underscore ? ";text-decoration: underline" : "")));
 			need_close=true;
 		}
-		return input + (need_close ? "</font>" : "");
+		match.appendTail(sb);
+		if(need_close)
+		{
+			sb.append("</font>");
+		}
+		return sb.toString();
 	}
 }

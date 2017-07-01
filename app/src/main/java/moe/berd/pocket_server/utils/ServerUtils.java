@@ -13,28 +13,28 @@ public class ServerUtils
 	private static File appDirectory=null;
 	private static File nukkitDataDirectory=new File(Environment.getExternalStorageDirectory(),"Nukkit"), pocketmineDataDirectory=new File(Environment
 		.getExternalStorageDirectory(),"PocketMine");
-
+	
 	private static Process serverProcess=null;
 	private static InputStreamReader stdout=null;
 	private static OutputStreamWriter stdin=null;
-
+	
 	public static void setAppDirectory(Context ctx)
 	{
 		appDirectory=ctx.getFilesDir().getParentFile();
 	}
-
+	
 	public static File getAppDirectory()
 	{
 		return appDirectory;
 	}
-
+	
 	public static File getDataDirectory()
 	{
 		File dir=MainActivity.nukkitMode ? nukkitDataDirectory : pocketmineDataDirectory;
 		dir.mkdirs();
 		return dir;
 	}
-
+	
 	public static void killServer()
 	{
 		try
@@ -46,10 +46,10 @@ public class ServerUtils
 		}
 		catch(Exception ignored)
 		{
-
+			
 		}
 	}
-
+	
 	public static boolean isRunning()
 	{
 		try
@@ -62,7 +62,7 @@ public class ServerUtils
 		}
 		return false;
 	}
-
+	
 	public static void runServer()
 	{
 		File f=new File(getDataDirectory(),"tmp");
@@ -87,7 +87,7 @@ public class ServerUtils
 			}
 			catch(Exception ignored)
 			{
-
+				
 			}
 		}
 		String[] args=null;
@@ -137,7 +137,11 @@ public class ServerUtils
 										continue;
 									case '\n':
 										String line=s.toString();
-										if(!line.startsWith("\u001b]0;"))
+										if(line.startsWith("\u001b]0;"))
+										{
+											ConsoleActivity.postTitle(line.substring(8));
+										}
+										else
 										{
 											ConsoleActivity.log(line);
 										}
@@ -153,7 +157,7 @@ public class ServerUtils
 						}
 						catch(IOException ignored)
 						{
-
+							
 						}
 						catch(Exception e)
 						{
@@ -185,7 +189,7 @@ public class ServerUtils
 			killServer();
 		}
 	}
-
+	
 	public static void setPermission()
 	{
 		try
@@ -204,7 +208,7 @@ public class ServerUtils
 			e.printStackTrace();
 		}
 	}
-
+	
 	public static boolean writeCommand(String cmd)
 	{
 		try
