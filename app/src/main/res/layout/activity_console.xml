@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context=".LogActivity"
 	android:padding="10dp">
 
 	<ScrollView
@@ -24,7 +22,13 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:ellipsize="none"
-				android:singleLine="false"
+				android:textColor="#F7F7F7"/>
+
+			<TextView
+				android:id="@+id/label_current"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:ellipsize="none"
 				android:textColor="#F7F7F7"/>
 
 		</LinearLayout>

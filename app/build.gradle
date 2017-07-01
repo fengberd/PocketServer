@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "net.fengberd.minecraftpe_server"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 1076
-        versionName "1.0.7.6"
+        versionCode 1080
+        versionName "1.0.8.0"
     }
 
     buildTypes {

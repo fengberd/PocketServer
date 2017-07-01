@@ -28,13 +28,15 @@
     <string name="message_install_fail_path">安裝失敗,請將 "nukkit_library.tar.gz" 放入</string>
     <string name="message_no_artifacts">未找到構建成功的文件</string>
     <string name="message_select_repository">請選擇%s源</string>
+    <string name="message_choose_php">選擇PHP Binary文件</string>
+    <string name="message_unknown_error">未知錯誤</string>
     
     <string name="label_management">伺服器管理</string>
 	<string name="label_type">伺服器類型</string>
 	<string name="label_console">控制台個性化</string>
 	<string name="label_console_fontsize">字體大小:</string>
 	<string name="label_pocketMine_to">把 PocketMine-MP.phar 或 src 資料夾放至 /sdcard/PocketMine</string>
-	<string name="label_nukkit_to">把您的 Nukkit.jar 放至 /sdcard/Nukkit</string>
+	<string name="label_nukkit_to">把 Nukkit.jar 放至 /sdcard/Nukkit</string>
 
 	<string name="menu_console">控制台</string>
     <string name="menu_kill">強制停止伺服器</string>

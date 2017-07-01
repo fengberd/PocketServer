@@ -17,7 +17,6 @@ Thank for everyone above!
     <string name="button_start">Démarrer le serveur</string>
     <string name="button_mount">Monter la Bibliothèque Java(ROOT)</string>
 
-    <string name="check_nukkit">Nukkit</string>
     <string name="check_pocketmine">PocketMine</string>
     <string name="check_ansi">Activer le support ANSI</string>
     <string name="check_kusud">Utiliser (ku.sud) pour demander l\'accès root</string>
@@ -47,4 +46,6 @@ Thank for everyone above!
     <!--string name="menu_install_php_manually">Translate required</string-->
     <string name="menu_install_java">Installer Java</string>
     <string name="menu_download_server">Télécharger le serveur</string>
+    <string name="message_unknown_error"></string>
+    <string name="check_nukkit" translatable="false">Nukkit</string>
 </resources>

@@ -1,0 +1,20 @@
+{
+	"jenkins": {
+		"nukkit": [
+			"MengCraft|http://ci.mengcraft.com:8080/job/nukkit/",
+			"RegularBox|http://ci.regularbox.com/job/Nukkit/",
+			"ZXDA|https://jenkins.zxda.net/job/Nukkit/"
+		],
+		"pocketmine": [
+			"Tesseract (ZXDA)|https://jenkins.zxda.net/job/Tesseract/",
+			"GenisysPro (ZXDA)|https://jenkins.zxda.net/job/GenisysPro/",
+			"PocketMine-MP-PMMP (pmmp/x64)|https://jenkins.pmmp.gq/job/PocketMine-MP/",
+			"PocketMine-MP-PMMP (ZXDA/x64)|https://jenkins.zxda.net/job/PocketMine-MP/",
+			"[Abandoned]BlueLight (ZXDA)|https://jenkins.zxda.net/job/BlueLight/",
+			"[Abandoned]Elywing (ZXDA)|https://jenkins.zxda.net/job/Elywing/",
+			"[Abandoned]Genisys (ZXDA)|https://jenkins.zxda.net/job/Genisys/",
+			"[Abandoned]ClearSky-PHP7 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP7/",
+			"[Abandoned]ClearSky-PHP5 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP5/"
+		]
+	}
+}

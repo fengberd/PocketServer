@@ -29,13 +29,14 @@
     <string name="message_no_artifacts">No artifacts found.</string>
     <string name="message_select_repository">Please select %s repository</string>
     <string name="message_choose_php">Choose your PHP binary</string>
+    <string name="message_unknown_error">Unknown Error</string>
     
     <string name="label_management">Server Management</string>
 	<string name="label_type">Server Type</string>
 	<string name="label_console">Console Customize</string>
 	<string name="label_console_fontsize">Font Size:</string>
 	<string name="label_pocketMine_to">Put PocketMine-MP.phar or src folder to /sdcard/PocketMine</string>
-	<string name="label_nukkit_to">Put your Nukkit.jar to /sdcard/Nukkit</string>
+	<string name="label_nukkit_to">Put Nukkit.jar to /sdcard/Nukkit</string>
 	
 	<string name="menu_console">Console</string>
     <string name="menu_kill">Kill server</string>
@@ -45,6 +46,7 @@
     <string name="menu_install_php_manually">Install PHP manually</string>
     <string name="menu_install_java">Install Java</string>
     <string name="menu_download_server">Download server</string>
+    <string name="menu_update_repos">Update Repositories From Server</string>
 
     <string name="alert_install_php_title">Be careful</string>
     <string name="alert_install_php_message">Install php manually is an advanced action.You should choose the php binary by yourself,don\'t choose any binary provided by someone you can\'t trust,it may be harmful for you device.\nIf you have an archived PHP binary,please extract it first.</string>
