@@ -1,10 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
-</LinearLayout>
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
 
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:padding="15dip">
+
+			<TextView
+				style="@style/ListTitleText"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="2dip"
+				android:text="@string/label_management"/>
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dip"
+				android:orientation="horizontal">
+
+				<Button
+					android:id="@+id/button_start"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:gravity="center"
+					android:text="@string/button_start"/>
+
+				<Button
+					android:id="@+id/button_stop"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:gravity="center"
+					android:text="@string/button_stop"/>
+
+			</LinearLayout>
+
+			<TextView
+				style="@style/ListTitleText"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="2dip"
+				android:text="@string/label_type"/>
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal">
+
+				<RadioGroup
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
+					android:orientation="horizontal"
+					android:weightSum="2">
+
+					<RadioButton
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:id="@+id/radio_pocketmine"
+						android:text="@string/check_pocketmine"
+						android:layout_weight="1.0"/>
+
+					<RadioButton
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:id="@+id/radio_nukkit"
+						android:text="@string/check_nukkit"
+						android:layout_weight="1.0"/>
+
+				</RadioGroup>
+
+			</LinearLayout>
+
+			<CheckBox
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:id="@+id/check_ansi"
+				android:text="@string/check_ansi"/>
+
+			<TextView
+				style="@style/ListTitleText"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="2dip"
+				android:text="@string/label_console"/>
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_marginBottom="10dp">
+
+				<LinearLayout
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
+					android:orientation="horizontal">
+
+					<TextView
+						android:layout_height="wrap_content"
+						android:text="@string/label_console_fontsize"
+						android:layout_width="wrap_content"
+						android:layout_gravity="center"/>
+
+					<SeekBar
+						android:layout_height="wrap_content"
+						android:layout_width="match_parent"
+						android:id="@+id/seekbar_fontsize"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<Button
+				android:layout_height="wrap_content"
+				android:text="@string/button_mount"
+				android:layout_width="match_parent"
+				android:id="@+id/button_mount"/>
+
+			<CheckBox
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:id="@+id/check_kusud"
+				android:text="@string/check_kusud"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="@string/label_pocketMine_to"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="@string/label_nukkit_to"
+				android:layout_width="wrap_content"/>
+
+		</LinearLayout>
+
+	</ScrollView>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Copyright 2016-2017 © FENGberd. All rights reserved."
+		android:layout_width="match_parent"
+		android:layout_alignParentBottom="true"
+		android:gravity="center"
+		android:layout_marginBottom="10dp"/>
+
+</RelativeLayout>
