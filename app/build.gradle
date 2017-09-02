@@ -10,6 +10,7 @@ android {
         targetSdkVersion 21
         versionCode 1080
         versionName "1.0.8.0"
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -26,5 +27,5 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile "com.android.support:support-compat:24.2.0"
+    compile 'com.android.support:support-v4:21.0.3'
 }

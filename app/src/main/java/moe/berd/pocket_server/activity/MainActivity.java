@@ -18,6 +18,8 @@ import java.security.cert.*;
 
 import javax.net.ssl.*;
 
+import moe.berd.pocket_server.exception.*;
+import moe.berd.pocket_server.fragment.*;
 import moe.berd.pocket_server.service.*;
 import moe.berd.pocket_server.utils.*;
 
@@ -29,7 +31,6 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 	public final static int CHOOSE_PHP_CODE=1;
 	
 	public static Intent serverIntent=null;
-	public static SharedPreferences config=null;
 	
 	public static boolean isStarted=false, nukkitMode=false, ansiMode=false;
 	
@@ -52,10 +53,10 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
 	}
 	
-	public RadioButton radio_pocketmine=null, radio_nukkit=null;
-	public CheckBox check_kusud=null, check_ansi=null;
-	public Button button_start=null, button_stop=null;
-	public SeekBar seekbar_fontsize=null;
+	public Fragment currentFragment=null;
+	public MainFragment fragment_main=new MainFragment();
+	public ConsoleFragment fragment_console=new ConsoleFragment();
+	public SettingsFragment fragment_settings=new SettingsFragment();
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -63,9 +64,30 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		ConfigProvider.init(getSharedPreferences("config",0));
+		nukkitMode=ConfigProvider.getBoolean("NukkitMode",nukkitMode);
+		
+		ServerUtils.init(this);
+		try
+		{
+			ServerUtils.installBusybox(this);
+		}
+		catch(ABINotSupportedException e)
+		{
+			alertABIWarning(e.binaryName,null);
+		}
+		catch(Exception e)
+		{
+			toast(e.getMessage());
+		}
+		
 		actionHandler=new Handler(this);
 		serverIntent=new Intent(this,ServerService.class);
 		
+		switchFragment(fragment_main);
+		
+		reloadUrls();
+		/*
 		config=getSharedPreferences("config",0);
 		ansiMode=config.getBoolean("ANSIMode",ansiMode);
 		nukkitMode=config.getBoolean("NukkitMode",nukkitMode);
@@ -106,7 +128,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 			@Override
 			public void onStopTrackingTouch(SeekBar p1)
 			{
-				ConsoleActivity.font_size=p1.getProgress();
+				// todo: write config
 				config.edit().putInt("ConsoleFontSize",p1.getProgress()).apply();
 			}
 		});
@@ -117,11 +139,11 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		radio_nukkit.setChecked(nukkitMode);
 		radio_pocketmine.setChecked(!nukkitMode);
 		
-		ServerUtils.setAppDirectory(this);
-		ConsoleActivity.font_size=seekbar_fontsize.getProgress();
+		ServerUtils.init(this);
 		
 		reloadUrls();
 		refreshEnabled();
+		*/
 	}
 	
 	@Override
@@ -163,7 +185,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 							public void run()
 							{
 								processing_dialog.dismiss();
-								refreshEnabled();
+								fragment_main.refreshEnabled();
 								toast(R.string.message_install_success);
 							}
 						});
@@ -188,7 +210,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 			break;
 		}
 	}
-	
+	/*
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -205,187 +227,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		menu.findItem(R.id.menu_download_server).setEnabled(!isStarted);
 		return true;
 	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		final ProgressDialog processing_dialog=new ProgressDialog(this);
-		switch(item.getItemId())
-		{
-		case R.id.menu_kill:
-			ServerUtils.killServer();
-			postMessage(ACTION_STOP_SERVICE,0,null);
-			refreshEnabled();
-			break;
-		case R.id.menu_console:
-			startActivity(new Intent(this,ConsoleActivity.class));
-			break;
-		case R.id.menu_install_php:
-			processing_dialog.setCancelable(false);
-			processing_dialog.setMessage(getString(R.string.message_installing));
-			processing_dialog.show();
-			new Thread(new Runnable()
-			{
-				public void run()
-				{
-					try
-					{
-						installBusybox();
-						copyAsset("php",new File(ServerUtils.getAppDirectory(),"/php"));
-						toast(R.string.message_install_success);
-					}
-					catch(Exception e)
-					{
-						toast(getString(R.string.message_install_fail) + "\n" + e.toString());
-					}
-					runOnUiThread(new Runnable()
-					{
-						public void run()
-						{
-							processing_dialog.dismiss();
-							refreshEnabled();
-						}
-					});
-				}
-			}).start();
-			break;
-		case R.id.menu_install_php_manually:
-			new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
-				.setTitle(R.string.alert_install_php_title)
-				.setMessage(R.string.alert_install_php_message)
-				.setPositiveButton(R.string.button_ok,new DialogInterface.OnClickListener()
-				{
-					@Override
-					public void onClick(DialogInterface dialog,int which)
-					{
-						chooseFile(CHOOSE_PHP_CODE,getString(R.string.message_choose_php));
-					}
-				})
-				.setNegativeButton(R.string.button_cancel,null)
-				.show();
-			break;
-		case R.id.menu_install_java:
-			processing_dialog.setCancelable(false);
-			processing_dialog.setMessage(getString(R.string.message_installing));
-			processing_dialog.show();
-			new Thread(new Runnable()
-			{
-				public void run()
-				{
-					try
-					{
-						File libData=new File(Environment.getExternalStorageDirectory().toString() + "/nukkit_library.tar.gz");
-						if(!libData.exists())
-						{
-							toast(getString(R.string.message_install_fail_path) + " " + Environment.getExternalStorageDirectory()
-								.toString());
-						}
-						else
-						{
-							File inside=new File(ServerUtils.getAppDirectory() + "/java/nukkit_library.tar.gz");
-							inside.delete();
-							new File(ServerUtils.getAppDirectory() + "/java").mkdirs();
-							OutputStream os=new FileOutputStream(inside);
-							InputStream is=new FileInputStream(libData);
-							int cou=0;
-							byte[] buffer=new byte[8192];
-							while((cou=is.read(buffer))!=-1)
-							{
-								os.write(buffer,0,cou);
-							}
-							is.close();
-							os.close();
-							installBusybox();
-							Runtime.getRuntime()
-								.exec("../busybox tar zxf nukkit_library.tar.gz",new String[0],new File(ServerUtils
-									.getAppDirectory() + "/java"))
-								.waitFor();
-							inside.delete();
-							toast(R.string.message_install_success);
-						}
-					}
-					catch(Exception e)
-					{
-						toast(getString(R.string.message_install_fail) + "\n" + e.toString());
-					}
-					runOnUiThread(new Runnable()
-					{
-						public void run()
-						{
-							processing_dialog.dismiss();
-							refreshEnabled();
-						}
-					});
-				}
-			}).start();
-			break;
-		case R.id.menu_download_server:
-			AlertDialog.Builder download_dialog_builder=new AlertDialog.Builder(this);
-			String[] jenkins=nukkitMode ? jenkins_nukkit : jenkins_pocketmine, values=new String[jenkins.length];
-			for(int i=0;i<jenkins.length;i++)
-			{
-				String[] split=jenkins[i].split("\\|",2);
-				values[i]=split[0];
-			}
-			download_dialog_builder.setTitle(getString(R.string.message_select_repository).replace("%s",nukkitMode ? "Nukkit" : "PocketMine"));
-			download_dialog_builder.setItems(values,new DialogInterface.OnClickListener()
-			{
-				@Override
-				public void onClick(DialogInterface p1,final int p2)
-				{
-					p1.dismiss();
-					processing_dialog.setCancelable(false);
-					processing_dialog.setMessage(getString(R.string.message_downloading).replace("%s",nukkitMode ? "Nukkit.jar" : "PocketMine-MP.phar"));
-					processing_dialog.setIndeterminate(false);
-					processing_dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-					processing_dialog.show();
-					new Thread(new Runnable()
-					{
-						public void run()
-						{
-							String[] wtf=nukkitMode ? jenkins_nukkit : jenkins_pocketmine;
-							wtf=wtf[p2].split("\\|");
-							downloadServer(wtf[1],new File(ServerUtils.getDataDirectory() + "/" + (nukkitMode ? "Nukkit.jar" : "PocketMine-MP.phar")),processing_dialog);
-							runOnUiThread(new Runnable()
-							{
-								public void run()
-								{
-									processing_dialog.dismiss();
-								}
-							});
-						}
-					}).start();
-				}
-			});
-			download_dialog_builder.show();
-			break;
-		case R.id.menu_update_repos:
-			processing_dialog.setCancelable(false);
-			processing_dialog.setMessage(getString(R.string.message_downloading).replace("%s",""));
-			processing_dialog.setIndeterminate(false);
-			processing_dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			processing_dialog.show();
-			new Thread(new Runnable()
-			{
-				public void run()
-				{
-					downloadFile("https://raw.githubusercontent.com/fengberd/MinecraftPEServer/master/app/src/main/assets/urls.json",new File(getFilesDir(),"urls.json"),processing_dialog);
-					runOnUiThread(new Runnable()
-					{
-						public void run()
-						{
-							reloadUrls();
-							processing_dialog.dismiss();
-						}
-					});
-				}
-			}).start();
-			break;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-		return true;
-	}
+	*/
 	
 	@Override
 	public boolean handleMessage(Message msg)
@@ -393,9 +235,8 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		switch(msg.arg1)
 		{
 		case ACTION_STOP_SERVICE:
-			isStarted=false;
-			refreshEnabled();
 			stopService(serverIntent);
+			fragment_main.refreshEnabled();
 			break;
 		}
 		return false;
@@ -406,52 +247,7 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 	{
 		switch(v.getId())
 		{
-		case R.id.button_start:
-			isStarted=true;
-			startService(serverIntent);
-			ServerUtils.runServer();
-			break;
-		case R.id.button_stop:
-			if(ServerUtils.isRunning())
-			{
-				ServerUtils.writeCommand("stop");
-			}
-			break;
-		case R.id.button_mount:
-			try
-			{
-				String binary="su", busybox=ServerUtils.getAppDirectory() + "/busybox ";
-				if(((CheckBox)findViewById(R.id.check_kusud)).isChecked())
-				{
-					binary="ku.sud";
-				}
-				Runtime.getRuntime().exec(binary + " -c " + busybox + "mount -o rw,remount /").waitFor();
-				if(!new File("/lib").exists())
-				{
-					Runtime.getRuntime().exec(binary + " -c " + busybox + "mkdir /lib").waitFor();
-				}
-				else
-				{
-					Runtime.getRuntime().exec(binary + " -c " + busybox + "umount /lib").waitFor();
-				}
-				Runtime.getRuntime()
-					.exec(binary + " -c " + busybox + "mount -o bind " + ServerUtils.getAppDirectory() + "/java/lib /lib")
-					.waitFor();
-				toast(R.string.message_done);
-			}
-			catch(Exception e)
-			{
-				toast(e.toString());
-			}
-			break;
-		case R.id.radio_pocketmine:
-			nukkitMode=false;
-			config.edit().putBoolean("NukkitMode",nukkitMode).apply();
-			break;
-		case R.id.radio_nukkit:
-			nukkitMode=true;
-			config.edit().putBoolean("NukkitMode",nukkitMode).apply();
-			break;
+		/*
 		case R.id.check_ansi:
 			ansiMode=check_ansi.isChecked();
 			config.edit().putBoolean("ANSIMode",ansiMode).apply();
@@ -459,42 +255,46 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		case R.id.check_kusud:
 			config.edit().putBoolean("KusudMode",check_kusud.isChecked()).apply();
 			break;
+			*/
 		default:
 			return;
 		}
-		refreshEnabled();
 	}
 	
-	public void installBusybox() throws Exception
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		File busybox=new File(ServerUtils.getAppDirectory() + "/busybox");
-		if(busybox.exists())
+		switch(item.getItemId())
 		{
+		case R.id.menu_kill:
+			ServerUtils.killServer();
+			stopService(serverIntent);
+			fragment_main.refreshEnabled();
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		if(currentFragment!=null && (currentFragment instanceof ConsoleFragment || currentFragment instanceof SettingsFragment))
+		{
+			switchFragment(fragment_main);
 			return;
 		}
-		copyAsset("busybox",busybox);
-		busybox.setExecutable(true,true);
+		super.onBackPressed();
 	}
 	
-	public void refreshEnabled()
+	public void switchFragment(Fragment target)
 	{
-		radio_nukkit.setEnabled(!isStarted);
-		radio_pocketmine.setEnabled(!isStarted);
-		check_ansi.setEnabled(!isStarted);
-		findViewById(R.id.button_mount).setEnabled(!isStarted);
-		if(nukkitMode && !new File(ServerUtils.getAppDirectory(),"java/jre/bin/java").exists())
-		{
-			button_start.setEnabled(false);
-		}
-		else if(!nukkitMode && !new File(ServerUtils.getAppDirectory(),"php").exists())
-		{
-			button_start.setEnabled(false);
-		}
-		else
-		{
-			button_start.setEnabled(!isStarted);
-		}
-		button_stop.setEnabled(isStarted);
+		getFragmentManager().beginTransaction()
+			.setCustomAnimations(R.animator.enter,R.animator.exit)
+			.replace(R.id.layout_main,target)
+			.commit();
+		currentFragment=target;
 	}
 	
 	public void chooseFile(int code,String title)
@@ -682,6 +482,31 @@ public class MainActivity extends Activity implements Handler.Callback, View.OnC
 		URLConnection connection=req.openConnection();
 		connection.connect();
 		return connection;
+	}
+	
+	public void alertABIWarning(final String name,final DialogInterface.OnClickListener onclick)
+	{
+		runOnUiThread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				new AlertDialog.Builder(MainActivity.this).setTitle(R.string.dialog_abi_title)
+					.setCancelable(false)
+					.setMessage(getString(R.string.dialog_abi_message).replace("%binary",name))
+					.setNegativeButton(R.string.dialog_abi_exit,new DialogInterface.OnClickListener()
+					{
+						@Override
+						public void onClick(DialogInterface dialog,int which)
+						{
+							finish();
+						}
+					})
+					.setPositiveButton(R.string.dialog_abi_ignore,onclick)
+					.create()
+					.show();
+			}
+		});
 	}
 	
 	public void downloadFile(String url,File saveTo,final ProgressDialog dialog)

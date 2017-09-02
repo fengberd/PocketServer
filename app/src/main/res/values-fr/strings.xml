@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-French translated by:
+Translated by:
 	sxmtrippy971@gmail.com
 Corrected by:
 	taffou2a@gmail.com
-Thank for everyone above!
+Please leave your email or name above with a tab as prefix
+Thanks to everyone above!
 -->
 <resources>
     <string name="application_name">Pocket Server</string>
@@ -17,7 +18,6 @@ Thank for everyone above!
     <string name="button_start">Démarrer le serveur</string>
     <string name="button_mount">Monter la Bibliothèque Java(ROOT)</string>
 
-    <string name="check_pocketmine">PocketMine</string>
     <string name="check_ansi">Activer le support ANSI</string>
     <string name="check_kusud">Utiliser (ku.sud) pour demander l\'accès root</string>
 
@@ -39,13 +39,11 @@ Thank for everyone above!
 	<string name="label_console_fontsize">Taille de police:</string>
 	
 	<string name="menu_console">Console</string>
+    <string name="menu_settings">Paramètres</string>
     <string name="menu_kill">Arrêter le serveur</string>
     <string name="menu_clear">Effacer</string>
     <string name="menu_copy">Copié</string>
     <string name="menu_install_php">Installer PHP</string>
-    <!--string name="menu_install_php_manually">Translate required</string-->
     <string name="menu_install_java">Installer Java</string>
     <string name="menu_download_server">Télécharger le serveur</string>
-    <string name="message_unknown_error"></string>
-    <string name="check_nukkit" translatable="false">Nukkit</string>
 </resources>

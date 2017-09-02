@@ -3,17 +3,17 @@
     <item
         android:id="@+id/menu_console"
         android:title="@string/menu_console"
-        android:icon="@drawable/hardware_dock"
+        android:icon="@drawable/console"
         android:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_kill"
+        android:title="@string/menu_kill"/>
     <item
         android:id="@+id/menu_download_server"
         android:title="@string/menu_download_server"/>
     <item
         android:id="@+id/menu_update_repos"
         android:title="@string/menu_update_repos"/>
-    <item
-        android:id="@+id/menu_kill"
-        android:title="@string/menu_kill"/>
     <item
         android:id="@+id/menu_install_php"
         android:title="@string/menu_install_php"/>
@@ -23,4 +23,7 @@
     <item
         android:id="@+id/menu_install_java"
         android:title="@string/menu_install_java"/>
+    <item
+        android:id="@+id/menu_settings"
+        android:title="Settings"/>
 </menu>

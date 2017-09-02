@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Translated by:
+
+Corrected by:
+
+Please leave your email or name above with a tab as prefix
+Thanks to everyone above!
+-->
 <resources>
     <string name="application_name">Pocket Server</string>
 	
@@ -38,6 +46,7 @@
 	<string name="label_nukkit_to">Nukkit.jar를 /sdcard/Nukkit에 넣으세요</string>
 	
 	<string name="menu_console">콘솔</string>
+    <string name="menu_settings">Settings</string>
     <string name="menu_kill">서버 강제 종료</string>
     <string name="menu_clear">콘솔 내용 지우기</string>
 	<string name="menu_copy">복사</string>

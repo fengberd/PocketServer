@@ -1,12 +1,16 @@
 package moe.berd.pocket_server.utils;
 
 import android.content.*;
+import android.content.res.*;
 import android.os.*;
 
 import java.io.*;
 import java.lang.Process;
+import java.util.*;
 
 import moe.berd.pocket_server.activity.*;
+import moe.berd.pocket_server.exception.*;
+import moe.berd.pocket_server.fragment.*;
 
 public class ServerUtils
 {
@@ -18,7 +22,7 @@ public class ServerUtils
 	private static InputStreamReader stdout=null;
 	private static OutputStreamWriter stdin=null;
 	
-	public static void setAppDirectory(Context ctx)
+	public static void init(Context ctx)
 	{
 		appDirectory=ctx.getFilesDir().getParentFile();
 	}
@@ -54,7 +58,10 @@ public class ServerUtils
 	{
 		try
 		{
-			serverProcess.exitValue();
+			if(serverProcess!=null)
+			{
+				serverProcess.exitValue();
+			}
 		}
 		catch(Exception e)
 		{
@@ -137,13 +144,14 @@ public class ServerUtils
 										continue;
 									case '\n':
 										String line=s.toString();
+										// TODO: lol.
 										if(line.startsWith("\u001b]0;"))
 										{
-											ConsoleActivity.postTitle(line.substring(8));
+											ConsoleFragment.postTitle(line.substring(8));
 										}
 										else
 										{
-											ConsoleActivity.log(line);
+											ConsoleFragment.log(line);
 										}
 									case '\u0007':
 										s.setLength(0);
@@ -175,7 +183,7 @@ public class ServerUtils
 							}
 						}
 					}
-					ConsoleActivity.log("[PE Server] Server was stopped.");
+					ConsoleFragment.log("[PE Server] Server was stopped.");
 					MainActivity.postMessage(MainActivity.ACTION_STOP_SERVICE,0,null);
 				}
 			};
@@ -183,11 +191,25 @@ public class ServerUtils
 		}
 		catch(Exception e)
 		{
-			ConsoleActivity.log("[PE Server] Unable to start " + (MainActivity.nukkitMode ? "Java" : "PHP") + ".");
-			ConsoleActivity.log(e.toString());
+			ConsoleFragment.log("[PE Server] Unable to start " + (MainActivity.nukkitMode ? "Java" : "PHP") + ".");
+			ConsoleFragment.log(e.toString());
 			MainActivity.postMessage(MainActivity.ACTION_STOP_SERVICE,0,null);
 			killServer();
 		}
+	}
+	
+	public static boolean writeCommand(String cmd)
+	{
+		try
+		{
+			stdin.write(cmd + "\r\n");
+			stdin.flush();
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
+		return true;
 	}
 	
 	public static void setPermission()
@@ -209,17 +231,110 @@ public class ServerUtils
 		}
 	}
 	
-	public static boolean writeCommand(String cmd)
+	@SuppressWarnings("deprecation")
+	public static void installBinary(File target,Context ctx,String filename,String friendlyName) throws Exception
 	{
-		try
+		AssetManager assets=ctx.getAssets();
+		List<String> ABIS=new ArrayList<>(), supportedABIS=new ArrayList<>();
+		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP)
 		{
-			stdin.write(cmd + "\r\n");
-			stdin.flush();
+			Collections.addAll(ABIS,Build.SUPPORTED_ABIS);
 		}
-		catch(Exception e)
+		else
 		{
-			return false;
+			ABIS.add(Build.CPU_ABI);
+			if(Build.CPU_ABI2!=null && !Build.CPU_ABI.equals(Build.CPU_ABI2))
+			{
+				ABIS.add(Build.CPU_ABI2);
+			}
 		}
-		return true;
+		Collections.addAll(supportedABIS,assets.list(filename));
+		InputStream data=null;
+		boolean compressed=false;
+		for(String ABI : ABIS)
+		{
+			if(supportedABIS.contains(ABI + ".tar.xz"))
+			{
+				compressed=true;
+				data=assets.open(filename + "/" + ABI + ".tar.xz");
+				break;
+			}
+			if(supportedABIS.contains(ABI))
+			{
+				data=assets.open(filename + "/" + ABI);
+				break;
+			}
+			if(ABI.startsWith("armeabi") || ABI.startsWith("arm64"))
+			{
+				if(supportedABIS.contains("armeabi.tar.xz"))
+				{
+					compressed=true;
+					data=assets.open(filename + "/armeabi.tar.xz");
+				}
+				else if(supportedABIS.contains("armeabi"))
+				{
+					data=assets.open(filename + "/armeabi");
+				}
+				break;
+			}
+			if(ABI.startsWith("x86"))
+			{
+				if(supportedABIS.contains("i686.tar.xz"))
+				{
+					compressed=true;
+					data=assets.open(filename + "/i686.tar.xz");
+				}
+				else if(supportedABIS.contains("i686"))
+				{
+					data=assets.open(filename + "/i686");
+				}
+				break;
+			}
+		}
+		if(data==null)
+		{
+			throw new ABINotSupportedException(friendlyName);
+		}
+		target.delete();
+		File writeTo=compressed ? new File(target + ".tar.xz") : target;
+		OutputStream os=new FileOutputStream(writeTo);
+		int cou=0;
+		byte[] buffer=new byte[8192];
+		while((cou=data.read(buffer))!=-1)
+		{
+			os.write(buffer,0,cou);
+		}
+		os.close();
+		data.close();
+		if(compressed)
+		{
+			Runtime.getRuntime().exec("./busybox tar -xf " + writeTo,new String[0],appDirectory).waitFor();
+			writeTo.delete();
+		}
+		target.setExecutable(true,true);
+	}
+	
+	public static void installPHP(Context ctx,String version) throws Exception
+	{
+		installBinary(new File(getAppDirectory(),"php"),ctx,"php" + version,"PHP" + version);
+	}
+	
+	public static void installBusybox(Context ctx) throws Exception
+	{
+		File target=new File(getAppDirectory(),"busybox");
+		if(!target.exists())
+		{
+			installBinary(target,ctx,"busybox","Busybox");
+		}
+	}
+	
+	public static boolean installedPHP()
+	{
+		return new File(getAppDirectory(),"php").exists();
+	}
+	
+	public static boolean installedJava()
+	{
+		return new File(getAppDirectory(),"java/jre/bin/java").exists();
 	}
 }

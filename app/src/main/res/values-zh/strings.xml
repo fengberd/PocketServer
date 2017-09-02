@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Translated by:
+    fengberd@gmail.com
+Corrected by:
+
+Please leave your email or name above with a tab as prefix
+Thanks to everyone above!
+-->
 <resources>
     <string name="application_name">口袋服务器</string>
 
@@ -39,6 +47,7 @@
 	<string name="label_nukkit_to">把 Nukkit.jar 放到 /sdcard/Nukkit</string>
 
 	<string name="menu_console">控制台</string>
+    <string name="menu_settings">设置</string>
     <string name="menu_kill">强制停止服务器</string>
     <string name="menu_clear">清空</string>
     <string name="menu_copy">复制</string>

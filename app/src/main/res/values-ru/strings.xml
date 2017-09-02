@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Translated by:
+
+Corrected by:
+
+Please leave your email or name above with a tab as prefix
+Thanks to everyone above!
+-->
 <resources>
     <string name="application_name">Pocket Server</string>
 	
@@ -35,6 +43,7 @@
 	<string name="label_nukkit_to">Поместите Nukkit.jar в /sdcard/Nukkit</string>
 	
 	<string name="menu_console">Консоль</string>
+    <string name="menu_settings">настройки</string>
     <string name="menu_kill">Убить сервер</string>
     <string name="menu_clear">Очистка</string>
     <string name="menu_copy">Копирование</string>

@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Translated by:
+    fengberd@gmail.com
+Corrected by:
+
+Please leave your email or name above with a tab as prefix
+Thanks to everyone above!
+-->
 <resources>
     <string name="application_name">Pocket Server</string>
-	
+
     <string name="activity_main">Pocket Server</string>
     <string name="activity_console">Console</string>
 
@@ -12,8 +20,8 @@
     <string name="button_start">Start Server</string>
     <string name="button_mount">Mount Java Library(ROOT)</string>
 
-    <string name="check_nukkit">Nukkit</string>
-    <string name="check_pocketmine">PocketMine</string>
+    <string name="check_nukkit" translatable="false">Nukkit</string>
+    <string name="check_pocketmine" translatable="false">PocketMine</string>
     <string name="check_ansi">Enable ANSI support</string>
     <string name="check_kusud">Use ku.sud to request root</string>
 
@@ -30,15 +38,21 @@
     <string name="message_select_repository">Please select %s repository</string>
     <string name="message_choose_php">Choose your PHP binary</string>
     <string name="message_unknown_error">Unknown Error</string>
-    
+
+    <string name="dialog_abi_title">ABI Not Supported</string>
+    <string name="dialog_abi_message">Sorry,all ABIs this app supported isn\'t match with your device,we can\'t install %binary on this device.\nYou can continue anyway but this app may not proper functioning.</string>
+    <string name="dialog_abi_exit">Exit</string>
+    <string name="dialog_abi_ignore">Ignore</string>
+
     <string name="label_management">Server Management</string>
-	<string name="label_type">Server Type</string>
-	<string name="label_console">Console Customize</string>
-	<string name="label_console_fontsize">Font Size:</string>
-	<string name="label_pocketMine_to">Put PocketMine-MP.phar or src folder to /sdcard/PocketMine</string>
-	<string name="label_nukkit_to">Put Nukkit.jar to /sdcard/Nukkit</string>
-	
-	<string name="menu_console">Console</string>
+    <string name="label_type">Server Type</string>
+    <string name="label_console">Console Customize</string>
+    <string name="label_console_fontsize">Font Size:</string>
+    <string name="label_pocketMine_to">Put PocketMine-MP.phar or src folder to /sdcard/PocketMine</string>
+    <string name="label_nukkit_to">Put Nukkit.jar to /sdcard/Nukkit</string>
+
+    <string name="menu_console">Console</string>
+    <string name="menu_settings">Settings</string>
     <string name="menu_kill">Kill server</string>
     <string name="menu_clear">Clear</string>
     <string name="menu_copy">Copy</string>
