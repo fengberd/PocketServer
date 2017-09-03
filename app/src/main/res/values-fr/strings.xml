@@ -18,8 +18,10 @@ Thanks to everyone above!
     <string name="button_start">Démarrer le serveur</string>
     <string name="button_mount">Monter la Bibliothèque Java(ROOT)</string>
 
-    <string name="check_ansi">Activer le support ANSI</string>
-    <string name="check_kusud">Utiliser (ku.sud) pour demander l\'accès root</string>
+    <string name="preference_kusud_title">Utiliser (ku.sud) pour demander l\'accès root</string>
+    <string name="preference_category_console">Console</string>
+    <string name="preference_ansi_title">Activer le support ANSI</string>
+    <string name="preference_font_size_title">Taille de police</string>
 
     <string name="message_copied">Copié.</string>
     <string name="message_done">Fini.</string>
@@ -29,21 +31,18 @@ Thanks to everyone above!
     <string name="message_downloading">Téléchargement de %s ...</string>
     <string name="message_install_fail">L\'installation a échoué:</string>
     <string name="message_install_success">Installé avec succès.</string>
-    <string name="message_install_fail_path">L\'installation a échoué, s’il vous plaît mettez "nukkit_library.tar.gz" dans</string>
     <string name="message_no_artifacts">Aucun artefact trouvé.</string>
     <string name="message_select_repository">S\'il vous plaît sélectionnez un référentiel %s</string>
 	
     <string name="label_management">Gestion du serveur</string>
 	<string name="label_type">Type de serveur</string>
-	<string name="label_console">Personnaliser la console</string>
-	<string name="label_console_fontsize">Taille de police:</string>
 	
 	<string name="menu_console">Console</string>
     <string name="menu_settings">Paramètres</string>
     <string name="menu_kill">Arrêter le serveur</string>
     <string name="menu_clear">Effacer</string>
     <string name="menu_copy">Copié</string>
-    <string name="menu_install_php">Installer PHP</string>
-    <string name="menu_install_java">Installer Java</string>
+    <string name="preference_install_php">Installer PHP</string>
+    <string name="preference_install_java">Installer Java</string>
     <string name="menu_download_server">Télécharger le serveur</string>
 </resources>

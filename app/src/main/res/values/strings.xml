@@ -12,6 +12,7 @@ Thanks to everyone above!
 
     <string name="activity_main">Pocket Server</string>
     <string name="activity_console">Console</string>
+    <string name="activity_settings">Settings</string>
 
     <string name="button_ok">OK</string>
     <string name="button_cancel">Cancel</string>
@@ -22,8 +23,18 @@ Thanks to everyone above!
 
     <string name="check_nukkit" translatable="false">Nukkit</string>
     <string name="check_pocketmine" translatable="false">PocketMine</string>
-    <string name="check_ansi">Enable ANSI support</string>
-    <string name="check_kusud">Use ku.sud to request root</string>
+
+    <string name="preference_category_general">General</string>
+    <string name="preference_kusud_title">Use ku.sud to request root</string>
+    <string name="preference_kusud_summary">Request root by "ku.sud" command instead of "su",only works with KingRoot.</string>
+    <string name="preference_install_php">Install PHP</string>
+    <string name="preference_install_php_manually">Install PHP manually</string>
+    <string name="preference_install_java">Install Java</string>
+    <string name="preference_update_repos">Update Repositories From Server</string>
+    <string name="preference_category_console">Console</string>
+    <string name="preference_ansi_title">Enable ANSI support</string>
+    <string name="preference_ansi_summary">Support console color and some font style.May reduce performance.</string>
+    <string name="preference_font_size_title">Font Size</string>
 
     <string name="message_copied">Copied.</string>
     <string name="message_done">Done.</string>
@@ -33,10 +44,10 @@ Thanks to everyone above!
     <string name="message_downloading">Downloading %s ...</string>
     <string name="message_install_fail">Install failed:</string>
     <string name="message_install_success">Install successfully.</string>
-    <string name="message_install_fail_path">Install failed,please put "nukkit_library.tar.gz" to</string>
     <string name="message_no_artifacts">No artifacts found.</string>
     <string name="message_select_repository">Please select %s repository</string>
     <string name="message_choose_php">Choose your PHP binary</string>
+    <string name="message_choose_java">Choose JAVA library(.tar.gz file)</string>
     <string name="message_unknown_error">Unknown Error</string>
 
     <string name="dialog_abi_title">ABI Not Supported</string>
@@ -46,8 +57,6 @@ Thanks to everyone above!
 
     <string name="label_management">Server Management</string>
     <string name="label_type">Server Type</string>
-    <string name="label_console">Console Customize</string>
-    <string name="label_console_fontsize">Font Size:</string>
     <string name="label_pocketMine_to">Put PocketMine-MP.phar or src folder to /sdcard/PocketMine</string>
     <string name="label_nukkit_to">Put Nukkit.jar to /sdcard/Nukkit</string>
 
@@ -56,11 +65,7 @@ Thanks to everyone above!
     <string name="menu_kill">Kill server</string>
     <string name="menu_clear">Clear</string>
     <string name="menu_copy">Copy</string>
-    <string name="menu_install_php">Install PHP</string>
-    <string name="menu_install_php_manually">Install PHP manually</string>
-    <string name="menu_install_java">Install Java</string>
     <string name="menu_download_server">Download server</string>
-    <string name="menu_update_repos">Update Repositories From Server</string>
 
     <string name="alert_install_php_title">Be careful</string>
     <string name="alert_install_php_message">Install php manually is an advanced action.You should choose the php binary by yourself,don\'t choose any binary provided by someone you can\'t trust,it may be harmful for you device.\nIf you have an archived PHP binary,please extract it first.</string>

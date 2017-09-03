@@ -24,13 +24,13 @@ public class ServerService extends Service
 			.build());
 		return START_NOT_STICKY;
 	}
-
+	
 	@Override
 	public void onDestroy()
 	{
 		ServerUtils.killServer();
 	}
-
+	
 	@Override
 	public IBinder onBind(Intent intent)
 	{

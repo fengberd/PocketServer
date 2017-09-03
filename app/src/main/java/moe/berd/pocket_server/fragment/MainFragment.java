@@ -8,10 +8,11 @@ import android.widget.*;
 
 import net.fengberd.minecraftpe_server.*;
 
+import org.json.*;
+
 import java.io.*;
 
 import moe.berd.pocket_server.activity.*;
-import moe.berd.pocket_server.exception.*;
 import moe.berd.pocket_server.utils.*;
 
 import static moe.berd.pocket_server.activity.MainActivity.*;
@@ -19,6 +20,8 @@ import static moe.berd.pocket_server.activity.MainActivity.*;
 public class MainFragment extends Fragment implements View.OnClickListener
 {
 	public MainActivity main=null;
+	
+	public String[] jenkins_nukkit, jenkins_pocketmine;
 	
 	public Button button_start=null, button_stop=null, button_mount=null;
 	public RadioButton radio_pocketmine=null, radio_nukkit=null;
@@ -53,10 +56,8 @@ public class MainFragment extends Fragment implements View.OnClickListener
 	}
 	
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
+	public void onStart()
 	{
-		super.onActivityCreated(savedInstanceState);
-		
 		button_stop=(Button)main.findViewById(R.id.button_stop);
 		button_stop.setOnClickListener(this);
 		button_start=(Button)main.findViewById(R.id.button_start);
@@ -71,7 +72,10 @@ public class MainFragment extends Fragment implements View.OnClickListener
 		radio_pocketmine.setChecked(!nukkitMode);
 		radio_pocketmine.setOnClickListener(this);
 		
+		reloadUrls();
 		refreshEnabled();
+		
+		super.onStart();
 	}
 	
 	@Override
@@ -85,9 +89,6 @@ public class MainFragment extends Fragment implements View.OnClickListener
 	public void onPrepareOptionsMenu(Menu menu)
 	{
 		boolean running=ServerUtils.isRunning();
-		menu.findItem(R.id.menu_install_php).setEnabled(!running);
-		menu.findItem(R.id.menu_install_php_manually).setEnabled(!running);
-		menu.findItem(R.id.menu_install_java).setEnabled(!running);
 		menu.findItem(R.id.menu_download_server).setEnabled(!running);
 	}
 	
@@ -98,113 +99,11 @@ public class MainFragment extends Fragment implements View.OnClickListener
 		switch(item.getItemId())
 		{
 		case R.id.menu_console:
-			main.switchFragment(main.fragment_console);
+			main.switchFragment(main.fragment_console,R.string.activity_console);
 			break;
 		case R.id.menu_settings:
-			main.switchFragment(main.fragment_settings);
+			main.switchFragment(main.fragment_settings,R.string.activity_settings);
 			break;
-		case R.id.menu_install_php:
-			processing_dialog.setCancelable(false);
-			processing_dialog.setMessage(getString(R.string.message_installing));
-			processing_dialog.show();
-			new Thread(new Runnable()
-			{
-				public void run()
-				{
-					try
-					{
-						ServerUtils.installPHP(main,"7");
-						main.toast(R.string.message_install_success);
-					}
-					catch(ABINotSupportedException e)
-					{
-						main.alertABIWarning(e.binaryName,null);
-					}
-					catch(Exception e)
-					{
-						main.toast(getString(R.string.message_install_fail) + "\n" + e.toString());
-					}
-					main.runOnUiThread(new Runnable()
-					{
-						public void run()
-						{
-							processing_dialog.dismiss();
-							refreshEnabled();
-						}
-					});
-				}
-			}).start();
-			break;
-		/*case R.id.menu_install_php_manually:
-			new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
-				.setTitle(R.string.alert_install_php_title)
-				.setMessage(R.string.alert_install_php_message)
-				.setPositiveButton(R.string.button_ok,new DialogInterface.OnClickListener()
-				{
-					@Override
-					public void onClick(DialogInterface dialog,int which)
-					{
-						chooseFile(CHOOSE_PHP_CODE,getString(R.string.message_choose_php));
-					}
-				})
-				.setNegativeButton(R.string.button_cancel,null)
-				.show();
-			break;
-		case R.id.menu_install_java:
-			processing_dialog.setCancelable(false);
-			processing_dialog.setMessage(getString(R.string.message_installing));
-			processing_dialog.show();
-			new Thread(new Runnable()
-			{
-				public void run()
-				{
-					try
-					{
-						File libData=new File(Environment.getExternalStorageDirectory().toString() + "/nukkit_library.tar.gz");
-						if(!libData.exists())
-						{
-							toast(getString(R.string.message_install_fail_path) + " " + Environment.getExternalStorageDirectory()
-								.toString());
-						}
-						else
-						{
-							File inside=new File(ServerUtils.getAppDirectory() + "/java/nukkit_library.tar.gz");
-							inside.delete();
-							new File(ServerUtils.getAppDirectory() + "/java").mkdirs();
-							OutputStream os=new FileOutputStream(inside);
-							InputStream is=new FileInputStream(libData);
-							int cou=0;
-							byte[] buffer=new byte[8192];
-							while((cou=is.read(buffer))!=-1)
-							{
-								os.write(buffer,0,cou);
-							}
-							is.close();
-							os.close();
-							installBusybox();
-							Runtime.getRuntime()
-								.exec("../busybox tar zxf nukkit_library.tar.gz",new String[0],new File(ServerUtils
-									.getAppDirectory() + "/java"))
-								.waitFor();
-							inside.delete();
-							toast(R.string.message_install_success);
-						}
-					}
-					catch(Exception e)
-					{
-						toast(getString(R.string.message_install_fail) + "\n" + e.toString());
-					}
-					runOnUiThread(new Runnable()
-					{
-						public void run()
-						{
-							processing_dialog.dismiss();
-							fragment_main.refreshEnabled();
-						}
-					});
-				}
-			}).start();
-			break;*/
 		case R.id.menu_download_server:
 			AlertDialog.Builder download_dialog_builder=new AlertDialog.Builder(main);
 			String[] jenkins=nukkitMode ? jenkins_nukkit : jenkins_pocketmine, values=new String[jenkins.length];
@@ -300,6 +199,52 @@ public class MainFragment extends Fragment implements View.OnClickListener
 			return;
 		}
 		refreshEnabled();
+	}
+	
+	public void reloadUrls()
+	{
+		try
+		{
+			File file=new File(ServerUtils.getAppFilesDirectory(),"urls.json");
+			if(!file.exists())
+			{
+				main.copyAsset("urls.json",file);
+			}
+			FileInputStream fis=new FileInputStream(file);
+			byte[] data=new byte[(int)file.length()];
+			fis.read(data);
+			fis.close();
+			if(data.length<2)
+			{
+				file.delete();
+				reloadUrls();
+				return;
+			}
+			JSONObject json=new JSONObject(new String(data,"UTF-8"));
+			JSONObject jenkins=json.getJSONObject("jenkins");
+			{
+				JSONArray nukkit=jenkins.getJSONArray("nukkit");
+				{
+					jenkins_nukkit=new String[nukkit.length()];
+					for(int i=0;i<jenkins_nukkit.length;i++)
+					{
+						jenkins_nukkit[i]=nukkit.getString(i);
+					}
+				}
+				JSONArray pocketmine=jenkins.getJSONArray("pocketmine");
+				{
+					jenkins_pocketmine=new String[pocketmine.length()];
+					for(int i=0;i<jenkins_pocketmine.length;i++)
+					{
+						jenkins_pocketmine[i]=pocketmine.getString(i);
+					}
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			main.toast(e.toString());
+		}
 	}
 	
 	public void refreshEnabled()

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -33,7 +34,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/button_start"/>
+                    android:text="@string/button_start"
+                    tools:ignore="ButtonStyle"/>
 
                 <Button
                     android:id="@+id/button_stop"
@@ -41,7 +43,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/button_stop"/>
+                    android:text="@string/button_stop"
+                    tools:ignore="ButtonStyle"/>
 
             </LinearLayout>
 
@@ -52,87 +55,33 @@
                 android:layout_marginBottom="2dip"
                 android:text="@string/label_type"/>
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioGroup
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <RadioButton
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:id="@+id/radio_pocketmine"
-                        android:text="@string/check_pocketmine"
-                        android:layout_weight="1.0"/>
-
-                    <RadioButton
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:id="@+id/radio_nukkit"
-                        android:text="@string/check_nukkit"
-                        android:layout_weight="1.0"/>
-
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <!--CheckBox
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/check_ansi"
-                android:text="@string/check_ansi"/>
-
-            <TextView
-                style="@style/ListTitleText"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="2dip"
-                android:text="@string/label_console"/>
-
-            <LinearLayout
+            <RadioGroup
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
+                android:weightSum="2">
 
-                <LinearLayout
+                <RadioButton
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_width="wrap_content"
+                    android:id="@+id/radio_pocketmine"
+                    android:text="@string/check_pocketmine"
+                    android:layout_weight="1.0"/>
 
-                    <TextView
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_console_fontsize"
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center"/>
+                <RadioButton
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/radio_nukkit"
+                    android:text="@string/check_nukkit"
+                    android:layout_weight="1.0"/>
 
-                    <SeekBar
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:id="@+id/seekbar_fontsize"/>
-
-                </LinearLayout>
-
-            </LinearLayout-->
+            </RadioGroup>
 
             <Button
                 android:layout_height="wrap_content"
                 android:text="@string/button_mount"
                 android:layout_width="match_parent"
                 android:id="@+id/button_mount"/>
-
-            <!--CheckBox
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/check_kusud"
-                android:text="@string/check_kusud"/-->
 
             <TextView
                 android:layout_height="wrap_content"
@@ -154,7 +103,7 @@
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        tools:ignore="HardcodedText"/>
 
 </RelativeLayout>
-

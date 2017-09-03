@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 Translated by:
-
+    Johnmacrocraft
+    sorisem4106@naver.com
 Corrected by:
 
 Please leave your email or name above with a tab as prefix
@@ -22,8 +23,11 @@ Thanks to everyone above!
 
     <string name="check_nukkit">Nukkit</string>
     <string name="check_pocketmine">PocketMine</string>
-    <string name="check_ansi">ANSI 지원 활성화</string>
-    <string name="check_kusud">ku.sud를 사용하여 루트 권한 요청</string>
+
+    <string name="preference_kusud_title">ku.sud를 사용하여 루트 권한 요청</string>
+    <string name="preference_category_console">콘솔</string>
+    <string name="preference_ansi_title">ANSI 지원 활성화</string>
+    <string name="preference_font_size_title">폰트 크기</string>
 
     <string name="message_copied">복사되었습니다.</string>
     <string name="message_done">완료.</string>
@@ -33,15 +37,12 @@ Thanks to everyone above!
     <string name="message_downloading">%s(을)를 다운로드 하는 중 ...</string>
     <string name="message_install_fail">설치 실패:</string>
     <string name="message_install_success">설치에 성공하였습니다.</string>
-    <string name="message_install_fail_path">설치 실패, "nukkit_library.tar.gz"를 넣어주세요. 경로:</string>
     <string name="message_no_artifacts">서버 구동에 필요한 파일이 없습니다.</string>
     <string name="message_select_repository">%s의 저장소를 선택해주세요.</string>
 	<string name="message_choose_php">PHP 바이너리 선택</string>
     
     <string name="label_management">서버 관리</string>
 	<string name="label_type">서버 형식</string>
-	<string name="label_console">콘솔 사용자 지정</string>
-	<string name="label_console_fontsize">폰트 크기:</string>
 	<string name="label_pocketMine_to">PocketMine-MP.phar 또는 src 폴더를 /sdcard/PocketMine에 넣으세요</string>
 	<string name="label_nukkit_to">Nukkit.jar를 /sdcard/Nukkit에 넣으세요</string>
 	
@@ -50,9 +51,9 @@ Thanks to everyone above!
     <string name="menu_kill">서버 강제 종료</string>
     <string name="menu_clear">콘솔 내용 지우기</string>
 	<string name="menu_copy">복사</string>
-    <string name="menu_install_php">PHP 설치</string>
-	<string name="menu_install_php_manually">수동으로 PHP 설치</string>
-    <string name="menu_install_java">Java 설치</string>
+    <string name="preference_install_php">PHP 설치</string>
+	<string name="preference_install_php_manually">수동으로 PHP 설치</string>
+    <string name="preference_install_java">Java 설치</string>
     <string name="menu_download_server">서버 다운로드</string>
 
 	<string name="alert_install_php_title">조심하세요</string>

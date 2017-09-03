@@ -6,8 +6,8 @@
 			"ZXDA|https://jenkins.zxda.net/job/Nukkit/"
 		],
 		"pocketmine": [
+			"[Suggested]GenisysPro (ZXDA)|https://jenkins.zxda.net/job/GenisysPro/",
 			"Tesseract (ZXDA)|https://jenkins.zxda.net/job/Tesseract/",
-			"GenisysPro (ZXDA)|https://jenkins.zxda.net/job/GenisysPro/",
 			"PocketMine-MP-PMMP (pmmp/x64)|https://jenkins.pmmp.gq/job/PocketMine-MP/",
 			"PocketMine-MP-PMMP (ZXDA/x64)|https://jenkins.zxda.net/job/PocketMine-MP/",
 			"[Abandoned]BlueLight (ZXDA)|https://jenkins.zxda.net/job/BlueLight/",

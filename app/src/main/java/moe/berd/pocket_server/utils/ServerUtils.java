@@ -1,12 +1,17 @@
 package moe.berd.pocket_server.utils;
 
+import android.annotation.*;
 import android.content.*;
 import android.content.res.*;
 import android.os.*;
 
 import java.io.*;
 import java.lang.Process;
+import java.net.*;
+import java.security.cert.*;
 import java.util.*;
+
+import javax.net.ssl.*;
 
 import moe.berd.pocket_server.activity.*;
 import moe.berd.pocket_server.exception.*;
@@ -14,7 +19,7 @@ import moe.berd.pocket_server.fragment.*;
 
 public class ServerUtils
 {
-	private static File appDirectory=null;
+	private static File appDirectory=null, appFilesDirectory=null;
 	private static File nukkitDataDirectory=new File(Environment.getExternalStorageDirectory(),"Nukkit"), pocketmineDataDirectory=new File(Environment
 		.getExternalStorageDirectory(),"PocketMine");
 	
@@ -24,12 +29,18 @@ public class ServerUtils
 	
 	public static void init(Context ctx)
 	{
-		appDirectory=ctx.getFilesDir().getParentFile();
+		appFilesDirectory=ctx.getFilesDir();
+		appDirectory=appFilesDirectory.getParentFile();
 	}
 	
 	public static File getAppDirectory()
 	{
 		return appDirectory;
+	}
+	
+	public static File getAppFilesDirectory()
+	{
+		return appFilesDirectory;
 	}
 	
 	public static File getDataDirectory()
@@ -144,15 +155,14 @@ public class ServerUtils
 										continue;
 									case '\n':
 										String line=s.toString();
-										// TODO: lol.
-										if(line.startsWith("\u001b]0;"))
+										/*if(line.startsWith("\u001b]0;"))
 										{
 											ConsoleFragment.postTitle(line.substring(8));
 										}
-										else
-										{
-											ConsoleFragment.log(line);
-										}
+										else*/
+									{
+										ConsoleFragment.log(line);
+									}
 									case '\u0007':
 										s.setLength(0);
 										break;
@@ -184,7 +194,7 @@ public class ServerUtils
 						}
 					}
 					ConsoleFragment.log("[PE Server] Server was stopped.");
-					MainActivity.postMessage(MainActivity.ACTION_STOP_SERVICE,0,null);
+					MainActivity.postStopService();
 				}
 			};
 			tMonitor.start();
@@ -193,7 +203,7 @@ public class ServerUtils
 		{
 			ConsoleFragment.log("[PE Server] Unable to start " + (MainActivity.nukkitMode ? "Java" : "PHP") + ".");
 			ConsoleFragment.log(e.toString());
-			MainActivity.postMessage(MainActivity.ACTION_STOP_SERVICE,0,null);
+			MainActivity.postStopService();
 			killServer();
 		}
 	}
@@ -229,6 +239,68 @@ public class ServerUtils
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public static void copyStream(InputStream is,OutputStream os) throws IOException
+	{
+		copyStream(is,os,true);
+	}
+	
+	public static void copyStream(InputStream is,OutputStream os,boolean close) throws IOException
+	{
+		int cou=0;
+		byte[] buffer=new byte[8192];
+		while((cou=is.read(buffer))!=-1)
+		{
+			os.write(buffer,0,cou);
+		}
+		if(close)
+		{
+			is.close();
+			os.close();
+		}
+	}
+	
+	public static URLConnection openNetConnection(String url) throws Exception
+	{
+		final SSLContext sc=SSLContext.getInstance("SSL");
+		sc.init(null,new TrustManager[]{
+			new X509TrustManager()
+			{
+				@Override
+				@SuppressLint("TrustAllX509TrustManager")
+				public void checkClientTrusted(X509Certificate[] p1,String p2) throws CertificateException
+				{
+					
+				}
+				
+				@Override
+				@SuppressLint("TrustAllX509TrustManager")
+				public void checkServerTrusted(X509Certificate[] p1,String p2) throws CertificateException
+				{
+					
+				}
+				
+				@Override
+				public X509Certificate[] getAcceptedIssuers()
+				{
+					return null;
+				}
+			}
+		},new java.security.SecureRandom());
+		HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+		HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier()
+		{
+			@SuppressLint("BadHostnameVerifier")
+			public boolean verify(String hostname,SSLSession session)
+			{
+				return true;
+			}
+		});
+		URL req=new URL(url);
+		URLConnection connection=req.openConnection();
+		connection.connect();
+		return connection;
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -297,15 +369,7 @@ public class ServerUtils
 		}
 		target.delete();
 		File writeTo=compressed ? new File(target + ".tar.xz") : target;
-		OutputStream os=new FileOutputStream(writeTo);
-		int cou=0;
-		byte[] buffer=new byte[8192];
-		while((cou=data.read(buffer))!=-1)
-		{
-			os.write(buffer,0,cou);
-		}
-		os.close();
-		data.close();
+		copyStream(data,new FileOutputStream(writeTo));
 		if(compressed)
 		{
 			Runtime.getRuntime().exec("./busybox tar -xf " + writeTo,new String[0],appDirectory).waitFor();

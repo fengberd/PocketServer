@@ -1,7 +1,9 @@
 package moe.berd.pocket_server.utils;
 
+import java.util.*;
 import java.util.regex.*;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class TerminalColorConverter
 {
 	public static Pattern pattern_SGR=Pattern.compile("\u001b\\[((\\d;?)*)m");
@@ -45,11 +47,13 @@ public class TerminalColorConverter
 		"#bcbcbc","#c6c6c6","#d0d0d0","#dadada","#e4e4e4","#eeeeee"
 	};
 	
+	@SuppressWarnings("ConstantConditions")
 	public static String control2html(String input)
 	{
 		String foreground="", background="";
 		Matcher match=pattern_SGR.matcher(input);
 		StringBuffer sb=new StringBuffer(input.length());
+		// TODO: dim and reverse
 		boolean need_close=false, bright=false, dim=false, italic=false, underscore=false, reverse=false;
 		while(match.find())
 		{
@@ -109,13 +113,154 @@ public class TerminalColorConverter
 					break;
 				}
 			}
-			match.appendReplacement(sb,String.format("%s<font color='%s' style='background: %s%s%s;'>",(need_close ? "</font>" : ""),foreground,background,(italic ? ";font-style: italic" : ""),(underscore ? ";text-decoration: underline" : "")));
+			match.appendReplacement(sb,String.format("%s<font color='%s' style" +
+				"='background: %s%s%s;'>",(need_close ? "</font>" : ""),foreground,background,(italic ? ";font-style: italic" : ""),(underscore ? ";text-decoration: underline" : "")));
 			need_close=true;
 		}
 		match.appendTail(sb);
 		if(need_close)
 		{
 			sb.append("</font>");
+		}
+		return sb.toString();
+	}
+	
+	public static int parseInt(final String s)
+	{
+		final int length=s.length();
+		int num=0, i=0;
+		while(i<length)
+		{
+			num=num * 10 + '0' - s.charAt(i++);
+		}
+		return -num;
+	}
+	
+	public boolean modfied=false;
+	
+	public StringBuilder sequence(final String escape)
+	{
+		StringTokenizer st=new StringTokenizer(escape,";");
+		int tokens=st.countTokens();
+		if(tokens==0)
+		{
+			return new StringBuilder(0);
+		}
+		String foreground=null;
+		StringBuilder result=new StringBuilder();
+		if(modfied)
+		{
+			result.append("</font>");
+		}
+		result.append("<font style='");
+		boolean bright=false;
+		for(int i=0;i<tokens;i++)
+		{
+			int icode=parseInt(st.nextToken());
+			if(30<=icode && icode<=37)
+			{
+				foreground=(bright ? BrightColorTable : ColorTable)[icode - 30];
+				continue;
+			}
+			if(40<=icode && icode<=47)
+			{
+				result.append("background:")
+					.append((bright ? BrightColorTable : ColorTable)[icode - 40])
+					.append(';');
+				continue;
+			}
+			switch(icode)
+			{
+			case 0:
+				result=new StringBuilder("</font>");
+				bright=false;
+				break;
+			case 1:
+				bright=true;
+				break;
+			case 2:
+				// dim
+				break;
+			case 3:
+				result.append("font-style:italic;");
+				break;
+			case 4:
+				result.append("text-decoration: underline;");
+				break;
+			case 7:
+				result.append("direction: rtl; unicode-bidi: bidi-override;");
+				break;
+			case 38: // RGB foreground
+				if(i<tokens - 1)
+				{
+					i++;
+					if(parseInt(st.nextToken())==5)
+					{
+						i++;
+						foreground=ColorTable256[parseInt(st.nextToken())];
+					}
+				}
+				break;
+			case 48: // RGB background
+				if(i<tokens - 1)
+				{
+					i++;
+					if(parseInt(st.nextToken())==5)
+					{
+						i++;
+						result.append("background:")
+							.append(ColorTable256[parseInt(st.nextToken())])
+							.append(';');
+					}
+				}
+				break;
+			}
+		}
+		if(foreground!=null)
+		{
+			result.append("' color='").append(foreground);
+		}
+		modfied=true;
+		return result.append("'>");
+	}
+	
+	public StringBuilder parseLine(CharSequence input)
+	{
+		modfied=false;
+		int index=0, length=input.length();
+		StringBuilder sb=new StringBuilder(input);
+		while(index<length)
+		{
+			char c=sb.charAt(index);
+			if(c=='\u001b')
+			{
+				index+=2;
+				StringBuilder escape=new StringBuilder(20);
+				while(index<length && (c=sb.charAt(index++))!='m' && escape.length()<=20)
+				{
+					escape.append(c);
+				}
+				int offset=index - 3 - escape.length();
+				escape=sequence(escape.toString());
+				sb.delete(offset,index).insert(offset,escape);
+				index=offset + escape.length();
+				length=sb.length();
+			}
+			else
+			{
+				index++;
+			}
+		}
+		return sb;
+	}
+	
+	public String parseMultiLines(String input)
+	{
+		StringBuilder sb=new StringBuilder();
+		StringTokenizer st=new StringTokenizer(input,"\n");
+		while(st.hasMoreTokens())
+		{
+			sb.append(parseLine(st.nextToken()));
 		}
 		return sb.toString();
 	}

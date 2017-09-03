@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 Translated by:
-
+    Oleksih@gmail.com
 Corrected by:
 
 Please leave your email or name above with a tab as prefix
@@ -20,8 +20,11 @@ Thanks to everyone above!
 
     <string name="check_nukkit">Nukkit</string>
     <string name="check_pocketmine">PocketMine</string>
-    <string name="check_ansi">Включить поддержку ANSI</string>
-    <string name="check_kusud">Использовать ku.sud чтобы запросить root</string>
+
+    <string name="preference_kusud_title">Использовать ku.sud чтобы запросить root</string>
+    <string name="preference_category_console">Консоль</string>
+    <string name="preference_ansi_title">Включить поддержку ANSI</string>
+    <string name="preference_font_size_title">Размер шрифта</string>
 
     <string name="message_copied">Скопировать.</string>
     <string name="message_done">Готово.</string>
@@ -31,14 +34,11 @@ Thanks to everyone above!
     <string name="message_downloading">Скачивание %s ...</string>
     <string name="message_install_fail">Установка не удалась:</string>
     <string name="message_install_success">Установка удалась.</string>
-    <string name="message_install_fail_path">Ошибка установки, пожалуйста поместите "nukkit_library.tar.gz" в</string>
     <string name="message_no_artifacts">Артефакты не найдены.</string>
     <string name="message_select_repository">Пожалуйста выберите %s хранилише</string>
     
     <string name="label_management">Управление сервером</string>
 	<string name="label_type">Тип Сервера</string>
-	<string name="label_console">Настройки консоли:</string>
-	<string name="label_console_fontsize">Размер шрифта:</string>
 	<string name="label_pocketMine_to">Поместите PocketMine-MP.phar или же папку src в /sdcard/PocketMine</string>
 	<string name="label_nukkit_to">Поместите Nukkit.jar в /sdcard/Nukkit</string>
 	
@@ -47,8 +47,8 @@ Thanks to everyone above!
     <string name="menu_kill">Убить сервер</string>
     <string name="menu_clear">Очистка</string>
     <string name="menu_copy">Копирование</string>
-    <string name="menu_install_php">Установить PHP</string>
-    <string name="menu_install_php_manually">Установка PHP вручную</string>
-    <string name="menu_install_java">Скачать Java</string>
+    <string name="preference_install_php">Установить PHP</string>
+    <string name="preference_install_php_manually">Установка PHP вручную</string>
+    <string name="preference_install_java">Скачать Java</string>
     <string name="menu_download_server">Скачать ядро сервера</string>
 </resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/preference_category_general">
+
+        <CheckBoxPreference
+            android:key="KusudMode"
+            android:title="@string/preference_kusud_title"
+            android:defaultValue="false"
+            android:summary="@string/preference_kusud_summary"/>
+
+        <Preference
+            android:key="button_install_php"
+            android:title="@string/preference_install_php"/>
+
+        <Preference
+            android:key="button_install_php_manually"
+            android:title="@string/preference_install_php_manually"/>
+
+        <Preference
+            android:key="button_install_java"
+            android:title="@string/preference_install_java"/>
+
+        <Preference
+            android:key="button_update_repos"
+            android:title="@string/preference_update_repos"/>
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/preference_category_console">
+
+        <CheckBoxPreference
+            android:key="ANSIMode"
+            android:title="@string/preference_ansi_title"
+            android:defaultValue="false"
+            android:summary="@string/preference_ansi_summary"/>
+
+        <moe.berd.pocket_server.utils.SeekBarPreference
+            android:key="ConsoleFontSize"
+            android:title="@string/preference_font_size_title"
+            android:defaultValue="16"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

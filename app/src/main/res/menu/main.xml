@@ -12,18 +12,6 @@
         android:id="@+id/menu_download_server"
         android:title="@string/menu_download_server"/>
     <item
-        android:id="@+id/menu_update_repos"
-        android:title="@string/menu_update_repos"/>
-    <item
-        android:id="@+id/menu_install_php"
-        android:title="@string/menu_install_php"/>
-    <item
-        android:id="@+id/menu_install_php_manually"
-        android:title="@string/menu_install_php_manually"/>
-    <item
-        android:id="@+id/menu_install_java"
-        android:title="@string/menu_install_java"/>
-    <item
         android:id="@+id/menu_settings"
-        android:title="Settings"/>
+        android:title="@string/menu_settings"/>
 </menu>

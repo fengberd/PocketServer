@@ -3,8 +3,8 @@ package moe.berd.pocket_server.fragment;
 import android.app.*;
 import android.content.*;
 import android.os.*;
-import android.support.annotation.*;
 import android.text.*;
+import android.util.*;
 import android.view.*;
 import android.widget.*;
 
@@ -13,23 +13,22 @@ import net.fengberd.minecraftpe_server.*;
 import moe.berd.pocket_server.activity.*;
 import moe.berd.pocket_server.utils.*;
 
-import static moe.berd.pocket_server.activity.MainActivity.ansiMode;
+import static moe.berd.pocket_server.activity.MainActivity.*;
 
 public class ConsoleFragment extends Fragment implements Handler.Callback
 {
 	public MainActivity main=null;
 	
-	private static final int MESSAGE_APPEND=1, MESSAGE_TITLE=2, MESSAGE_UPDATE_LINE=3;
+	private static final int MESSAGE_APPEND=1, MESSAGE_UPDATE_LINE=2;
 	
 	public static Handler logUpdateHandler=null;
+	public static CharSequence currentLine="";
+	public static SpannableStringBuilder currentLog=new SpannableStringBuilder();
 	
-	public ScrollView scroll_log=null;
 	public Button button_command=null;
 	public TextView label_log=null, label_current=null;
 	public EditText edit_command=null;
-	
-	public static CharSequence currentLine="";
-	public static SpannableStringBuilder currentLog=new SpannableStringBuilder();
+	public ScrollView scroll_log=null;
 	
 	public ConsoleFragment()
 	{
@@ -53,6 +52,7 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState)
 	{
@@ -60,9 +60,8 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 	}
 	
 	@Override
-	public void onActivityCreated(@Nullable Bundle savedInstanceState)
+	public void onStart()
 	{
-		super.onActivityCreated(savedInstanceState);
 		logUpdateHandler=new Handler(this);
 		
 		label_log=(TextView)main.findViewById(R.id.label_log);
@@ -93,15 +92,25 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 		});
 		
 		label_log.setTextSize(ConfigProvider.getInt("ConsoleFontSize",16));
+		label_current.setTextSize(ConfigProvider.getInt("ConsoleFontSize",16));
 		
 		postAppend(currentLog);
+		
+		super.onStart();
+	}
+	
+	@Override
+	public void onStop()
+	{
+		logUpdateHandler=null;
+		super.onStop();
 	}
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu,MenuInflater inflater)
 	{
 		super.onCreateOptionsMenu(menu,inflater);
-		inflater.inflate(R.menu.main,menu);
+		inflater.inflate(R.menu.console,menu);
 	}
 	
 	@Override
@@ -133,16 +142,19 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 		{
 		case MESSAGE_APPEND:
 			label_log.append((CharSequence)msg.obj);
-			scroll_log.fullScroll(ScrollView.FOCUS_DOWN);
-			break;
-		case MESSAGE_TITLE:
-			//setTitle((CharSequence)msg.obj);
+			scrollToBottom();
 			break;
 		case MESSAGE_UPDATE_LINE:
-			label_current.setText((CharSequence)msg.obj);
+			label_current.setText(currentLine);
 			break;
 		}
 		return true;
+	}
+	
+	public void scrollToBottom()
+	{
+		scroll_log.smoothScrollBy(0,scroll_log.getChildAt(scroll_log.getChildCount() - 1)
+			.getBottom() + scroll_log.getPaddingBottom() - scroll_log.getScrollY() - scroll_log.getHeight());
 	}
 	
 	private void sendCommand()
@@ -150,19 +162,6 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 		log("> " + edit_command.getText());
 		ServerUtils.writeCommand(edit_command.getText().toString());
 		edit_command.setText("");
-	}
-	
-	public static boolean postTitle(CharSequence data)
-	{
-		if(logUpdateHandler!=null)
-		{
-			Message msg=new Message();
-			msg.arg1=MESSAGE_TITLE;
-			msg.obj=data;
-			logUpdateHandler.sendMessage(msg);
-			return true;
-		}
-		return false;
 	}
 	
 	public static boolean postAppend(CharSequence data)
@@ -178,13 +177,12 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 		return false;
 	}
 	
-	public static boolean postNewLine(CharSequence data)
+	public static boolean postNewLine()
 	{
 		if(logUpdateHandler!=null)
 		{
 			Message msg=new Message();
 			msg.arg1=MESSAGE_UPDATE_LINE;
-			msg.obj=data;
 			logUpdateHandler.sendMessage(msg);
 			return true;
 		}
@@ -193,6 +191,12 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 	
 	public static void log(String line)
 	{
+		if(!currentLine.equals(""))
+		{
+			currentLog.append(ansiMode ? Html.fromHtml("<br />") : "\n").append(currentLine);
+			postAppend(ansiMode ? Html.fromHtml("<br />") : "\n");
+			postAppend(currentLine);
+		}
 		if(ansiMode)
 		{
 			int index=0;
@@ -200,21 +204,16 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 			{
 				line=line.substring(index + 4);
 			}
+			long timeSpan=System.currentTimeMillis();
 			line=TerminalColorConverter.control2html(line.replace("&","&amp;")
 				.replace("<","&lt;")
 				.replace(">","&gt;")
 				.replace(" ","&nbsp;")
 				.replace("\u001b[1G","")
 				.replace("\u001b[K",""));
-		}
-		if(!currentLine.equals(""))
-		{
-			currentLog.append(ansiMode ? Html.fromHtml("<br />") : "\n");
-			postAppend(ansiMode ? Html.fromHtml("<br />") : "\n");
-			currentLog.append(currentLine);
-			postAppend(currentLine);
+			Log.d("Parse Time",(System.currentTimeMillis() - timeSpan) + "ms");
 		}
 		currentLine=ansiMode ? Html.fromHtml(line) : line;
-		postNewLine(currentLine);
+		postNewLine();
 	}
 }
