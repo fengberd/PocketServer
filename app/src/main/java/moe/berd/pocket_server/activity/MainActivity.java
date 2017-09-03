@@ -85,11 +85,6 @@ public class MainActivity extends Activity implements Handler.Callback
 	@Override
 	protected void onActivityResult(int requestCode,int resultCode,Intent data)
 	{
-		if(requestCode!=CHOOSE_PHP_CODE && requestCode!=CHOOSE_JAVA_CODE)
-		{
-			super.onActivityResult(requestCode,resultCode,data);
-			return;
-		}
 		if(data==null)
 		{
 			return;
@@ -116,7 +111,7 @@ public class MainActivity extends Activity implements Handler.Callback
 							public void run()
 							{
 								processing_dialog.dismiss();
-								fragment_main.refreshEnabled();
+								fragment_main.refreshElements();
 								toast(R.string.message_install_success);
 							}
 						});
@@ -179,7 +174,7 @@ public class MainActivity extends Activity implements Handler.Callback
 		case R.id.menu_kill:
 			ServerUtils.killServer();
 			stopService(serverIntent);
-			fragment_main.refreshEnabled();
+			fragment_main.refreshElements();
 			break;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -205,7 +200,7 @@ public class MainActivity extends Activity implements Handler.Callback
 		{
 		case ACTION_STOP_SERVICE:
 			stopService(serverIntent);
-			fragment_main.refreshEnabled();
+			fragment_main.refreshElements();
 			break;
 		default:
 			return false;

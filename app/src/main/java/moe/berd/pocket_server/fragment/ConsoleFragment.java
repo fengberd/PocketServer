@@ -4,7 +4,6 @@ import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.text.*;
-import android.util.*;
 import android.view.*;
 import android.widget.*;
 
@@ -94,9 +93,17 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 		label_log.setTextSize(ConfigProvider.getInt("ConsoleFontSize",16));
 		label_current.setTextSize(ConfigProvider.getInt("ConsoleFontSize",16));
 		
-		postAppend(currentLog);
+		label_log.setText(currentLog);
+		label_current.setText(currentLine);
 		
 		super.onStart();
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		scrollToBottom();
 	}
 	
 	@Override
@@ -142,7 +149,14 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 		{
 		case MESSAGE_APPEND:
 			label_log.append((CharSequence)msg.obj);
-			scrollToBottom();
+			label_log.post(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					scrollToBottom();
+				}
+			});
 			break;
 		case MESSAGE_UPDATE_LINE:
 			label_current.setText(currentLine);
@@ -153,13 +167,12 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 	
 	public void scrollToBottom()
 	{
-		scroll_log.smoothScrollBy(0,scroll_log.getChildAt(scroll_log.getChildCount() - 1)
-			.getBottom() + scroll_log.getPaddingBottom() - scroll_log.getScrollY() - scroll_log.getHeight());
+		scroll_log.smoothScrollBy(0,scroll_log.getChildAt(scroll_log.getChildCount() - 1).getBottom());
 	}
 	
 	private void sendCommand()
 	{
-		log("> " + edit_command.getText());
+		logLine("> " + edit_command.getText());
 		ServerUtils.writeCommand(edit_command.getText().toString());
 		edit_command.setText("");
 	}
@@ -189,7 +202,7 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 		return false;
 	}
 	
-	public static void log(String line)
+	public static void logLine(String line)
 	{
 		if(!currentLine.equals(""))
 		{
@@ -204,14 +217,12 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 			{
 				line=line.substring(index + 4);
 			}
-			long timeSpan=System.currentTimeMillis();
 			line=TerminalColorConverter.control2html(line.replace("&","&amp;")
 				.replace("<","&lt;")
 				.replace(">","&gt;")
 				.replace(" ","&nbsp;")
 				.replace("\u001b[1G","")
 				.replace("\u001b[K",""));
-			Log.d("Parse Time",(System.currentTimeMillis() - timeSpan) + "ms");
 		}
 		currentLine=ansiMode ? Html.fromHtml(line) : line;
 		postNewLine();

@@ -59,6 +59,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginBottom="10dip"
                 android:weightSum="2">
 
                 <RadioButton
@@ -84,14 +85,9 @@
                 android:id="@+id/button_mount"/>
 
             <TextView
-                android:layout_height="wrap_content"
+                android:id="@+id/label_path_tip"
                 android:layout_width="wrap_content"
-                android:text="@string/label_pocketMine_to"/>
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:text="@string/label_nukkit_to"
-                android:layout_width="wrap_content"/>
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

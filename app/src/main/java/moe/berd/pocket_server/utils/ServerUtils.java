@@ -154,15 +154,7 @@ public class ServerUtils
 									case '\r':
 										continue;
 									case '\n':
-										String line=s.toString();
-										/*if(line.startsWith("\u001b]0;"))
-										{
-											ConsoleFragment.postTitle(line.substring(8));
-										}
-										else*/
-									{
-										ConsoleFragment.log(line);
-									}
+										ConsoleFragment.logLine(s.toString());
 									case '\u0007':
 										s.setLength(0);
 										break;
@@ -193,7 +185,7 @@ public class ServerUtils
 							}
 						}
 					}
-					ConsoleFragment.log("[PE Server] Server was stopped.");
+					ConsoleFragment.logLine("[PE Server] Server was stopped.");
 					MainActivity.postStopService();
 				}
 			};
@@ -201,8 +193,8 @@ public class ServerUtils
 		}
 		catch(Exception e)
 		{
-			ConsoleFragment.log("[PE Server] Unable to start " + (MainActivity.nukkitMode ? "Java" : "PHP") + ".");
-			ConsoleFragment.log(e.toString());
+			ConsoleFragment.logLine("[PE Server] Unable to start " + (MainActivity.nukkitMode ? "Java" : "PHP") + ".");
+			ConsoleFragment.logLine(e.toString());
 			MainActivity.postStopService();
 			killServer();
 		}
@@ -222,13 +214,33 @@ public class ServerUtils
 		return true;
 	}
 	
+	public static void walkSetPermission(File folder)
+	{
+		folder.setReadable(true,true);
+		folder.setExecutable(true,true);
+		File[] files=folder.listFiles();
+		if(files==null)
+		{
+			return;
+		}
+		for(File file : files)
+		{
+			file.setReadable(true,true);
+			file.setExecutable(true,true);
+			if(file.isDirectory())
+			{
+				walkSetPermission(file);
+			}
+		}
+	}
+	
 	public static void setPermission()
 	{
 		try
 		{
 			if(MainActivity.nukkitMode)
 			{
-				Runtime.getRuntime().exec("./busybox chmod -R 755 java",new String[0],appDirectory).waitFor();
+				walkSetPermission(new File(appDirectory,"java"));
 			}
 			else
 			{

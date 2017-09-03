@@ -3,7 +3,7 @@
     <item
         android:id="@+id/menu_clear"
         android:title="@string/menu_clear"
-        android:icon="@drawable/content_discard"
+        android:icon="@drawable/content_clear"
         android:showAsAction="ifRoom"/>
     <item
         android:id="@+id/menu_copy"

@@ -23,6 +23,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 	
 	public String[] jenkins_nukkit, jenkins_pocketmine;
 	
+	public TextView label_path_tip=null;
 	public Button button_start=null, button_stop=null, button_mount=null;
 	public RadioButton radio_pocketmine=null, radio_nukkit=null;
 	
@@ -58,6 +59,8 @@ public class MainFragment extends Fragment implements View.OnClickListener
 	@Override
 	public void onStart()
 	{
+		label_path_tip=(TextView)main.findViewById(R.id.label_path_tip);
+		
 		button_stop=(Button)main.findViewById(R.id.button_stop);
 		button_stop.setOnClickListener(this);
 		button_start=(Button)main.findViewById(R.id.button_start);
@@ -73,7 +76,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 		radio_pocketmine.setOnClickListener(this);
 		
 		reloadUrls();
-		refreshEnabled();
+		refreshElements();
 		
 		super.onStart();
 	}
@@ -198,7 +201,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 		default:
 			return;
 		}
-		refreshEnabled();
+		refreshElements();
 	}
 	
 	public void reloadUrls()
@@ -247,25 +250,39 @@ public class MainFragment extends Fragment implements View.OnClickListener
 		}
 	}
 	
-	public void refreshEnabled()
+	public void refreshElements()
 	{
 		boolean running=ServerUtils.isRunning();
 		button_stop.setEnabled(running);
 		button_mount.setEnabled(!running);
 		radio_nukkit.setEnabled(!running);
 		radio_pocketmine.setEnabled(!running);
+		label_path_tip.setText("");
 		
-		// Fake running state to prevent user starting server without Java/PHP installed
 		if(nukkitMode)
 		{
+			button_mount.setVisibility(View.VISIBLE);
+			if(!new File(ServerUtils.getDataDirectory(),"Nukkit.jar").exists())
+			{
+				label_path_tip.setText(R.string.label_nukkit_to);
+			}
 			if(!ServerUtils.installedJava())
 			{
 				running=true;
 			}
 		}
-		else if(!ServerUtils.installedPHP())
+		else
 		{
-			running=true;
+			button_mount.setVisibility(View.GONE);
+			if(!new File(ServerUtils.getDataDirectory(),"PocketMine-MP.phar").exists() && !new File(ServerUtils
+				.getDataDirectory(),"src").exists())
+			{
+				label_path_tip.setText(R.string.label_pocketMine_to);
+			}
+			if(!ServerUtils.installedPHP())
+			{
+				running=true;
+			}
 		}
 		button_start.setEnabled(!running);
 	}
