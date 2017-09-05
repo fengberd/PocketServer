@@ -138,7 +138,10 @@ public class MainFragment extends Fragment implements View.OnClickListener
 							{
 								public void run()
 								{
-									processing_dialog.dismiss();
+									if(processing_dialog.isShowing())
+									{
+										processing_dialog.dismiss();
+									}
 								}
 							});
 						}

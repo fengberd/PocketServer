@@ -227,12 +227,20 @@ public class MainActivity extends Activity implements Handler.Callback
 	
 	public void switchFragment(Fragment target,int title)
 	{
-		getFragmentManager().beginTransaction()
-			.setCustomAnimations(R.animator.enter,R.animator.exit)
-			.replace(R.id.layout_main,target)
-			.commit();
-		currentFragment=target;
-		setTitle(title);
+		try
+		{
+			getFragmentManager().beginTransaction()
+				.setCustomAnimations(R.animator.enter,R.animator.exit)
+				.replace(R.id.layout_main,target)
+				.commit();
+			currentFragment=target;
+			setTitle(title);
+		}
+		catch(Exception e)
+		{
+			// commitAllowingStateLoss is danger so I prefer to crash the Exception
+			toast(e.toString());
+		}
 	}
 	
 	public void chooseFile(int code,String title)
