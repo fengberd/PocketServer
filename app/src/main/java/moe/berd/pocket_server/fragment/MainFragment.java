@@ -2,6 +2,7 @@ package moe.berd.pocket_server.fragment;
 
 import android.app.*;
 import android.content.*;
+import android.net.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
@@ -60,6 +61,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 	public void onStart()
 	{
 		label_path_tip=(TextView)main.findViewById(R.id.label_path_tip);
+		label_path_tip.setOnClickListener(this);
 		
 		button_stop=(Button)main.findViewById(R.id.button_stop);
 		button_stop.setOnClickListener(this);
@@ -158,6 +160,11 @@ public class MainFragment extends Fragment implements View.OnClickListener
 	{
 		switch(v.getId())
 		{
+		case R.id.label_path_tip:
+			Intent intent=new Intent(Intent.ACTION_VIEW);
+			intent.setDataAndType(Uri.parse("file://" + ServerUtils.getDataDirectory()),"application/*");
+			startActivity(intent);
+			break;
 		case R.id.button_start:
 			main.startService(serverIntent);
 			ServerUtils.runServer();
@@ -171,21 +178,59 @@ public class MainFragment extends Fragment implements View.OnClickListener
 		case R.id.button_mount:
 			try
 			{
-				String prefix=(ConfigProvider.getBoolean("KusudMode",false) ? "ku.sud" : "su") + " -c " + ServerUtils
-					.getAppDirectory() + "/busybox ";
-				Runtime.getRuntime().exec(prefix + "mount -o rw,remount /").waitFor();
-				if(!new File("/lib").exists())
+				final ProgressDialog processing_dialog=new ProgressDialog(main);
+				processing_dialog.setCancelable(false);
+				processing_dialog.setMessage(getString(R.string.message_installing));
+				processing_dialog.show();
+				new Thread(new Runnable()
 				{
-					Runtime.getRuntime().exec(prefix + "mkdir /lib").waitFor();
-				}
-				else
-				{
-					Runtime.getRuntime().exec(prefix + "umount /lib").waitFor();
-				}
-				Runtime.getRuntime()
-					.exec(prefix + "mount -o bind " + ServerUtils.getAppDirectory() + "/java/lib /lib")
-					.waitFor();
-				main.toast(R.string.message_done);
+					public void run()
+					{
+						try
+						{
+							String prefix=(ConfigProvider.getBoolean("KusudMode",false) ? "ku.sud" : "su") + " -c " + ServerUtils
+								.getAppDirectory() + "/busybox ";
+							Runtime.getRuntime().exec(prefix + "mount -o rw,remount /").waitFor();
+							if(!new File("/lib").exists())
+							{
+								Runtime.getRuntime().exec(prefix + "mkdir /lib").waitFor();
+							}
+							else
+							{
+								Runtime.getRuntime().exec(prefix + "umount /lib").waitFor();
+							}
+							Runtime.getRuntime()
+								.exec(prefix + "mount -o bind " + ServerUtils.getAppDirectory() + "/java/lib /lib")
+								.waitFor();
+							main.runOnUiThread(new Runnable()
+							{
+								public void run()
+								{
+									if(processing_dialog.isShowing())
+									{
+										processing_dialog.dismiss();
+									}
+									refreshElements();
+									main.toast(R.string.message_done);
+								}
+							});
+						}
+						catch(final Exception e)
+						{
+							main.runOnUiThread(new Runnable()
+							{
+								public void run()
+								{
+									if(processing_dialog.isShowing())
+									{
+										processing_dialog.dismiss();
+									}
+									main.toast(e.toString());
+								}
+							});
+						}
+					}
+				}).start();
 			}
 			catch(Exception e)
 			{
@@ -257,28 +302,30 @@ public class MainFragment extends Fragment implements View.OnClickListener
 		button_mount.setEnabled(!running);
 		radio_nukkit.setEnabled(!running);
 		radio_pocketmine.setEnabled(!running);
-		label_path_tip.setText("");
 		
+		if(!ServerUtils.installedServerSoftware())
+		{
+			running=true;
+		}
 		if(nukkitMode)
 		{
+			button_mount.setEnabled(false);
 			button_mount.setVisibility(View.VISIBLE);
-			if(!new File(ServerUtils.getDataDirectory(),"Nukkit.jar").exists())
-			{
-				label_path_tip.setText(R.string.label_nukkit_to);
-			}
+			label_path_tip.setText(R.string.label_nukkit_to);
 			if(!ServerUtils.installedJava())
 			{
 				running=true;
+			}
+			else if(!ServerUtils.mountedJavaLibrary())
+			{
+				running=true;
+				button_mount.setEnabled(true);
 			}
 		}
 		else
 		{
 			button_mount.setVisibility(View.GONE);
-			if(!new File(ServerUtils.getDataDirectory(),"PocketMine-MP.phar").exists() && !new File(ServerUtils
-				.getDataDirectory(),"src").exists())
-			{
-				label_path_tip.setText(R.string.label_pocketMine_to);
-			}
+			label_path_tip.setText(R.string.label_pocketMine_to);
 			if(!ServerUtils.installedPHP())
 			{
 				running=true;

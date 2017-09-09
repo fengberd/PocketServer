@@ -7,12 +7,15 @@ import android.os.*;
 import android.view.*;
 import android.widget.*;
 
+import com.google.firebase.analytics.*;
+
 import net.fengberd.minecraftpe_server.*;
 
 import org.json.*;
 
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 import moe.berd.pocket_server.exception.*;
 import moe.berd.pocket_server.fragment.*;
@@ -22,7 +25,7 @@ import moe.berd.pocket_server.utils.*;
 public class MainActivity extends Activity implements Handler.Callback
 {
 	public static Handler actionHandler=null;
-	public final static int ACTION_STOP_SERVICE=1;
+	public final static int ACTION_STOP_SERVICE=1, ACTION_START_FAILED_WARNING=2;
 	
 	public final static int CHOOSE_PHP_CODE=1, CHOOSE_JAVA_CODE=2;
 	
@@ -47,10 +50,17 @@ public class MainActivity extends Activity implements Handler.Callback
 		postMessage(ACTION_STOP_SERVICE,0,null);
 	}
 	
+	public static void postStartFailedWarning()
+	{
+		postMessage(ACTION_START_FAILED_WARNING,0,null);
+	}
+	
 	public Fragment currentFragment=null;
 	public MainFragment fragment_main=new MainFragment();
 	public ConsoleFragment fragment_console=new ConsoleFragment();
 	public SettingsFragment fragment_settings=new SettingsFragment();
+	
+	private FirebaseAnalytics firebaseAnalytics=null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -62,6 +72,11 @@ public class MainActivity extends Activity implements Handler.Callback
 		ansiMode=ConfigProvider.getBoolean("ANSIMode",nukkitMode);
 		nukkitMode=ConfigProvider.getBoolean("NukkitMode",nukkitMode);
 		
+		if(ConfigProvider.getBoolean("EnableFirebase",true))
+		{
+			firebaseAnalytics=FirebaseAnalytics.getInstance(this);
+		}
+		
 		ServerUtils.init(this);
 		try
 		{
@@ -69,7 +84,7 @@ public class MainActivity extends Activity implements Handler.Callback
 		}
 		catch(ABINotSupportedException e)
 		{
-			alertABIWarning(e.binaryName,null);
+			alertABIWarning(e.binaryName,null,e.supportedABIS);
 		}
 		catch(Exception e)
 		{
@@ -201,6 +216,30 @@ public class MainActivity extends Activity implements Handler.Callback
 		case ACTION_STOP_SERVICE:
 			stopService(serverIntent);
 			fragment_main.refreshElements();
+			break;
+		case ACTION_START_FAILED_WARNING:
+			if(firebaseAnalytics!=null)
+			{
+				Bundle report=new Bundle();
+				report.putBoolean("installed_php",ServerUtils.installedPHP());
+				report.putBoolean("installed_java",ServerUtils.installedJava());
+				report.putBoolean("mounted_java",ServerUtils.mountedJavaLibrary());
+				report.putBoolean("nukkit_mode",nukkitMode);
+				firebaseAnalytics.logEvent("server_start_failed",report);
+			}
+			runOnUiThread(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					new AlertDialog.Builder(MainActivity.this).setTitle(R.string.dialog_start_failed_title)
+						.setCancelable(false)
+						.setMessage(getString(R.string.dialog_start_failed_message))
+						.setPositiveButton(R.string.button_ok,null)
+						.create()
+						.show();
+				}
+			});
 			break;
 		default:
 			return false;
@@ -400,8 +439,29 @@ public class MainActivity extends Activity implements Handler.Callback
 		ServerUtils.copyStream(getAssets().open(name),new FileOutputStream(target));
 	}
 	
-	public void alertABIWarning(final String name,final DialogInterface.OnClickListener onclick)
+	public void alertABIWarning(final String name,final DialogInterface.OnClickListener onclick,ArrayList<String> supportedABIS)
 	{
+		if(firebaseAnalytics!=null)
+		{
+			Bundle report=new Bundle();
+			StringBuilder abis=new StringBuilder();
+			boolean first=true;
+			for(String abi : supportedABIS)
+			{
+				if(first)
+				{
+					first=false;
+				}
+				else
+				{
+					abis.append(',');
+				}
+				abis.append(abi);
+			}
+			report.putString("abis",abis.toString());
+			report.putString("binary",name);
+			firebaseAnalytics.logEvent("unsupported_abi",report);
+		}
 		runOnUiThread(new Runnable()
 		{
 			@Override

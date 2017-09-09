@@ -25,6 +25,8 @@ Thanks to everyone above!
     <string name="check_pocketmine" translatable="false">PocketMine</string>
 
     <string name="preference_category_general">General</string>
+    <string name="preference_enable_firebase_title">Firebase Analytics</string>
+    <string name="preference_enable_firebase_summary">Firebase Analytics can help me to improve this app and let me know if there\'s anything wrong,if you really mind this you can turn it off.</string>
     <string name="preference_kusud_title">Use ku.sud to request root</string>
     <string name="preference_kusud_summary">Request root by "ku.sud" command instead of "su",only works with KingRoot.</string>
     <string name="preference_install_php">Install PHP</string>
@@ -54,6 +56,9 @@ Thanks to everyone above!
     <string name="dialog_abi_message">Sorry,all ABIs this app supported isn\'t match with your device,we can\'t install %binary on this device.\nYou can continue anyway but this app may not proper functioning.</string>
     <string name="dialog_abi_exit">Exit</string>
     <string name="dialog_abi_ignore">Ignore</string>
+
+    <string name="dialog_start_failed_title">Failed To Start Server</string>
+    <string name="dialog_start_failed_message">Your server isn\'t started correctly because it\'s stopped in 5 seconds.\nThis might caused by following reasons:\n\n· Server software crashed\n· Device memory too low\n· Device ABI not supported or you are using a wrong binary\n· You shut down the server manually\n\nAll reasons above CANNOT BE SOLVED BY THE DEVELOPER OF POCKET SERVER,please contact THE DEVELOPER OF SERVER SOFTWARE THAT YOU ARE USING for help.\nLEAVE A 1 STAR COMMENT IN GOOGLE PLAY TAKES NO EFFECT!</string>
 
     <string name="label_management">Server Management</string>
     <string name="label_type">Server Type</string>

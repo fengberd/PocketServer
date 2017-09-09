@@ -25,8 +25,14 @@ Thanks to everyone above!
     <string name="check_pocketmine">PocketMine</string>
 
     <string name="preference_category_general">通用</string>
+    <string name="preference_enable_firebase_title">Firebase统计</string>
+    <string name="preference_enable_firebase_summary">Firebase统计能帮助我改进这个APP或者知道哪些地方出了问题,如果你没有Google服务框架或者非常不想使用这个统计系统你可以关掉它.</string>
     <string name="preference_kusud_title">使用 ku.sud 请求root权限</string>
     <string name="preference_kusud_summary">使用 "ku.sud" 命令而不是 "su" 请求root权限,只对KingRoot有效.</string>
+    <string name="preference_install_php">安装PHP</string>
+    <string name="preference_install_php_manually">手动安装PHP7</string>
+    <string name="preference_install_java">安装Java</string>
+    <string name="preference_update_repos">从服务器更新源</string>
     <string name="preference_category_console">控制台</string>
     <string name="preference_ansi_title">启用ANSI支持</string>
     <string name="preference_ansi_summary">开启控制台颜色和字体样式支持.可能造成性能下降.</string>
@@ -45,7 +51,15 @@ Thanks to everyone above!
     <string name="message_choose_php">选择PHP Binary文件</string>
     <string name="message_choose_java">选择JAVA支持库(.tar.gz文件)</string>
     <string name="message_unknown_error">未知错误</string>
-    
+
+    <string name="dialog_abi_title">ABI不受支持</string>
+    <string name="dialog_abi_message">抱歉,你的设备上的所有ABI这个APP都不支持,我们不能在这个设备上安装 %binary.\n你可以忽略这个错误但这个APP可能不会正常工作.</string>
+    <string name="dialog_abi_exit">退出</string>
+    <string name="dialog_abi_ignore">忽略</string>
+
+    <string name="dialog_start_failed_title">服务器启动失败</string>
+    <string name="dialog_start_failed_message">你的服务器没有正常启动,它在5秒钟内被关闭了.\n这可能是以下原因造成的:\n\n· 服务器核心崩溃\n· 设备内存太小\n· 设备ABI不受支持或者你使用了一个错误的Binary文件\n· 你自己关掉了服务器\n\n以上的所有错误我都不能解决,请联系你正在使用的核心的开发者寻求帮助.\n在Google Play留一星评论没有任何效果</string>
+
     <string name="label_management">服务器管理</string>
 	<string name="label_type">服务器类型</string>
 	<string name="label_pocketMine_to">把 PocketMine-MP.phar 或 src 文件夹放到 /sdcard/PocketMine</string>
@@ -56,11 +70,7 @@ Thanks to everyone above!
     <string name="menu_kill">强制停止服务器</string>
     <string name="menu_clear">清空</string>
     <string name="menu_copy">复制</string>
-    <string name="preference_install_php">安装PHP</string>
-    <string name="preference_install_php_manually">手动安装PHP7</string>
-    <string name="preference_install_java">安装Java</string>
     <string name="menu_download_server">下载服务端</string>
-    <string name="preference_update_repos">从服务器更新源</string>
 
     <string name="alert_install_php_title">注意</string>
     <string name="alert_install_php_message">手动安装PHP是一个高级操作,你需要自己选择PHP可执行文件,不要选择任何你不能信任的人提供的PHP可执行文件,它们可能会对你的设备造成损害.\n如果你的PHP文件是压缩包,请先解压它</string>

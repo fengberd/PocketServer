@@ -27,9 +27,17 @@ public class ServerUtils
 	private static InputStreamReader stdout=null;
 	private static OutputStreamWriter stdin=null;
 	
+	private static long startTime=0;
+	
+	@SuppressLint("SdCardPath")
 	public static void init(Context ctx)
 	{
 		appFilesDirectory=ctx.getFilesDir();
+		if(appFilesDirectory==null)
+		{
+			// Add this line to compatible with some strange devices
+			appFilesDirectory=new File("/data/data/net.fengberd.minecraftpe_server/files/");
+		}
 		appDirectory=appFilesDirectory.getParentFile();
 	}
 	
@@ -99,7 +107,8 @@ public class ServerUtils
 			{
 				ini.createNewFile();
 				FileOutputStream os=new FileOutputStream(ini);
-				os.write("phar.readonly=0\nphar.require_hash=1\ndate.timezone=Asia/Shanghai\nshort_open_tag=0\nasp_tags=0\nopcache.enable=1\nopcache.enable_cli=1\nopcache.save_comments=1\nopcache.fast_shutdown=0\nopcache.max_accelerated_files=4096\nopcache.interned_strings_buffer=8\nopcache.memory_consumption=128\nopcache.optimization_level=0xffffffff"
+				os.write(("date.timezone=" + TimeZone.getDefault()
+					.getDisplayName(false,TimeZone.SHORT) + "\n\nzend.enable_gc=On\nzend.assertions=-1\n\nenable_dl=On\nallow_url_fopen=On\nmax_execution_time=0\nregister_argc_argv=On\n\nerror_reporting=-1\ndisplay_errors=stderr\ndisplay_startup_errors=On\n\ndefault_charset=\"UTF-8\"\n\nphar.readonly=Off\nphar.require_hash=On\n\nopcache.enable=1\nopcache.enable_cli=1\nopcache.save_comments=1\nopcache.load_comments=1\nopcache.fast_shutdown=0\nopcache.memory_consumption=128\nopcache.interned_strings_buffer=8\nopcache.max_accelerated_files=4000\nopcache.optimization_level=0xffffffff")
 					.getBytes("UTF8"));
 				os.close();
 			}
@@ -128,6 +137,7 @@ public class ServerUtils
 		builder.environment().put("TMPDIR",getDataDirectory() + "/tmp");
 		try
 		{
+			startTime=System.currentTimeMillis();
 			serverProcess=builder.start();
 			stdout=new InputStreamReader(serverProcess.getInputStream(),"UTF-8");
 			stdin=new OutputStreamWriter(serverProcess.getOutputStream(),"UTF-8");
@@ -142,10 +152,10 @@ public class ServerUtils
 						{
 							int size=0;
 							char[] buffer=new char[8192];
-							StringBuilder s=new StringBuilder();
+							StringBuilder s=null;
 							while((size=br.read(buffer,0,buffer.length))!=-1)
 							{
-								s.setLength(0);
+								s=new StringBuilder();
 								for(int i=0;i<size;i++)
 								{
 									char c=buffer[i];
@@ -156,7 +166,7 @@ public class ServerUtils
 									case '\n':
 										ConsoleFragment.logLine(s.toString());
 									case '\u0007':
-										s.setLength(0);
+										s=new StringBuilder();
 										break;
 									default:
 										s.append(c);
@@ -185,8 +195,16 @@ public class ServerUtils
 							}
 						}
 					}
-					ConsoleFragment.logLine("[PE Server] Server was stopped.");
-					MainActivity.postStopService();
+					if(System.currentTimeMillis() - startTime<5000)
+					{
+						ConsoleFragment.logLine("[PE Server] Server start failed!");
+						MainActivity.postStartFailedWarning();
+					}
+					else
+					{
+						ConsoleFragment.logLine("[PE Server] Server was stopped.");
+						MainActivity.postStopService();
+					}
 				}
 			};
 			tMonitor.start();
@@ -319,7 +337,7 @@ public class ServerUtils
 	public static void installBinary(File target,Context ctx,String filename,String friendlyName) throws Exception
 	{
 		AssetManager assets=ctx.getAssets();
-		List<String> ABIS=new ArrayList<>(), supportedABIS=new ArrayList<>();
+		ArrayList<String> ABIS=new ArrayList<>(), supportedABIS=new ArrayList<>();
 		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP)
 		{
 			Collections.addAll(ABIS,Build.SUPPORTED_ABIS);
@@ -377,7 +395,7 @@ public class ServerUtils
 		}
 		if(data==null)
 		{
-			throw new ABINotSupportedException(friendlyName);
+			throw new ABINotSupportedException(friendlyName,supportedABIS);
 		}
 		target.delete();
 		File writeTo=compressed ? new File(target + ".tar.xz") : target;
@@ -412,5 +430,38 @@ public class ServerUtils
 	public static boolean installedJava()
 	{
 		return new File(getAppDirectory(),"java/jre/bin/java").exists();
+	}
+	
+	public static boolean mountedJavaLibrary()
+	{
+		String[] list=new File("/lib").list();
+		if(list!=null)
+		{
+			for(String f : list)
+			{
+				if(f.contains("ld-linux.so"))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static boolean installedServerSoftware()
+	{
+		if(MainActivity.nukkitMode)
+		{
+			if(new File(getDataDirectory(),"Nukkit.jar").exists())
+			{
+				return true;
+			}
+		}
+		else if(new File(getDataDirectory(),"PocketMine-MP.phar").exists() || !new File(getDataDirectory(),"src")
+			.exists())
+		{
+			return true;
+		}
+		return false;
 	}
 }
