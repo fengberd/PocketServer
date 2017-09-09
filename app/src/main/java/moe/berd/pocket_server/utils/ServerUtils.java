@@ -30,6 +30,7 @@ public class ServerUtils
 	private static long startTime=0;
 	
 	@SuppressLint("SdCardPath")
+	@SuppressWarnings("SpellCheckingInspection")
 	public static void init(Context ctx)
 	{
 		appFilesDirectory=ctx.getFilesDir();
@@ -63,6 +64,7 @@ public class ServerUtils
 		try
 		{
 			// TODO: This might kill other processes?
+			ConsoleFragment.logLine("[PE Server] Killing server...");
 			Runtime.getRuntime()
 				.exec(getAppDirectory() + "/busybox killall -9 " + (MainActivity.nukkitMode ? "java" : "php"))
 				.waitFor();
@@ -89,6 +91,7 @@ public class ServerUtils
 		return false;
 	}
 	
+	@SuppressWarnings("SpellCheckingInspection")
 	public static void runServer()
 	{
 		File f=new File(getDataDirectory(),"tmp");
@@ -107,8 +110,7 @@ public class ServerUtils
 			{
 				ini.createNewFile();
 				FileOutputStream os=new FileOutputStream(ini);
-				os.write(("date.timezone=" + TimeZone.getDefault()
-					.getDisplayName(false,TimeZone.SHORT) + "\n\nzend.enable_gc=On\nzend.assertions=-1\n\nenable_dl=On\nallow_url_fopen=On\nmax_execution_time=0\nregister_argc_argv=On\n\nerror_reporting=-1\ndisplay_errors=stderr\ndisplay_startup_errors=On\n\ndefault_charset=\"UTF-8\"\n\nphar.readonly=Off\nphar.require_hash=On\n\nopcache.enable=1\nopcache.enable_cli=1\nopcache.save_comments=1\nopcache.load_comments=1\nopcache.fast_shutdown=0\nopcache.memory_consumption=128\nopcache.interned_strings_buffer=8\nopcache.max_accelerated_files=4000\nopcache.optimization_level=0xffffffff")
+				os.write(("zend.enable_gc=On\nzend.assertions=-1\n\nenable_dl=On\nallow_url_fopen=On\nmax_execution_time=0\nregister_argc_argv=On\n\nerror_reporting=-1\ndisplay_errors=stderr\ndisplay_startup_errors=On\n\ndefault_charset=\"UTF-8\"\n\nphar.readonly=Off\nphar.require_hash=On\n\nopcache.enable=1\nopcache.enable_cli=1\nopcache.save_comments=1\nopcache.load_comments=1\nopcache.fast_shutdown=0\nopcache.memory_consumption=128\nopcache.interned_strings_buffer=8\nopcache.max_accelerated_files=4000\nopcache.optimization_level=0xffffffff")
 					.getBytes("UTF8"));
 				os.close();
 			}
@@ -419,6 +421,28 @@ public class ServerUtils
 		if(!target.exists())
 		{
 			installBinary(target,ctx,"busybox","Busybox");
+		}
+	}
+	
+	public static void mountJavaLibrary() throws Exception
+	{
+		String prefix=(ConfigProvider.getBoolean("KusudMode",false) ? "ku.sud" : "su") + " -c " + ServerUtils
+			.getAppDirectory() + "/busybox ";
+		Runtime.getRuntime().exec(prefix + "mount -o rw,remount /").waitFor();
+		if(!new File("/lib").exists())
+		{
+			Runtime.getRuntime().exec(prefix + "mkdir /lib").waitFor();
+		}
+		else
+		{
+			Runtime.getRuntime().exec(prefix + "umount /lib").waitFor();
+		}
+		Runtime.getRuntime()
+			.exec(prefix + "mount -o bind " + ServerUtils.getAppDirectory() + "/java/lib /lib")
+			.waitFor();
+		if(!mountedJavaLibrary())
+		{
+			throw new RuntimeException("Mount failed.");
 		}
 	}
 	

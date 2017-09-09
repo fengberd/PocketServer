@@ -1,4 +1,5 @@
 {
+	"version": 1,
 	"jenkins": {
 		"nukkit": [
 			"MengCraft|http://ci.mengcraft.com:8080/job/nukkit/",
@@ -16,5 +17,7 @@
 			"[Abandoned]ClearSky-PHP7 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP7/",
 			"[Abandoned]ClearSky-PHP5 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP5/"
 		]
-	}
+	},
+	"source_code": "https://github.com/fengberd/PocketServer",
+	"binaries_download": "https://www.dropbox.com/sh/bk5l4pn1pzc406b/AABzdxQENP6vw_q3p0nrfyTaa?dl=0"
 }

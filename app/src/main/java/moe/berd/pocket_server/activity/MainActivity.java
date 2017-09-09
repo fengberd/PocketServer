@@ -24,12 +24,13 @@ import moe.berd.pocket_server.utils.*;
 
 public class MainActivity extends Activity implements Handler.Callback
 {
-	public static Handler actionHandler=null;
 	public final static int ACTION_STOP_SERVICE=1, ACTION_START_FAILED_WARNING=2;
 	
 	public final static int CHOOSE_PHP_CODE=1, CHOOSE_JAVA_CODE=2;
 	
 	public static Intent serverIntent=null;
+	public static Handler actionHandler=null;
+	public static JSONObject urls_json=null;
 	
 	public static boolean nukkitMode=false, ansiMode=false;
 	
@@ -69,6 +70,12 @@ public class MainActivity extends Activity implements Handler.Callback
 		setContentView(R.layout.activity_main);
 		
 		ConfigProvider.init(getSharedPreferences("config",0));
+		
+		if(ConfigProvider.getBoolean("FirstRun",true))
+		{
+			showReadmeDialog();
+		}
+		
 		ansiMode=ConfigProvider.getBoolean("ANSIMode",nukkitMode);
 		nukkitMode=ConfigProvider.getBoolean("NukkitMode",nukkitMode);
 		
@@ -90,6 +97,8 @@ public class MainActivity extends Activity implements Handler.Callback
 		{
 			toast(e.getMessage());
 		}
+		
+		reloadUrls();
 		
 		actionHandler=new Handler(this);
 		serverIntent=new Intent(this,ServerService.class);
@@ -200,6 +209,9 @@ public class MainActivity extends Activity implements Handler.Callback
 			stopService(serverIntent);
 			fragment_main.refreshElements();
 			break;
+		case R.id.menu_readme:
+			showReadmeDialog();
+			break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -271,6 +283,84 @@ public class MainActivity extends Activity implements Handler.Callback
 				Toast.makeText(instance,text,Toast.LENGTH_SHORT).show();
 			}
 		});
+	}
+	
+	public void reloadUrls()
+	{
+		try
+		{
+			File file=new File(ServerUtils.getAppFilesDirectory(),"urls.json");
+			if(!file.exists())
+			{
+				copyAsset("urls.json",file);
+			}
+			if(file.length()<2)
+			{
+				file.delete();
+				reloadUrls();
+				return;
+			}
+			
+			int current_version=0;
+			InputStream is=getAssets().open("urls.json");
+			byte[] data=new byte[is.available()];
+			is.read(data);
+			is.close();
+			current_version=new JSONObject(new String(data,"UTF-8")).getInt("version");
+			
+			is=new FileInputStream(file);
+			data=new byte[(int)file.length()];
+			is.read(data);
+			is.close();
+			JSONObject json=new JSONObject(new String(data,"UTF-8"));
+			
+			if(!json.has("version") || json.getInt("version")<current_version)
+			{
+				file.delete();
+				reloadUrls();
+				return;
+			}
+			
+			urls_json=json;
+			
+			JSONObject jenkins=json.getJSONObject("jenkins");
+			{
+				JSONArray nukkit=jenkins.getJSONArray("nukkit");
+				{
+					fragment_main.jenkins_nukkit=new String[nukkit.length()];
+					for(int i=0;i<fragment_main.jenkins_nukkit.length;i++)
+					{
+						fragment_main.jenkins_nukkit[i]=nukkit.getString(i);
+					}
+				}
+				JSONArray pocketmine=jenkins.getJSONArray("pocketmine");
+				{
+					fragment_main.jenkins_pocketmine=new String[pocketmine.length()];
+					for(int i=0;i<fragment_main.jenkins_pocketmine.length;i++)
+					{
+						fragment_main.jenkins_pocketmine[i]=pocketmine.getString(i);
+					}
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			toast(e.toString());
+		}
+	}
+	
+	public boolean openUrlFromJson(String key)
+	{
+		try
+		{
+			startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(urls_json.getString(key))));
+			return true;
+		}
+		catch(JSONException e)
+		{
+			toast(e.toString());
+		}
+		return false;
 	}
 	
 	public void switchFragment(Fragment target,int title)
@@ -387,6 +477,31 @@ public class MainActivity extends Activity implements Handler.Callback
 				
 			}
 		}
+	}
+	
+	public void showReadmeDialog()
+	{
+		new AlertDialog.Builder(MainActivity.this).setTitle(R.string.dialog_readme_title)
+			.setCancelable(false)
+			.setMessage(getString(R.string.dialog_readme_message))
+			.setNegativeButton(R.string.dialog_readme_exit,new DialogInterface.OnClickListener()
+			{
+				@Override
+				public void onClick(DialogInterface dialog,int which)
+				{
+					finish();
+				}
+			})
+			.setPositiveButton(R.string.dialog_readme_continue,new DialogInterface.OnClickListener()
+			{
+				@Override
+				public void onClick(DialogInterface dialog,int which)
+				{
+					ConfigProvider.set("FirstRun",false);
+				}
+			})
+			.create()
+			.show();
 	}
 	
 	public String getInternetString(String url)

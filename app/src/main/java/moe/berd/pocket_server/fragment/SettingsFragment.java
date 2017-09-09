@@ -41,38 +41,6 @@ public class SettingsFragment extends PreferenceFragment
 				return true;
 			}
 		});
-		findPreference("button_update_repos").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
-		{
-			@Override
-			public boolean onPreferenceClick(Preference preference)
-			{
-				final ProgressDialog processing_dialog=new ProgressDialog(main);
-				processing_dialog.setCancelable(false);
-				processing_dialog.setMessage(getString(R.string.message_downloading).replace("%s",""));
-				processing_dialog.setIndeterminate(false);
-				processing_dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-				processing_dialog.show();
-				new Thread(new Runnable()
-				{
-					public void run()
-					{
-						main.downloadFile("https://raw.githubusercontent.com/fengberd/MinecraftPEServer/master/app/src/main/assets/urls.json",new File(ServerUtils
-							.getAppFilesDirectory(),"urls.json"),processing_dialog);
-						main.runOnUiThread(new Runnable()
-						{
-							public void run()
-							{
-								if(processing_dialog.isShowing())
-								{
-									processing_dialog.dismiss();
-								}
-							}
-						});
-					}
-				}).start();
-				return false;
-			}
-		});
 		findPreference("button_install_php").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
 		{
 			@Override
@@ -138,6 +106,48 @@ public class SettingsFragment extends PreferenceFragment
 			public boolean onPreferenceClick(Preference preference)
 			{
 				main.chooseFile(MainActivity.CHOOSE_JAVA_CODE,getString(R.string.message_choose_java));
+				return false;
+			}
+		});
+		findPreference("button_download_binaries").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+		{
+			@Override
+			public boolean onPreferenceClick(Preference preference)
+			{
+				main.openUrlFromJson("binaries_download");
+				return false;
+			}
+		});
+		findPreference("button_update_repos").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+		{
+			@Override
+			public boolean onPreferenceClick(Preference preference)
+			{
+				final ProgressDialog processing_dialog=new ProgressDialog(main);
+				processing_dialog.setCancelable(false);
+				processing_dialog.setMessage(getString(R.string.message_downloading).replace("%s",""));
+				processing_dialog.setIndeterminate(false);
+				processing_dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+				processing_dialog.show();
+				new Thread(new Runnable()
+				{
+					public void run()
+					{
+						main.downloadFile("https://raw.githubusercontent.com/fengberd/MinecraftPEServer/master/app/src/main/assets/urls.json",new File(ServerUtils
+							.getAppFilesDirectory(),"urls.json"),processing_dialog);
+						main.reloadUrls();
+						main.runOnUiThread(new Runnable()
+						{
+							public void run()
+							{
+								if(processing_dialog.isShowing())
+								{
+									processing_dialog.dismiss();
+								}
+							}
+						});
+					}
+				}).start();
 				return false;
 			}
 		});

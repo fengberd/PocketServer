@@ -26,13 +26,16 @@ Thanks to everyone above!
     <string name="check_pocketmine">PocketMine</string>
 
     <string name="preference_category_general">通用</string>
-    <string name="preference_enable_firebase_title">Firebase統計</string>
-    <string name="preference_enable_firebase_summary">Firebase統計能幫助我改進這個APP或者知道哪些地方出了問題,如果你沒有Google服務框架或者非常不想使用這個統計系統你可以關掉它.</string>
+    <string name="preference_auto_mount_title">自動掛載Java運行庫</string>
+    <string name="preference_auto_mount_summary">在你開啟伺服器的時候自動掛載Java運行庫.</string>
     <string name="preference_kusud_title">使用 ku.sud 請求root許可權</string>
     <string name="preference_kusud_summary">使用 "ku.sud" 命令而不是 "su" 請求root許可權,只對KingRoot有效.</string>
+    <string name="preference_enable_firebase_title">Firebase統計</string>
+    <string name="preference_enable_firebase_summary">Firebase統計能幫助我改進這個APP或者知道哪些地方出了問題,如果你沒有Google服務框架或者非常不想使用這個統計系統你可以關掉它.</string>
     <string name="preference_install_php">安裝PHP</string>
     <string name="preference_install_php_manually">手動安裝PHP7</string>
     <string name="preference_install_java">安裝Java</string>
+    <string name="preference_download_binaries">下載可執行文件(Java/PHP等)</string>
     <string name="preference_update_repos">從伺服器更新源</string>
     <string name="preference_category_console">控制台</string>
     <string name="preference_ansi_title">啟用ANSI支持</string>
@@ -60,6 +63,11 @@ Thanks to everyone above!
 
     <string name="dialog_start_failed_title">伺服器啟動失敗</string>
     <string name="dialog_start_failed_message">你的伺服器沒有正常啟動,它在3秒鐘內被關閉了.\n這可能是以下原因造成的:\n\n· 伺服器核心崩潰\n· 設備內存太小\n· 設備ABI不受支持或者你使用了一個錯誤的Binary文件\n· 你自己關掉了伺服器\n\n以上的所有錯誤我都不能解決,請聯繫你正在使用的核心的開發者尋求幫助.\n在Google Play留一星評論沒有任何效果</string>
+
+    <string name="dialog_readme_title">使用前必讀</string>
+    <string name="dialog_readme_message"><![CDATA[如果你不同意以下內容請點擊退出然後卸載這個APP.\n本APP是一個開發者工具而不是一個遊戲伺服器.\n\nBug反饋:\n· 發送郵件到:fengberd@gmail.com\n· 點擊底部的Copyright標籤然後提交Issue.\n· 在APP崩潰或者卡死時點擊 \"反饋\" 按鈕.\n\n* 留下1星帶髒話的評論沒有任何作用,我不會回復你\n\n如果你碰到了下列問題,我也解決不了:\n· \"伺服器文件夾在哪?\"–>/sdcard/PocketMine 或者 /sdcard/Nukkit\n· \"為什麼這玩意卡到飛起甚至把系統卡死了?\"–>你的設備性能太差了,畢竟它只是個手機/平板而不是搭載E5–2699的伺服器...\n· 控制台里出現\"Login Timeout\" 或者 \"XXX 錯誤\"->伺服器核心的問題,我無能為力\n· 一些類似 \"No such file or directory\" 的控制台輸出->你的設備不受支持,無法解決.\n· ABI不受支持的對話框->我只提供x86和armeabi支持.\n· \"伺服器IP/埠是多少?\",\"伺服器進不去!!!\"->卸載就行了,我不會在Google Play上回復你.\n· PocketMine伺服器突然關閉,沒有錯誤信息->核心問題或者PHP問題\n\n這是一個讓你在移動設備上運行\"伺服器核心\"的APP,\"伺服器核心\"不是我寫的,出問題請找它們的開發者.\n作為一個高中生不可能經常更新這個APP,出問題請耐心等待.\n\n如果你碰到問題然後不想幫助我修復,卸載這個APP然後忘了它就行了]]></string>
+    <string name="dialog_readme_exit">退出</string>
+    <string name="dialog_readme_continue">同意並繼續</string>
 
     <string name="label_management">伺服器管理</string>
     <string name="label_type">伺服器類型</string>

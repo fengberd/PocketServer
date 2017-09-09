@@ -2,14 +2,11 @@ package moe.berd.pocket_server.fragment;
 
 import android.app.*;
 import android.content.*;
-import android.net.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
 
 import net.fengberd.minecraftpe_server.*;
-
-import org.json.*;
 
 import java.io.*;
 
@@ -60,8 +57,9 @@ public class MainFragment extends Fragment implements View.OnClickListener
 	@Override
 	public void onStart()
 	{
+		main.findViewById(R.id.label_copyright).setOnClickListener(this);
+		
 		label_path_tip=(TextView)main.findViewById(R.id.label_path_tip);
-		label_path_tip.setOnClickListener(this);
 		
 		button_stop=(Button)main.findViewById(R.id.button_stop);
 		button_stop.setOnClickListener(this);
@@ -77,7 +75,6 @@ public class MainFragment extends Fragment implements View.OnClickListener
 		radio_pocketmine.setChecked(!nukkitMode);
 		radio_pocketmine.setOnClickListener(this);
 		
-		reloadUrls();
 		refreshElements();
 		
 		super.onStart();
@@ -161,29 +158,17 @@ public class MainFragment extends Fragment implements View.OnClickListener
 	@Override
 	public void onClick(View v)
 	{
+		final ProgressDialog processing_dialog=new ProgressDialog(main);
 		switch(v.getId())
 		{
-		case R.id.label_path_tip:
-			Intent intent=new Intent(Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.parse("file://" + ServerUtils.getDataDirectory()),"application/*");
-			startActivity(intent);
+		case R.id.label_copyright:
+			main.openUrlFromJson("source_code");
 			break;
 		case R.id.button_start:
-			main.startService(serverIntent);
-			ServerUtils.runServer();
-			break;
-		case R.id.button_stop:
-			if(ServerUtils.isRunning())
+			if(nukkitMode && ConfigProvider.getBoolean("AutoMountJava",false) && !ServerUtils.mountedJavaLibrary())
 			{
-				ServerUtils.writeCommand("stop");
-			}
-			break;
-		case R.id.button_mount:
-			try
-			{
-				final ProgressDialog processing_dialog=new ProgressDialog(main);
 				processing_dialog.setCancelable(false);
-				processing_dialog.setMessage(getString(R.string.message_installing));
+				processing_dialog.setMessage(getString(R.string.message_running));
 				processing_dialog.show();
 				new Thread(new Runnable()
 				{
@@ -191,20 +176,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 					{
 						try
 						{
-							String prefix=(ConfigProvider.getBoolean("KusudMode",false) ? "ku.sud" : "su") + " -c " + ServerUtils
-								.getAppDirectory() + "/busybox ";
-							Runtime.getRuntime().exec(prefix + "mount -o rw,remount /").waitFor();
-							if(!new File("/lib").exists())
-							{
-								Runtime.getRuntime().exec(prefix + "mkdir /lib").waitFor();
-							}
-							else
-							{
-								Runtime.getRuntime().exec(prefix + "umount /lib").waitFor();
-							}
-							Runtime.getRuntime()
-								.exec(prefix + "mount -o bind " + ServerUtils.getAppDirectory() + "/java/lib /lib")
-								.waitFor();
+							ServerUtils.mountJavaLibrary();
 							main.runOnUiThread(new Runnable()
 							{
 								public void run()
@@ -213,8 +185,9 @@ public class MainFragment extends Fragment implements View.OnClickListener
 									{
 										processing_dialog.dismiss();
 									}
+									main.startService(serverIntent);
+									ServerUtils.runServer();
 									refreshElements();
-									main.toast(R.string.message_done);
 								}
 							});
 						}
@@ -235,10 +208,58 @@ public class MainFragment extends Fragment implements View.OnClickListener
 					}
 				}).start();
 			}
-			catch(Exception e)
+			else
 			{
-				main.toast(e.toString());
+				main.startService(serverIntent);
+				ServerUtils.runServer();
 			}
+			break;
+		case R.id.button_stop:
+			if(ServerUtils.isRunning())
+			{
+				ServerUtils.writeCommand("stop");
+			}
+			break;
+		case R.id.button_mount:
+			processing_dialog.setCancelable(false);
+			processing_dialog.setMessage(getString(R.string.message_running));
+			processing_dialog.show();
+			new Thread(new Runnable()
+			{
+				public void run()
+				{
+					try
+					{
+						ServerUtils.mountJavaLibrary();
+						main.runOnUiThread(new Runnable()
+						{
+							public void run()
+							{
+								if(processing_dialog.isShowing())
+								{
+									processing_dialog.dismiss();
+								}
+								refreshElements();
+								main.toast(R.string.message_done);
+							}
+						});
+					}
+					catch(final Exception e)
+					{
+						main.runOnUiThread(new Runnable()
+						{
+							public void run()
+							{
+								if(processing_dialog.isShowing())
+								{
+									processing_dialog.dismiss();
+								}
+								main.toast(e.toString());
+							}
+						});
+					}
+				}
+			}).start();
 			break;
 		case R.id.radio_pocketmine:
 			ConfigProvider.set("NukkitMode",nukkitMode=false);
@@ -250,52 +271,6 @@ public class MainFragment extends Fragment implements View.OnClickListener
 			return;
 		}
 		refreshElements();
-	}
-	
-	public void reloadUrls()
-	{
-		try
-		{
-			File file=new File(ServerUtils.getAppFilesDirectory(),"urls.json");
-			if(!file.exists())
-			{
-				main.copyAsset("urls.json",file);
-			}
-			FileInputStream fis=new FileInputStream(file);
-			byte[] data=new byte[(int)file.length()];
-			fis.read(data);
-			fis.close();
-			if(data.length<2)
-			{
-				file.delete();
-				reloadUrls();
-				return;
-			}
-			JSONObject json=new JSONObject(new String(data,"UTF-8"));
-			JSONObject jenkins=json.getJSONObject("jenkins");
-			{
-				JSONArray nukkit=jenkins.getJSONArray("nukkit");
-				{
-					jenkins_nukkit=new String[nukkit.length()];
-					for(int i=0;i<jenkins_nukkit.length;i++)
-					{
-						jenkins_nukkit[i]=nukkit.getString(i);
-					}
-				}
-				JSONArray pocketmine=jenkins.getJSONArray("pocketmine");
-				{
-					jenkins_pocketmine=new String[pocketmine.length()];
-					for(int i=0;i<jenkins_pocketmine.length;i++)
-					{
-						jenkins_pocketmine[i]=pocketmine.getString(i);
-					}
-				}
-			}
-		}
-		catch(Exception e)
-		{
-			main.toast(e.toString());
-		}
 	}
 	
 	public void refreshElements()
@@ -313,13 +288,13 @@ public class MainFragment extends Fragment implements View.OnClickListener
 		if(nukkitMode)
 		{
 			button_mount.setEnabled(false);
-			button_mount.setVisibility(View.VISIBLE);
+			button_mount.setVisibility(ConfigProvider.getBoolean("AutoMountJava",false) ? View.GONE : View.VISIBLE);
 			label_path_tip.setText(R.string.label_nukkit_to);
 			if(!ServerUtils.installedJava())
 			{
 				running=true;
 			}
-			else if(!ServerUtils.mountedJavaLibrary())
+			else if(!ServerUtils.mountedJavaLibrary() && !ConfigProvider.getBoolean("AutoMountJava",false))
 			{
 				running=true;
 				button_mount.setEnabled(true);
