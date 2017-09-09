@@ -58,7 +58,7 @@ Thanks to everyone above!
     <string name="dialog_abi_ignore">忽略</string>
 
     <string name="dialog_start_failed_title">服务器启动失败</string>
-    <string name="dialog_start_failed_message">你的服务器没有正常启动,它在5秒钟内被关闭了.\n这可能是以下原因造成的:\n\n· 服务器核心崩溃\n· 设备内存太小\n· 设备ABI不受支持或者你使用了一个错误的Binary文件\n· 你自己关掉了服务器\n\n以上的所有错误我都不能解决,请联系你正在使用的核心的开发者寻求帮助.\n在Google Play留一星评论没有任何效果</string>
+    <string name="dialog_start_failed_message">你的服务器没有正常启动,它在3秒钟内被关闭了.\n这可能是以下原因造成的:\n\n· 服务器核心崩溃\n· 设备内存太小\n· 设备ABI不受支持或者你使用了一个错误的Binary文件\n· 你自己关掉了服务器\n\n以上的所有错误我都不能解决,请联系你正在使用的核心的开发者寻求帮助.\n在Google Play留一星评论没有任何效果</string>
 
     <string name="label_management">服务器管理</string>
 	<string name="label_type">服务器类型</string>

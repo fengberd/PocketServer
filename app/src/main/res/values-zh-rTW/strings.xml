@@ -26,10 +26,18 @@ Thanks to everyone above!
     <string name="check_pocketmine">PocketMine</string>
 
     <string name="preference_category_general">通用</string>
-    <string name="preference_kusud_title">使用 ku.sud 請求root權限</string>
-    <string name="preference_category_console">控制台個性化</string>
+    <string name="preference_enable_firebase_title">Firebase統計</string>
+    <string name="preference_enable_firebase_summary">Firebase統計能幫助我改進這個APP或者知道哪些地方出了問題,如果你沒有Google服務框架或者非常不想使用這個統計系統你可以關掉它.</string>
+    <string name="preference_kusud_title">使用 ku.sud 請求root許可權</string>
+    <string name="preference_kusud_summary">使用 "ku.sud" 命令而不是 "su" 請求root許可權,只對KingRoot有效.</string>
+    <string name="preference_install_php">安裝PHP</string>
+    <string name="preference_install_php_manually">手動安裝PHP7</string>
+    <string name="preference_install_java">安裝Java</string>
+    <string name="preference_update_repos">從伺服器更新源</string>
+    <string name="preference_category_console">控制台</string>
     <string name="preference_ansi_title">啟用ANSI支持</string>
-    <string name="preference_font_size_title">字體大小:</string>
+    <string name="preference_ansi_summary">開啟控制台顏色和字體樣式支持.可能造成性能下降.</string>
+    <string name="preference_font_size_title">字體大小</string>
 
     <string name="message_copied">已複製.</string>
     <string name="message_done">操作完成.</string>
@@ -44,22 +52,27 @@ Thanks to everyone above!
     <string name="message_choose_php">選擇PHP Binary文件</string>
     <string name="message_choose_java">選擇JAVA支持庫(.tar.gz文件)</string>
     <string name="message_unknown_error">未知錯誤</string>
-    
-    <string name="label_management">伺服器管理</string>
-	<string name="label_type">伺服器類型</string>
-	<string name="label_pocketMine_to">把 PocketMine-MP.phar 或 src 資料夾放至 /sdcard/PocketMine</string>
-	<string name="label_nukkit_to">把 Nukkit.jar 放至 /sdcard/Nukkit</string>
 
-	<string name="menu_console">控制台</string>
+    <string name="dialog_abi_title">ABI不受支持</string>
+    <string name="dialog_abi_message">抱歉,你的設備上的所有ABI這個APP都不支持,我們不能在這個設備上安裝 %binary.\n你可以忽略這個錯誤但這個APP可能不會正常工作.</string>
+    <string name="dialog_abi_exit">退出</string>
+    <string name="dialog_abi_ignore">忽略</string>
+
+    <string name="dialog_start_failed_title">伺服器啟動失敗</string>
+    <string name="dialog_start_failed_message">你的伺服器沒有正常啟動,它在3秒鐘內被關閉了.\n這可能是以下原因造成的:\n\n· 伺服器核心崩潰\n· 設備內存太小\n· 設備ABI不受支持或者你使用了一個錯誤的Binary文件\n· 你自己關掉了伺服器\n\n以上的所有錯誤我都不能解決,請聯繫你正在使用的核心的開發者尋求幫助.\n在Google Play留一星評論沒有任何效果</string>
+
+    <string name="label_management">伺服器管理</string>
+    <string name="label_type">伺服器類型</string>
+    <string name="label_pocketMine_to">把 PocketMine-MP.phar 或 src 資料夾放至 /sdcard/PocketMine</string>
+    <string name="label_nukkit_to">把 Nukkit.jar 放至 /sdcard/Nukkit</string>
+
+    <string name="menu_console">控制台</string>
     <string name="menu_settings">設定</string>
     <string name="menu_kill">強制停止伺服器</string>
     <string name="menu_clear">清空</string>
     <string name="menu_copy">複製</string>
-    <string name="preference_install_php">安裝PHP</string>
-    <string name="preference_install_php_manually">手動安裝PHP7</string>
-    <string name="preference_install_java">安裝Java</string>
     <string name="menu_download_server">下載伺服端</string>
-    
+
     <string name="alert_install_php_title">注意</string>
     <string name="alert_install_php_message">手動安裝PHP是一個高級操作,你需要自己選擇PHP可執行文件,不要選擇任何你不能信任的人提供的PHP可執行文件,它們可能會對你的設備造成損害.\n如果你的PHP文件是壓縮包,請先解壓它</string>
 </resources>

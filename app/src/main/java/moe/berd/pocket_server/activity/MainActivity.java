@@ -125,7 +125,10 @@ public class MainActivity extends Activity implements Handler.Callback
 						{
 							public void run()
 							{
-								processing_dialog.dismiss();
+								if(processing_dialog.isShowing())
+								{
+									processing_dialog.dismiss();
+								}
 								fragment_main.refreshElements();
 								toast(R.string.message_install_success);
 							}
@@ -138,7 +141,10 @@ public class MainActivity extends Activity implements Handler.Callback
 						{
 							public void run()
 							{
-								processing_dialog.dismiss();
+								if(processing_dialog.isShowing())
+								{
+									processing_dialog.dismiss();
+								}
 								toast(getString(R.string.message_install_fail) + ex);
 							}
 						});
@@ -172,7 +178,10 @@ public class MainActivity extends Activity implements Handler.Callback
 					{
 						public void run()
 						{
-							processing_dialog.dismiss();
+							if(processing_dialog.isShowing())
+							{
+								processing_dialog.dismiss();
+							}
 						}
 					});
 				}

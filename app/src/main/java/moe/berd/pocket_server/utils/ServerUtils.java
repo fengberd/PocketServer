@@ -195,7 +195,7 @@ public class ServerUtils
 							}
 						}
 					}
-					if(System.currentTimeMillis() - startTime<5000)
+					if(System.currentTimeMillis() - startTime<3000)
 					{
 						ConsoleFragment.logLine("[PE Server] Server start failed!");
 						MainActivity.postStartFailedWarning();
@@ -203,8 +203,8 @@ public class ServerUtils
 					else
 					{
 						ConsoleFragment.logLine("[PE Server] Server was stopped.");
-						MainActivity.postStopService();
 					}
+					MainActivity.postStopService();
 				}
 			};
 			tMonitor.start();
