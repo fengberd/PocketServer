@@ -62,7 +62,10 @@ public class SettingsFragment extends PreferenceFragment
 						{
 							public void run()
 							{
-								processing_dialog.dismiss();
+								if(processing_dialog.isShowing())
+								{
+									processing_dialog.dismiss();
+								}
 							}
 						});
 					}
