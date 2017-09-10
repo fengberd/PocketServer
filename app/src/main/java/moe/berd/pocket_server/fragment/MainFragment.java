@@ -137,10 +137,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 							{
 								public void run()
 								{
-									if(processing_dialog.isShowing())
-									{
-										processing_dialog.dismiss();
-									}
+									tryDismissDialog(processing_dialog);
 								}
 							});
 						}
@@ -181,10 +178,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 							{
 								public void run()
 								{
-									if(processing_dialog.isShowing())
-									{
-										processing_dialog.dismiss();
-									}
+									tryDismissDialog(processing_dialog);
 									main.startService(serverIntent);
 									ServerUtils.runServer();
 									refreshElements();
@@ -197,10 +191,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 							{
 								public void run()
 								{
-									if(processing_dialog.isShowing())
-									{
-										processing_dialog.dismiss();
-									}
+									tryDismissDialog(processing_dialog);
 									main.toast(e.toString());
 								}
 							});
@@ -235,10 +226,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 						{
 							public void run()
 							{
-								if(processing_dialog.isShowing())
-								{
-									processing_dialog.dismiss();
-								}
+								tryDismissDialog(processing_dialog);
 								refreshElements();
 								main.toast(R.string.message_done);
 							}
@@ -250,10 +238,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 						{
 							public void run()
 							{
-								if(processing_dialog.isShowing())
-								{
-									processing_dialog.dismiss();
-								}
+								tryDismissDialog(processing_dialog);
 								main.toast(e.toString());
 							}
 						});

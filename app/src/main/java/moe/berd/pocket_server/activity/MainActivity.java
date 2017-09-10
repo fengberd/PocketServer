@@ -134,10 +134,7 @@ public class MainActivity extends Activity implements Handler.Callback
 						{
 							public void run()
 							{
-								if(processing_dialog.isShowing())
-								{
-									processing_dialog.dismiss();
-								}
+								tryDismissDialog(processing_dialog);
 								fragment_main.refreshElements();
 								toast(R.string.message_install_success);
 							}
@@ -150,10 +147,7 @@ public class MainActivity extends Activity implements Handler.Callback
 						{
 							public void run()
 							{
-								if(processing_dialog.isShowing())
-								{
-									processing_dialog.dismiss();
-								}
+								tryDismissDialog(processing_dialog);
 								toast(getString(R.string.message_install_fail) + ex);
 							}
 						});
@@ -187,10 +181,7 @@ public class MainActivity extends Activity implements Handler.Callback
 					{
 						public void run()
 						{
-							if(processing_dialog.isShowing())
-							{
-								processing_dialog.dismiss();
-							}
+							tryDismissDialog(processing_dialog);
 						}
 					});
 				}
@@ -253,12 +244,19 @@ public class MainActivity extends Activity implements Handler.Callback
 				@Override
 				public void run()
 				{
-					new AlertDialog.Builder(MainActivity.this).setTitle(R.string.dialog_start_failed_title)
-						.setCancelable(false)
-						.setMessage(getString(R.string.dialog_start_failed_message))
-						.setPositiveButton(R.string.button_ok,null)
-						.create()
-						.show();
+					try
+					{
+						new AlertDialog.Builder(MainActivity.this).setTitle(R.string.dialog_start_failed_title)
+							.setCancelable(false)
+							.setMessage(getString(R.string.dialog_start_failed_message))
+							.setPositiveButton(R.string.button_ok,null)
+							.create()
+							.show();
+					}
+					catch(Exception ignored)
+					{
+						
+					}
 				}
 			});
 			break;
@@ -557,7 +555,8 @@ public class MainActivity extends Activity implements Handler.Callback
 			{
 				json=artifacts.getJSONObject(0);
 			}
-			downloadFile(jenkins + "lastSuccessfulBuild/artifact/" + json.getString("relativePath")+"?time="+System.currentTimeMillis(),saveTo,dialog);
+			downloadFile(jenkins + "lastSuccessfulBuild/artifact/" + json.getString("relativePath") + "?time=" + System
+				.currentTimeMillis(),saveTo,dialog);
 		}
 		catch(Exception e)
 		{
@@ -599,21 +598,64 @@ public class MainActivity extends Activity implements Handler.Callback
 			@Override
 			public void run()
 			{
-				new AlertDialog.Builder(MainActivity.this).setTitle(R.string.dialog_abi_title)
-					.setCancelable(false)
-					.setMessage(getString(R.string.dialog_abi_message).replace("%binary",name))
-					.setNegativeButton(R.string.dialog_abi_exit,new DialogInterface.OnClickListener()
-					{
-						@Override
-						public void onClick(DialogInterface dialog,int which)
+				try
+				{
+					new AlertDialog.Builder(MainActivity.this).setTitle(R.string.dialog_abi_title)
+						.setCancelable(false)
+						.setMessage(getString(R.string.dialog_abi_message).replace("%binary",name))
+						.setNegativeButton(R.string.dialog_abi_exit,new DialogInterface.OnClickListener()
 						{
-							finish();
-						}
-					})
-					.setPositiveButton(R.string.dialog_abi_ignore,onclick)
-					.create()
-					.show();
+							@Override
+							public void onClick(DialogInterface dialog,int which)
+							{
+								finish();
+							}
+						})
+						.setPositiveButton(R.string.dialog_abi_ignore,onclick)
+						.create()
+						.show();
+				}
+				catch(Exception ignored)
+				{
+					
+				}
 			}
 		});
+	}
+	
+	public static void tryDismissDialog(Dialog dialog)
+	{
+		try
+		{
+			if(dialog!=null && dialog.isShowing())
+			{
+				Context context=((ContextWrapper)dialog.getContext()).getBaseContext();
+				if(context instanceof Activity)
+				{
+					if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1)
+					{
+						if(!((Activity)context).isFinishing() && !((Activity)context).isDestroyed())
+						{
+							dialog.dismiss();
+						}
+					}
+					else
+					{
+						if(!((Activity)context).isFinishing())
+						{
+							dialog.dismiss();
+						}
+					}
+				}
+				else
+				{
+					dialog.dismiss();
+				}
+			}
+		}
+		catch(Exception ignored)
+		{
+			
+		}
 	}
 }

@@ -71,7 +71,7 @@ public class SettingsFragment extends PreferenceFragment
 						{
 							public void run()
 							{
-								processing_dialog.dismiss();
+								MainActivity.tryDismissDialog(processing_dialog);
 							}
 						});
 					}
@@ -140,10 +140,7 @@ public class SettingsFragment extends PreferenceFragment
 						{
 							public void run()
 							{
-								if(processing_dialog.isShowing())
-								{
-									processing_dialog.dismiss();
-								}
+								MainActivity.tryDismissDialog(processing_dialog);
 							}
 						});
 					}
