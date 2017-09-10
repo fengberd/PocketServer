@@ -2,7 +2,7 @@
 <!--
 Translated by:
     Johnmacrocraft
-    sorisem4106@naver.com
+    NLOG
 Corrected by:
 
 Please leave your email or name above with a tab as prefix
@@ -10,9 +10,10 @@ Thanks to everyone above!
 -->
 <resources>
     <string name="application_name">Pocket Server</string>
-	
+
     <string name="activity_main">Pocket Server</string>
     <string name="activity_console">콘솔</string>
+    <string name="activity_settings">설정</string>
 
     <string name="button_ok">확인</string>
     <string name="button_cancel">닫기</string>
@@ -24,9 +25,21 @@ Thanks to everyone above!
     <string name="check_nukkit">Nukkit</string>
     <string name="check_pocketmine">PocketMine</string>
 
-    <string name="preference_kusud_title">ku.sud를 사용하여 루트 권한 요청</string>
+    <string name="preference_category_general">일반</string>
+    <string name="preference_auto_mount_title">자동으로 Java 라이브러리 마운트</string>
+    <string name="preference_auto_mount_summary">서버를 시작할 때 자동으로 Java 라이브러리를 마운트합니다.</string>
+    <string name="preference_kusud_title">ku.sud를 사용해 루트 권한 요청</string>
+    <string name="preference_kusud_summary">"su" 대신 "ku.sud" 명령어를 사용해서 루트를 요청합니다, KingRoot와만 작동합니다.</string>
+    <string name="preference_enable_firebase_title">Firebase Analytics</string>
+    <string name="preference_enable_firebase_summary">Firebase Analytics는 제가 앱을 향상하는 것을 도울 수 있고 잘못된 것이 있다면 이를 알 수 있도록 도와줍니다. 이것이 싫으시다면 끄실 수 있습니다.</string>
+    <string name="preference_install_php">PHP 설치</string>
+    <string name="preference_install_php_manually">수동으로 PHP 설치</string>
+    <string name="preference_install_java">Java 설치</string>
+    <string name="preference_download_binaries">바이너리(Java/PHP 기타 등등.) 다운로드</string>
+    <string name="preference_update_repos">서버에서 저장소 업데이트</string>
     <string name="preference_category_console">콘솔</string>
     <string name="preference_ansi_title">ANSI 지원 활성화</string>
+    <string name="preference_ansi_summary">콘솔 색상과 일부 글꼴 스타일을 지원합니다. 성능을 줄일 수 있습니다.</string>
     <string name="preference_font_size_title">폰트 크기</string>
 
     <string name="message_copied">복사되었습니다.</string>
@@ -34,28 +47,41 @@ Thanks to everyone above!
     <string name="message_running">가 실행 중입니다</string>
     <string name="message_tap_open">Pocket Server를 열려면 누르세요</string>
     <string name="message_installing">설치 중입니다, 잠시만 기다리세요...</string>
-    <string name="message_downloading">%s(을)를 다운로드 하는 중 ...</string>
-    <string name="message_install_fail">설치 실패:</string>
-    <string name="message_install_success">설치에 성공하였습니다.</string>
+    <string name="message_downloading">%s 다운로드 중...</string>
+    <string name="message_install_fail">설치 실패: </string>
+    <string name="message_install_success">설치에 성공했습니다.</string>
     <string name="message_no_artifacts">서버 구동에 필요한 파일이 없습니다.</string>
     <string name="message_select_repository">%s의 저장소를 선택해주세요.</string>
-	<string name="message_choose_php">PHP 바이너리 선택</string>
-    
+    <string name="message_choose_java">Java 라이브러리(.tar.gz 파일) 선택</string>
+    <string name="message_choose_php">PHP 바이너리 선택</string>
+    <string name="message_unknown_error">알 수 없는 오류</string>
+
+    <string name="dialog_abi_title">ABI 지원되지 않음</string>
+    <string name="dialog_abi_message">죄송합니다, 이 앱이 지원하는 모든 ABI가 장치와 맞지 않기에, 장치에 바이너리를 설치할 수 없습니다. 계속할 수 있지만 앱이 정상적으로 작동하지 않을 수 있습니다.</string>
+    <string name="dialog_abi_exit">나가기</string>
+    <string name="dialog_abi_ignore">무시</string>
+
+    <string name="dialog_start_failed_title">서버 시작 실패</string>
+    <string name="dialog_start_failed_message">서버가 3초 안에 중지되었기 때문에 서버가 올바르게 시작되지 않았습니다. 이는 다음 이유로 인해서 발생했을 수 있습니다:\n\n· 서버 소프트웨어가 충돌함\n· 장치 메모리가 너무 낮음\n· 장치 ABI가 지원되지 않거나 잘못된 바이너리를 사용하고 있음\n· 서버를 직접 종료함\n\n위의 모든 이유는 Pocket Server의 개발자가 해결할 수 없습니다, 도움을 받으려면 사용하고 있는 서버 소프트웨어의 개발자에게 문의하세요.\n별 1개 리뷰를 남기는 것은 효과가 없습니다</string>
+
+    <!--WHY I MUST WRITE SOMETHING LIKE THIS?-->
+    <string name="dialog_readme_title">사용 전에 읽어주세요</string>
+    <string name="dialog_readme_message"><![CDATA[다음 텍스트에 동의하지 않으신다면 \"나가기\"를 클릭하고 앱을 제거하세요.\n이 앱은 게임 서버 대신 개발자를 위한 도구입니다.\n\n버그 보고:\n· 이메일: fengberd@gmail.com\n· 저작권 라벨을 클릭하고 이슈를 제출하세요.· 충돌 대화 상자를 볼 때 \"보고\" 버튼을 누르세요.\n\n* \"씨*\" 같은 콘텐츠와 함께 별 1개 리뷰를 남기는 것은 효과가 없습니다\n\n저는 아래의 문제들이 발생하면 이들을 고칠 수 없습니다:\n· \"서버 폴더는 어디에 있나요?\"–>/sdcard/PocketMine 또는 /sdcard/Nukkit\n· \"왜 랙이 많이 걸리고 심지어는 시스템이 멈추나요?\"–>장치에서 발생하는 것으로, 장치는 E5-2699로 구동되는 서버가 아니라 그냥 휴대 전화나 태블릿일 뿐입니다...\n· \"콘솔에 Login Timeout (로그인 시간 초과)\" 또는 \"XXX 오류\"->서버 소프트웨어로 인해 발생\n· 콘솔에 \"No such file or directory (그런 파일 또는 디렉터리 없음)\"->이는 장치에서 ABI가 지원되지 않거나 하는 경우에 발생합니다.\n· ABI 지원되지 않음 대화 상자->x86 또는 armeabi 장치만 지원합니다.· \"어떻게 제 서버의 IP 주소와 포트를 얻나요?\", \"서버에 들어갈 수 없어요!!! 씨* 앱 개 쓰*기네!!!\"->그냥 앱을 삭제하세요, Google Play에서 응답하지 않겠습니다.\n· PocketMine 서버가 갑자기 추가 메시지 없이 중지되었어요->서버 소프트웨어 또는 PHP 바이너리에 의해 발생합니다.\n\n이 앱은 \"서버 소프트웨어\"를 장치에서 실행할 수 있도록 해주는 플랫폼으로, \"서버 소프트웨어\"는 제가 개발하지 않습니다. 문제를 해결하려면 그 서버 소프트웨어의 개발자에게 문의해야 합니다.\n학생으로서 저는 이 앱을 주기적으로 업데이트할 수 없습니다. 기다려주세요.\n\n이 앱이 작동하지 않고 제가 문제를 해결하는 데 관심이 없다면, 그냥 제거 버튼을 누르세요.]]></string>
+    <string name="dialog_readme_exit">나가기</string>
+    <string name="dialog_readme_continue">동의 &amp; 계속</string>
+
     <string name="label_management">서버 관리</string>
-	<string name="label_type">서버 형식</string>
-	<string name="label_pocketMine_to">PocketMine-MP.phar 또는 src 폴더를 /sdcard/PocketMine에 넣으세요</string>
-	<string name="label_nukkit_to">Nukkit.jar를 /sdcard/Nukkit에 넣으세요</string>
-	
-	<string name="menu_console">콘솔</string>
-    <string name="menu_settings">Settings</string>
+    <string name="label_type">서버 형식</string>
+    <string name="label_pocketMine_to">PocketMine-MP.phar 또는 src 폴더를 /sdcard/PocketMine에 넣으세요</string>
+    <string name="label_nukkit_to">Nukkit.jar를 /sdcard/Nukkit에 넣으세요</string>
+
+    <string name="menu_console">콘솔</string>
+    <string name="menu_settings">설정</string>
     <string name="menu_kill">서버 강제 종료</string>
-    <string name="menu_clear">콘솔 내용 지우기</string>
-	<string name="menu_copy">복사</string>
-    <string name="preference_install_php">PHP 설치</string>
-	<string name="preference_install_php_manually">수동으로 PHP 설치</string>
-    <string name="preference_install_java">Java 설치</string>
+    <string name="menu_clear">지우기</string>
+    <string name="menu_copy">복사</string>
     <string name="menu_download_server">서버 다운로드</string>
 
-	<string name="alert_install_php_title">조심하세요</string>
-	<string name="alert_install_php_message">수동으로 PHP를 설치하는 것은 고급 작업입니다. PHP 바이너리를 직접 선택해야 하며 신뢰할 수 없는 다른 사람으로부터 받은 바이너리는 선택하지 마세요. 장치에 해를 끼칠 수 있습니다.\n압축된 PHP 바이너리를 가지고 있는 경우, 먼저 압축을 해제해 주세요.</string>
+    <string name="alert_install_php_title">조심하세요</string>
+    <string name="alert_install_php_message">수동으로 PHP를 설치하는 것은 고급 작업입니다. PHP 바이너리를 직접 선택해야 하며 신뢰할 수 없는 다른 사람으로부터 받은 바이너리는 선택하지 마세요. 장치에 해를 끼칠 수 있습니다.\n압축된 PHP 바이너리를 가지고 있는 경우, 먼저 압축을 해제해 주세요.</string>
 </resources>
