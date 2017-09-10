@@ -557,7 +557,7 @@ public class MainActivity extends Activity implements Handler.Callback
 			{
 				json=artifacts.getJSONObject(0);
 			}
-			downloadFile(jenkins + "lastSuccessfulBuild/artifact/" + json.getString("relativePath"),saveTo,dialog);
+			downloadFile(jenkins + "lastSuccessfulBuild/artifact/" + json.getString("relativePath")+"?time="+System.currentTimeMillis(),saveTo,dialog);
 		}
 		catch(Exception e)
 		{

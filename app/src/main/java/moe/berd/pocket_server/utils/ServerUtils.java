@@ -481,7 +481,7 @@ public class ServerUtils
 				return true;
 			}
 		}
-		else if(new File(getDataDirectory(),"PocketMine-MP.phar").exists() || !new File(getDataDirectory(),"src")
+		else if(new File(getDataDirectory(),"PocketMine-MP.phar").exists() || new File(getDataDirectory(),"src")
 			.exists())
 		{
 			return true;
