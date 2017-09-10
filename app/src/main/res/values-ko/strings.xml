@@ -40,7 +40,7 @@ Thanks to everyone above!
     <string name="preference_category_console">콘솔</string>
     <string name="preference_ansi_title">ANSI 지원 활성화</string>
     <string name="preference_ansi_summary">콘솔 색상과 일부 글꼴 스타일을 지원합니다. 성능을 줄일 수 있습니다.</string>
-    <string name="preference_font_size_title">폰트 크기</string>
+    <string name="preference_font_size_title">글꼴 크기</string>
 
     <string name="message_copied">복사되었습니다.</string>
     <string name="message_done">완료.</string>
