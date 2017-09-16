@@ -354,7 +354,11 @@ public class MainActivity extends Activity implements Handler.Callback
 			startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(urls_json.getString(key))));
 			return true;
 		}
-		catch(JSONException e)
+		catch(ActivityNotFoundException e)
+		{
+			toast("Open failed.");
+		}
+		catch(Exception e)
 		{
 			toast(e.toString());
 		}
