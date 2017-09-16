@@ -8,14 +8,16 @@
 		],
 		"pocketmine": [
 			"[Suggested]GenisysPro (ZXDA)|https://jenkins.zxda.net/job/GenisysPro/",
+			"Leveryl (Official)|http://cortexpe.ml:8080/job/Leveryl/",
+			"Leveryl (ZXDA)|https://jenkins.zxda.net/job/Leveryl/",
 			"Tesseract (ZXDA)|https://jenkins.zxda.net/job/Tesseract/",
-			"PocketMine-MP-PMMP (pmmp/x64)|https://jenkins.pmmp.gq/job/PocketMine-MP/",
-			"PocketMine-MP-PMMP (ZXDA/x64)|https://jenkins.zxda.net/job/PocketMine-MP/",
-			"[Abandoned]BlueLight (ZXDA)|https://jenkins.zxda.net/job/BlueLight/",
-			"[Abandoned]Elywing (ZXDA)|https://jenkins.zxda.net/job/Elywing/",
-			"[Abandoned]Genisys (ZXDA)|https://jenkins.zxda.net/job/Genisys/",
-			"[Abandoned]ClearSky-PHP7 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP7/",
-			"[Abandoned]ClearSky-PHP5 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP5/"
+			"[x64]PMMP (Official)|https://jenkins.pmmp.gq/job/PocketMine-MP/",
+			"[x64]PMMP (ZXDA)|https://jenkins.zxda.net/job/PocketMine-MP/",
+			"[Discontinued]BlueLight (ZXDA)|https://jenkins.zxda.net/job/BlueLight/",
+			"[Discontinued]Elywing (ZXDA)|https://jenkins.zxda.net/job/Elywing/",
+			"[Discontinued]Genisys (ZXDA)|https://jenkins.zxda.net/job/Genisys/",
+			"[Discontinued]ClearSky-PHP7 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP7/",
+			"[Discontinued]ClearSky-PHP5 (ZXDA)|https://jenkins.zxda.net/job/ClearSky-PHP5/"
 		]
 	},
 	"source_code": "https://github.com/fengberd/PocketServer",
