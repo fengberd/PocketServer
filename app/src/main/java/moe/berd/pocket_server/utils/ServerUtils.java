@@ -36,8 +36,16 @@ public class ServerUtils
 		appFilesDirectory=ctx.getFilesDir();
 		if(appFilesDirectory==null)
 		{
-			// Add this line to compatible with some strange devices
-			appFilesDirectory=new File("/data/data/net.fengberd.minecraftpe_server/files/");
+			ContextWrapper wrapper=new ContextWrapper(ctx);
+			if(wrapper.getApplicationInfo().dataDir!=null)
+			{
+				appFilesDirectory=new File(wrapper.getApplicationInfo().dataDir,"files");
+			}
+			else
+			{
+				// Add this line to compatible with some strange devices
+				appFilesDirectory=new File("/data/user/0/net.fengberd.minecraftpe_server/files/");
+			}
 		}
 		appDirectory=appFilesDirectory.getParentFile();
 	}
