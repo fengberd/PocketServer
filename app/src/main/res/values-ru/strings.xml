@@ -1,30 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 Translated by:
-    Oleksih@gmail.com
+    oleksih@gmail.com
 Corrected by:
 
 Please leave your email or name above with a tab as prefix
 Thanks to everyone above!
 -->
+
 <resources>
     <string name="application_name">Pocket Server</string>
-	
+
     <string name="activity_main">Pocket Server</string>
     <string name="activity_console">Консоль</string>
-	
+    <string name="activity_settings">Настройки</string>
+
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Отмена</string>
     <string name="button_send">Отправить</string>
     <string name="button_stop">Остановить сервер</string>
-    <string name="button_start">Запустить сервер</string>
+    <string name="button_start">запустить сервер</string>
     <string name="button_mount">Установить Java (ROOT)</string>
 
-    <string name="check_nukkit">Nukkit</string>
-    <string name="check_pocketmine">PocketMine</string>
 
+    <string name="check_nukkit" translatable="false">Nukkit</string>
+    <string name="check_pocketmine" translatable="false">PocketMine</string>
+
+
+    
+    <string name="preference_category_general">Основная категория</string>
+    <string name="preference_auto_mount_title">Автоматическое монтирование java библиотеки</string>
+    <string name="preference_auto_mount_summary">Автоматическое монтирование java-библиотеки при запуске сервера.</string>
     <string name="preference_kusud_title">Использовать ku.sud чтобы запросить root</string>
+    <string name="preference_kusud_summary">Запросить root командой «ku.sud» вместо «su», работает только с KingRoot.</string>
+    <string name="preference_enable_firebase_title">Firebase Analytics</string> 
+    <string name="preference_enable_firebase_summary">Firebase Analytics can help me to improve this app and let me know if there\'s anything wrong,if you really mind this you can turn it off.</string>
+    <string name="preference_install_php">Установить PHP</string>
+    <string name="preference_install_php_manually">Установите PHP вручную</string>
+    <string name="preference_install_java">Установить Java</string>
+    <string name="preference_download_binaries">Загрузитиь бинарник (Java/PHP etc.)</string>
+    <string name="preference_update_repos">Обновление репозиториев с сервера</string>
     <string name="preference_category_console">Консоль</string>
     <string name="preference_ansi_title">Включить поддержку ANSI</string>
+    <string name="preference_ansi_summary">Поддержка цветов консоли и стилев шрифта. Повлияет на производительность.</string>
     <string name="preference_font_size_title">Размер шрифта</string>
+
 
     <string name="message_copied">Скопировать.</string>
     <string name="message_done">Готово.</string>
@@ -36,19 +56,36 @@ Thanks to everyone above!
     <string name="message_install_success">Установка удалась.</string>
     <string name="message_no_artifacts">Артефакты не найдены.</string>
     <string name="message_select_repository">Пожалуйста выберите %s хранилише</string>
-    
+    <string name="message_choose_php">Выберете бинарник PHP</string>
+    <string name="message_choose_java">Выберете JAVA библиотеку(.tar.gz file)</string>
+    <string name="message_unknown_error">Unknown Error</string>
+
+    <string name="dialog_abi_title">ABI Не поддерживается</string>
+    <string name="dialog_abi_message">Извените,all ABIs this app supported isn\'t match with your device,we can\'t install %binary on this device.\nYou can continue anyway but this app may not proper functioning.</string>
+    <string name="dialog_abi_exit">Выход</string>
+    <string name="dialog_abi_ignore">Игнорировать</string>
+
+    <string name="dialog_start_failed_title">Не удалось запустить сервер</string>
+    <string name="dialog_start_failed_message">Your server isn\'t started correctly because it\'s stopped in 3 seconds.\nThis might caused by following reasons:\n\n· Server software crashed\n· Device memory too low\n· Device ABI not supported or you are using a wrong binary\n· You shut down the server manually\n\nAll reasons above CANNOT BE SOLVED BY THE DEVELOPER OF POCKET SERVER,please contact THE DEVELOPER OF SERVER SOFTWARE THAT YOU ARE USING for help.\nLEAVING 1 STAR REVIEW TAKES NO EFFECT</string>
+
+    <!--WHY I MUST WRITE SOMETHING LIKE THIS?-->
+    <string name="dialog_readme_title">READ BEFORE USE</string>
+    <string name="dialog_readme_message"><![CDATA[If you don\'t agree the following text please click \"Exit\" and uninstall this app.\nThis app is A TOOL FOR DEVELOPERS INSTEAD OF A GAME SERVER.\n\nBug reporting:\n· Email to:fengberd@gmail.com\n· Click the copyright label and submit a issue.\n· Click \"Report\" button when you see a crash dialog.\n\n* LEAVING 1 STAR REVIEW WITH CONTENT LIKE \"s**t\" TAKES NO EFFECT\n\nIf you meet any problems below,I CANNOT FIX THEM:\n· \"Where is the server folder?\"–>/sdcard/PocketMine or /sdcard/Nukkit\n· \"Why it\'s so lagggg even freezing my system?\"–>Caused by your device,it\'s just a phone or tablet instead of a server with E5–2699...\n· \"Login Timeout\" or \"XXX Error\" in console->Caused by server softwares\n· Some strange output like \"No such file or directory\" in console->This is something like ABI not supported,it\'s caused by your device.\n· ABI Not Supported dialog->Only supported x86 and armeabi devices.\n· \"How do I get the IP address and port for my server?\",\"I can\'t join the server!!!S**t app!!!\"->Just uninstall it,I\'ll not reply you in Google Play.\n· PocketMine server stopped suddenly with no extra messages->Caused by server softwares or PHP binaries\n\nThis app is a platform to let you run \"Server Software\" on your devices,\"Server Software\" isn\'t developed by me,you should contact the developer of them to fix these problems.\nAs a student I CANNOT update this app frequently,please be patient.\n\nIF THIS APP DOES NOT WORK AND YOU ARE NOT INTERESTED IN HELP ME TO FIX IT,JUST CLICK THE UNINSTALL BUTTON]]></string>
+    <string name="dialog_readme_exit">Выход</string>
+    <string name="dialog_readme_continue">Согласен &amp; Продолжить</string>
+
     <string name="label_management">Управление сервером</string>
-	<string name="label_type">Тип Сервера</string>
-	<string name="label_pocketMine_to">Поместите PocketMine-MP.phar или же папку src в /sdcard/PocketMine</string>
+    <string name="label_type">Тип сервера</string>
+    <string name="label_pocketMine_to">Поместите PocketMine-MP.phar или же папку src в /sdcard/PocketMine</string>
 	<string name="label_nukkit_to">Поместите Nukkit.jar в /sdcard/Nukkit</string>
-	
-	<string name="menu_console">Консоль</string>
-    <string name="menu_settings">настройки</string>
-    <string name="menu_kill">Убить сервер</string>
-    <string name="menu_clear">Очистка</string>
-    <string name="menu_copy">Копирование</string>
-    <string name="preference_install_php">Установить PHP</string>
-    <string name="preference_install_php_manually">Установка PHP вручную</string>
-    <string name="preference_install_java">Скачать Java</string>
+
+    <string name="menu_console">Консоль</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_kill">Пренудительно отключить (убить)</string>
+    <string name="menu_clear">Очистить</string>
+    <string name="menu_copy">Скопировать</string>
     <string name="menu_download_server">Скачать ядро сервера</string>
+
+    <string name="alert_install_php_title">Будьте осторожны</string>
+    <string name="alert_install_php_message">Install php manually is an advanced action.You should choose the php binary by yourself,don\'t choose any binary provided by someone you can\'t trust,it may be harmful for you device.\nIf you have an archived PHP binary,please extract it first.</string>
 </resources>
