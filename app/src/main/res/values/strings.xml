@@ -54,6 +54,7 @@ Thanks to everyone above!
     <string name="message_choose_php">Choose your PHP binary</string>
     <string name="message_choose_java">Choose JAVA library(.tar.gz file)</string>
     <string name="message_unknown_error">Unknown Error</string>
+    <string name="message_interrupted">Action was interrupted by user.</string>
 
     <string name="dialog_abi_title">ABI Not Supported</string>
     <string name="dialog_abi_message">Sorry,all ABIs this app supported isn\'t match with your device,we can\'t install %binary on this device.\nYou can continue anyway but this app may not proper functioning.</string>

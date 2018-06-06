@@ -460,6 +460,10 @@ public class MainActivity extends Activity implements Handler.Callback
 			input.close();
 			toast(R.string.message_done);
 		}
+		catch(InterruptedException | InterruptedIOException e)
+		{
+			toast(R.string.message_interrupted);
+		}
 		catch(Exception e)
 		{
 			toast(e.getMessage());
@@ -523,6 +527,10 @@ public class MainActivity extends Activity implements Handler.Callback
 			}
 			reader.close();
 			return sb.toString();
+		}
+		catch(InterruptedException | InterruptedIOException e)
+		{
+			toast(R.string.message_interrupted);
 		}
 		catch(Exception e)
 		{

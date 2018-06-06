@@ -54,6 +54,7 @@ Thanks to everyone above!
     <string name="message_choose_php">选择PHP Binary文件</string>
     <string name="message_choose_java">选择JAVA支持库(.tar.gz文件)</string>
     <string name="message_unknown_error">未知错误</string>
+    <string name="message_interrupted">操作已被用户取消</string>
 
     <string name="dialog_abi_title">ABI不受支持</string>
     <string name="dialog_abi_message">抱歉,你的设备上的所有ABI这个APP都不支持,我们不能在这个设备上安装 %binary.\n你可以忽略这个错误但这个APP可能不会正常工作.</string>

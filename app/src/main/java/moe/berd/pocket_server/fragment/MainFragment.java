@@ -29,7 +29,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 	
 	public MainFragment()
 	{
-		
+	
 	}
 	
 	@Override
@@ -123,13 +123,11 @@ public class MainFragment extends Fragment implements View.OnClickListener
 				public void onClick(DialogInterface p1,final int p2)
 				{
 					p1.dismiss();
-					processing_dialog.setCancelable(false);
+					processing_dialog.setCanceledOnTouchOutside(false);
 					processing_dialog.setMessage(getString(R.string.message_downloading).replace("%s",nukkitMode ? "Nukkit.jar" : "PocketMine-MP.phar"));
 					processing_dialog.setIndeterminate(false);
 					processing_dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-					main.setRequestedOrientation(getResources().getConfiguration().orientation==Configuration.ORIENTATION_PORTRAIT ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-					processing_dialog.show();
-					new Thread(new Runnable()
+					final Thread download_thread=new Thread(new Runnable()
 					{
 						public void run()
 						{
@@ -140,12 +138,30 @@ public class MainFragment extends Fragment implements View.OnClickListener
 							{
 								public void run()
 								{
-									main.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 									tryDismissDialog(processing_dialog);
 								}
 							});
 						}
-					}).start();
+					});
+					processing_dialog.setOnCancelListener(new DialogInterface.OnCancelListener()
+					{
+						@Override
+						public void onCancel(DialogInterface dialog)
+						{
+							download_thread.interrupt();
+						}
+					});
+					processing_dialog.setOnDismissListener(new DialogInterface.OnDismissListener()
+					{
+						@Override
+						public void onDismiss(DialogInterface dialog)
+						{
+							main.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+						}
+					});
+					main.setRequestedOrientation(getResources().getConfiguration().orientation==Configuration.ORIENTATION_PORTRAIT ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+					processing_dialog.show();
+					download_thread.start();
 				}
 			});
 			download_dialog_builder.show();
