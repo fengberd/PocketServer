@@ -22,6 +22,7 @@ import moe.berd.pocket_server.fragment.*;
 import moe.berd.pocket_server.service.*;
 import moe.berd.pocket_server.utils.*;
 
+@SuppressWarnings({"ResultOfMethodCallIgnored","UnusedReturnValue"})
 public class MainActivity extends Activity implements Handler.Callback
 {
 	public final static int ACTION_STOP_SERVICE=1, ACTION_START_FAILED_WARNING=2;
@@ -129,6 +130,7 @@ public class MainActivity extends Activity implements Handler.Callback
 					{
 						File inside=new File(ServerUtils.getAppDirectory(),"php");
 						inside.delete();
+						assert choose!=null;
 						ServerUtils.copyStream(getContentResolver().openInputStream(choose),new FileOutputStream(inside));
 						runOnUiThread(new Runnable()
 						{
@@ -165,6 +167,7 @@ public class MainActivity extends Activity implements Handler.Callback
 						File inside=new File(ServerUtils.getAppDirectory() + "/java/nukkit_library.tar.gz");
 						inside.delete();
 						inside.getParentFile().mkdirs();
+						assert choose!=null;
 						ServerUtils.copyStream(getContentResolver().openInputStream(choose),new FileOutputStream(inside));
 						Runtime.getRuntime()
 							.exec("../busybox tar zxf nukkit_library.tar.gz",new String[0],new File(ServerUtils
@@ -299,7 +302,7 @@ public class MainActivity extends Activity implements Handler.Callback
 				return;
 			}
 			
-			int current_version=0;
+			int current_version;
 			InputStream is=getAssets().open("urls.json");
 			byte[] data=new byte[is.available()];
 			is.read(data);
@@ -423,7 +426,7 @@ public class MainActivity extends Activity implements Handler.Callback
 			URLConnection connection=ServerUtils.openNetConnection(url);
 			input=new BufferedInputStream(connection.getInputStream());
 			output=new FileOutputStream(saveTo);
-			int count=0;
+			int count;
 			long read=0;
 			if(dialog!=null)
 			{
@@ -513,7 +516,7 @@ public class MainActivity extends Activity implements Handler.Callback
 			BufferedReader reader=new BufferedReader(new InputStreamReader(ServerUtils.openNetConnection(url)
 				.getInputStream()));
 			StringBuilder sb=new StringBuilder();
-			String line=null;
+			String line;
 			while((line=reader.readLine())!=null)
 			{
 				sb.append(line).append('\r');
@@ -559,6 +562,14 @@ public class MainActivity extends Activity implements Handler.Callback
 			{
 				json=artifacts.getJSONObject(0);
 			}
+			dialog.setOnDismissListener(new DialogInterface.OnDismissListener()
+			{
+				@Override
+				public void onDismiss(DialogInterface dialog)
+				{
+					fragment_main.refreshElements();
+				}
+			});
 			downloadFile(jenkins + "lastSuccessfulBuild/artifact/" + json.getString("relativePath") + "?time=" + System
 				.currentTimeMillis(),saveTo,dialog);
 		}

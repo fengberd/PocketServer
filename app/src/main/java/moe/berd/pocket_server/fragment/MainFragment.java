@@ -2,6 +2,8 @@ package moe.berd.pocket_server.fragment;
 
 import android.app.*;
 import android.content.*;
+import android.content.pm.*;
+import android.content.res.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
@@ -125,6 +127,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 					processing_dialog.setMessage(getString(R.string.message_downloading).replace("%s",nukkitMode ? "Nukkit.jar" : "PocketMine-MP.phar"));
 					processing_dialog.setIndeterminate(false);
 					processing_dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+					main.setRequestedOrientation(getResources().getConfiguration().orientation==Configuration.ORIENTATION_PORTRAIT ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 					processing_dialog.show();
 					new Thread(new Runnable()
 					{
@@ -137,6 +140,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 							{
 								public void run()
 								{
+									main.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 									tryDismissDialog(processing_dialog);
 								}
 							});

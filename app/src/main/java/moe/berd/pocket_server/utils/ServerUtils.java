@@ -17,6 +17,7 @@ import moe.berd.pocket_server.activity.*;
 import moe.berd.pocket_server.exception.*;
 import moe.berd.pocket_server.fragment.*;
 
+@SuppressWarnings({"ResultOfMethodCallIgnored","UnusedReturnValue","WeakerAccess"})
 public class ServerUtils
 {
 	private static File appDirectory=null, appFilesDirectory=null;
@@ -79,7 +80,7 @@ public class ServerUtils
 		}
 		catch(Exception ignored)
 		{
-			
+		
 		}
 	}
 	
@@ -124,10 +125,10 @@ public class ServerUtils
 			}
 			catch(Exception ignored)
 			{
-				
+			
 			}
 		}
-		String[] args=null;
+		String[] args;
 		if(MainActivity.nukkitMode)
 		{
 			args=new String[]{
@@ -160,9 +161,9 @@ public class ServerUtils
 					{
 						try
 						{
-							int size=0;
+							int size;
 							char[] buffer=new char[8192];
-							StringBuilder s=null;
+							StringBuilder s;
 							while((size=br.read(buffer,0,buffer.length))!=-1)
 							{
 								s=new StringBuilder();
@@ -187,7 +188,7 @@ public class ServerUtils
 						}
 						catch(IOException ignored)
 						{
-							
+						
 						}
 						catch(Exception e)
 						{
@@ -288,7 +289,7 @@ public class ServerUtils
 	
 	public static void copyStream(InputStream is,OutputStream os,boolean close) throws IOException
 	{
-		int cou=0;
+		int cou;
 		byte[] buffer=new byte[8192];
 		while((cou=is.read(buffer))!=-1)
 		{
@@ -309,16 +310,16 @@ public class ServerUtils
 			{
 				@Override
 				@SuppressLint("TrustAllX509TrustManager")
-				public void checkClientTrusted(X509Certificate[] p1,String p2) throws CertificateException
+				public void checkClientTrusted(X509Certificate[] p1,String p2)
 				{
-					
+				
 				}
 				
 				@Override
 				@SuppressLint("TrustAllX509TrustManager")
-				public void checkServerTrusted(X509Certificate[] p1,String p2) throws CertificateException
+				public void checkServerTrusted(X509Certificate[] p1,String p2)
 				{
-					
+				
 				}
 				
 				@Override
@@ -348,7 +349,7 @@ public class ServerUtils
 	{
 		AssetManager assets=ctx.getAssets();
 		ArrayList<String> ABIS=new ArrayList<>(), supportedABIS=new ArrayList<>();
-		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP)
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
 		{
 			Collections.addAll(ABIS,Build.SUPPORTED_ABIS);
 		}
@@ -376,6 +377,22 @@ public class ServerUtils
 				data=assets.open(filename + "/" + ABI);
 				break;
 			}
+			if(ABI.startsWith("arm64"))
+			{
+				if(supportedABIS.contains("arm64.tar.xz"))
+				{
+					compressed=true;
+					data=assets.open(filename + "/arm64.tar.xz");
+				}
+				else if(supportedABIS.contains("arm64"))
+				{
+					data=assets.open(filename + "/arm64");
+				}
+				else
+				{
+					continue;
+				}
+			}
 			if(ABI.startsWith("armeabi") || ABI.startsWith("arm64"))
 			{
 				if(supportedABIS.contains("armeabi.tar.xz"))
@@ -387,7 +404,10 @@ public class ServerUtils
 				{
 					data=assets.open(filename + "/armeabi");
 				}
-				break;
+				else
+				{
+					continue;
+				}
 			}
 			if(ABI.startsWith("x86"))
 			{
@@ -400,7 +420,6 @@ public class ServerUtils
 				{
 					data=assets.open(filename + "/i686");
 				}
-				break;
 			}
 		}
 		if(data==null)
@@ -484,16 +503,12 @@ public class ServerUtils
 	{
 		if(MainActivity.nukkitMode)
 		{
-			if(new File(getDataDirectory(),"Nukkit.jar").exists())
-			{
-				return true;
-			}
+			return new File(getDataDirectory(),"Nukkit.jar").exists();
 		}
-		else if(new File(getDataDirectory(),"PocketMine-MP.phar").exists() || new File(getDataDirectory(),"src")
-			.exists())
+		else
 		{
-			return true;
+			return new File(getDataDirectory(),"PocketMine-MP.phar").exists() || new File(getDataDirectory(),"src")
+				.exists();
 		}
-		return false;
 	}
 }

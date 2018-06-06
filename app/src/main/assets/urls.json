@@ -9,11 +9,11 @@
 		"pocketmine": [
 			"[Suggested]GenisysPro (ZXDA)|https://jenkins.zxda.net/job/GenisysPro/",
 			"Apollo (ZXDA)|https://jenkins.zxda.net/job/Apollo-Legacy/",
-			"Leveryl (Official)|http://cortexpe.ml:8080/job/Leveryl/",
-			"Leveryl (ZXDA)|https://jenkins.zxda.net/job/Leveryl/",
 			"Tesseract (ZXDA)|https://jenkins.zxda.net/job/Tesseract/",
 			"[x64]PMMP (Official)|https://jenkins.pmmp.gq/job/PocketMine-MP/",
 			"[x64]PMMP (ZXDA)|https://jenkins.zxda.net/job/PocketMine-MP/",
+			"Leveryl (Official)|http://cortexpe.ml:8080/job/Leveryl/",
+			"Leveryl (ZXDA)|https://jenkins.zxda.net/job/Leveryl/",
 			"[Discontinued]BlueLight (ZXDA)|https://jenkins.zxda.net/job/BlueLight/",
 			"[Discontinued]Elywing (ZXDA)|https://jenkins.zxda.net/job/Elywing/",
 			"[Discontinued]Genisys (ZXDA)|https://jenkins.zxda.net/job/Genisys/",
