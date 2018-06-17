@@ -4,7 +4,7 @@
 		"nukkit": [
 			"MengCraft|http://ci.mengcraft.com:8080/job/nukkit/",
 			"RegularBox|http://ci.regularbox.com/job/Nukkit/",
-			"ZXDA|https://jenkins.zxda.net/job/Nukkit/"
+			"ZXDA|https://jenkins.zxda.net/job/Nukkit/",
 			"NukkitX|https://ci.nukkitx.com/job/NukkitX/job/master/"
 		],
 		"pocketmine": [
