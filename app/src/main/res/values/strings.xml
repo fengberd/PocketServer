@@ -3,7 +3,7 @@
 Translated by:
     fengberd@gmail.com
 Corrected by:
-
+    EoflaOE <eoflaoevicecity@gmail.com>
 Please leave your email or name above with a tab as prefix
 Thanks to everyone above!
 -->
@@ -25,48 +25,48 @@ Thanks to everyone above!
     <string name="check_pocketmine" translatable="false">PocketMine</string>
 
     <string name="preference_category_general">General</string>
-    <string name="preference_auto_mount_title">Auto mount java library</string>
-    <string name="preference_auto_mount_summary">Mount java library automatically when you start the server.</string>
+    <string name="preference_auto_mount_title">Auto mount Java library</string>
+    <string name="preference_auto_mount_summary">Mount Java library automatically when you start the server.</string>
     <string name="preference_kusud_title">Use ku.sud to request root</string>
-    <string name="preference_kusud_summary">Request root by "ku.sud" command instead of "su",only works with KingRoot.</string>
+    <string name="preference_kusud_summary">Request root by "ku.sud" command instead of "su", only works with KingRoot.</string>
     <string name="preference_enable_firebase_title">Firebase Analytics</string>
-    <string name="preference_enable_firebase_summary">Firebase Analytics can help me to improve this app and let me know if there\'s anything wrong,if you really mind this you can turn it off.</string>
+    <string name="preference_enable_firebase_summary">Firebase Analytics can help me to improve this app and let me know if there\'s anything wrong, If you really mind this you can turn it off.</string>
     <string name="preference_install_php">Install PHP</string>
     <string name="preference_install_php_manually">Install PHP manually</string>
     <string name="preference_install_java">Install Java</string>
-    <string name="preference_download_binaries">Download Binaries(Java/PHP etc.)</string>
-    <string name="preference_update_repos">Update Repositories From Server</string>
+    <string name="preference_download_binaries">Download Binaries(Java, PHP, etc.)</string>
+    <string name="preference_update_repos">Update repositories from server</string>
     <string name="preference_category_console">Console</string>
     <string name="preference_ansi_title">Enable ANSI support</string>
-    <string name="preference_ansi_summary">Support console color and some font style.May reduce performance.</string>
+    <string name="preference_ansi_summary">Support console colors and some font styles. It may reduce performance and it is recommended to turn off on low-performance devices.</string>
     <string name="preference_font_size_title">Font Size</string>
 
     <string name="message_copied">Copied.</string>
     <string name="message_done">Done.</string>
     <string name="message_running">is running</string>
     <string name="message_tap_open">Tap to open Pocket Server</string>
-    <string name="message_installing">Installing,Please wait...</string>
+    <string name="message_installing">Installing, Please wait...</string>
     <string name="message_downloading">Downloading %s ...</string>
     <string name="message_install_fail">Install failed:</string>
-    <string name="message_install_success">Install successfully.</string>
+    <string name="message_install_success">Installed successfully.</string>
     <string name="message_no_artifacts">No artifacts found.</string>
     <string name="message_select_repository">Please select %s repository</string>
     <string name="message_choose_php">Choose your PHP binary</string>
-    <string name="message_choose_java">Choose JAVA library(.tar.gz file)</string>
-    <string name="message_unknown_error">Unknown Error</string>
+    <string name="message_choose_java">Choose Java library(.tar.gz file)</string>
+    <string name="message_unknown_error">Unknown error</string>
     <string name="message_interrupted">Action was interrupted by user.</string>
 
     <string name="dialog_abi_title">ABI Not Supported</string>
-    <string name="dialog_abi_message">Sorry,all ABIs this app supported isn\'t match with your device,we can\'t install %binary on this device.\nYou can continue anyway but this app may not proper functioning.</string>
+    <string name="dialog_abi_message">Sorry, all ABIs this app supported doesn\'t match with your device, we can\'t install %binary on this device.\nYou can continue anyway but this app may not work properly.</string>
     <string name="dialog_abi_exit">Exit</string>
     <string name="dialog_abi_ignore">Ignore</string>
 
     <string name="dialog_start_failed_title">Failed To Start Server</string>
-    <string name="dialog_start_failed_message">Your server isn\'t started correctly because it\'s stopped in 3 seconds.\nThis might caused by following reasons:\n\n· Server software crashed\n· Device memory too low\n· Device ABI not supported or you are using a wrong binary\n· You shut down the server manually\n\nAll reasons above CANNOT BE SOLVED BY THE DEVELOPER OF POCKET SERVER,please contact THE DEVELOPER OF SERVER SOFTWARE THAT YOU ARE USING for help.\nLEAVING 1 STAR REVIEW TAKES NO EFFECT</string>
+    <string name="dialog_start_failed_message">Your server didn\'t start correctly because it\'s stopped in 3 seconds.\nThis might caused by following reasons:\n\n· Server software crashed\n· Device memory too low\n· Device ABI not supported or you are using a wrong binary\n· You shut down the server manually\n\nAll reasons above CANNOT BE SOLVED BY THE DEVELOPER OF POCKET SERVER, please contact THE DEVELOPER OF SERVER SOFTWARE THAT YOU ARE USING for help.\nLEAVING 1 STAR REVIEW TAKES NO EFFECT</string>
 
     <!--WHY I MUST WRITE SOMETHING LIKE THIS?-->
     <string name="dialog_readme_title">READ BEFORE USE</string>
-    <string name="dialog_readme_message"><![CDATA[If you don\'t agree the following text please click \"Exit\" and uninstall this app.\nThis app is A TOOL FOR DEVELOPERS INSTEAD OF A GAME SERVER.\n\nBug reporting:\n· Email to:fengberd@gmail.com\n· Click the copyright label and submit a issue.\n· Click \"Report\" button when you see a crash dialog.\n\n* LEAVING 1 STAR REVIEW WITH CONTENT LIKE \"s**t\" TAKES NO EFFECT\n\nIf you meet any problems below,I CANNOT FIX THEM:\n· \"Where is the server folder?\"–>/sdcard/PocketMine or /sdcard/Nukkit\n· \"Why it\'s so lagggg even freezing my system?\"–>Caused by your device,it\'s just a phone or tablet instead of a server with E5–2699...\n· \"Login Timeout\" or \"XXX Error\" in console->Caused by server softwares\n· Some strange output like \"No such file or directory\" in console->This is something like ABI not supported,it\'s caused by your device.\n· ABI Not Supported dialog->Only supported x86 and armeabi devices.\n· \"How do I get the IP address and port for my server?\",\"I can\'t join the server!!!S**t app!!!\"->Just uninstall it,I\'ll not reply you in Google Play.\n· PocketMine server stopped suddenly with no extra messages->Caused by server softwares or PHP binaries\n\nThis app is a platform to let you run \"Server Software\" on your devices,\"Server Software\" isn\'t developed by me,you should contact the developer of them to fix these problems.\nAs a student I CANNOT update this app frequently,please be patient.\n\nIF THIS APP DOES NOT WORK AND YOU ARE NOT INTERESTED IN HELP ME TO FIX IT,JUST CLICK THE UNINSTALL BUTTON]]></string>
+    <string name="dialog_readme_message"><![CDATA[If you don\'t agree the following text please click \"Exit\" and uninstall this app.\nThis app is A TOOL FOR DEVELOPERS INSTEAD OF A GAME SERVER.\n\nBug reporting:\n· Email to: fengberd@gmail.com\n· Click the copyright label and submit a issue.\n· Click \"Report\" button when you see a crash dialog.\n\n* LEAVING 1 STAR REVIEW WITH CONTENT LIKE \"s**t\" TAKES NO EFFECT\n\nIf you meet any problems below, I CANNOT FIX THEM:\n· \"Where is the server folder?\" –> /sdcard/PocketMine or /sdcard/Nukkit\n· \"Why it\'s so lagggg even freezing my system?\" –> Caused by your device, it\'s just a phone or tablet instead of a server with E5–2699...\n· \"Login Timeout\" or \"XXX Error\" in console -> Caused by the server software\n· Some strange output like \"No such file or directory\" in console -> This is something like ABI not supported, it\'s caused by your device.\n· ABI Not Supported dialog -> It only supports x86 and armeabi devices.\n· \"How do I get the IP address and port for my server?\", \"I can\'t join the server!!! S**t app!!!\" -> Just uninstall it, I\'ll not reply to you in Google Play.\n· PocketMine server stopped suddenly with no extra messages -> Caused by server software or PHP binaries\n\nThis app is a platform to let you run \"Server Software\" on your devices, \"Server Software\" isn\'t developed by me, you should contact the developer of them to fix these problems.\nAs a student I CANNOT update this app frequently, please be patient.\n\nIF THIS APP DOES NOT WORK AND YOU ARE NOT INTERESTED IN HELPING ME TO FIX IT, JUST CLICK THE UNINSTALL BUTTON]]></string>
     <string name="dialog_readme_exit">Exit</string>
     <string name="dialog_readme_continue">Agree &amp; Continue</string>
 
@@ -83,5 +83,5 @@ Thanks to everyone above!
     <string name="menu_download_server">Download server</string>
 
     <string name="alert_install_php_title">Be careful</string>
-    <string name="alert_install_php_message">Install php manually is an advanced action.You should choose the php binary by yourself,don\'t choose any binary provided by someone you can\'t trust,it may be harmful for you device.\nIf you have an archived PHP binary,please extract it first.</string>
+    <string name="alert_install_php_message">Installing PHP manually is an advanced action. You should choose the PHP binary by yourself, don\'t choose any binary provided by someone you can\'t trust, it may be harmful for you device.\nIf you have an archived PHP binary, please extract it first.</string>
 </resources>
