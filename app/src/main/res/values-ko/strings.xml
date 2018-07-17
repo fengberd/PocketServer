@@ -29,7 +29,7 @@ Thanks to everyone above!
     <string name="preference_auto_mount_title">자동으로 Java 라이브러리 마운트</string>
     <string name="preference_auto_mount_summary">서버를 시작할 때 자동으로 Java 라이브러리를 마운트합니다.</string>
     <string name="preference_kusud_title">ku.sud를 사용해 루트 권한 요청</string>
-    <string name="preference_kusud_summary">"su" 대신 "ku.sud" 명령어를 사용해서 루트를 요청합니다, KingRoot에서만 작동합니다.</string>
+    <string name="preference_kusud_summary">"su" 대신 "ku.sud" 명령어로 루트를 요청합니다, KingRoot에서만 작동합니다.</string>
     <string name="preference_enable_firebase_title">Firebase Analytics</string>
     <string name="preference_enable_firebase_summary">Firebase Analytics는 제가 앱을 향상하는 것을 도울 수 있고 잘못된 것이 있는지 알 수 있도록 도와주며, 싫으시다면 끌 수 있습니다.</string>
     <string name="preference_install_php">PHP 설치</string>
@@ -63,10 +63,10 @@ Thanks to everyone above!
     <string name="dialog_abi_ignore">무시</string>
 
     <string name="dialog_start_failed_title">서버 시작 실패</string>
-    <string name="dialog_start_failed_message">서버가 3초 안에 중지되었기 때문에 올바르게 시작되지 않았습니다. 이는 다음 이유로 인해서 발생했을 수 있습니다:\n\n· 서버 소프트웨어가 충돌함\n· 장치 메모리가 너무 낮음\n· 장치 ABI가 지원되지 않거나 잘못된 바이너리를 사용하고 있음\n· 서버를 직접 종료함\n\n위의 모든 이유는 Pocket Server의 개발자가 해결할 수 없습니다, 도움을 받으려면 사용하고 있는 서버 소프트웨어의 개발자에게 문의하세요.\n별 1개 리뷰를 남기는 것은 효과가 없습니다</string>
+    <string name="dialog_start_failed_message">서버가 3초 안에 중지되었기 때문에 올바르게 시작되지 않았습니다. 이는 다음 이유로 인해 발생했을 수 있습니다:\n\n· 서버 소프트웨어가 충돌함\n· 장치 메모리가 너무 낮음\n· 장치 ABI가 지원되지 않거나 잘못된 바이너리를 사용하고 있음\n· 서버를 직접 종료함\n\n위의 모든 이유는 Pocket Server의 개발자가 해결할 수 없습니다, 도움을 받으려면 사용하고 있는 서버 소프트웨어의 개발자에게 문의하세요.\n별 1개 리뷰를 남기는 것은 효과가 없습니다</string>
 
     <string name="dialog_readme_title">사용 전에 읽어주세요</string>
-    <string name="dialog_readme_message"><![CDATA[다음 텍스트에 동의하지 않으신다면 \"나가기\"를 클릭하고 앱을 제거하세요.\n이 앱은 게임 서버 대신 개발자를 위한 도구입니다.\n\n버그 보고:\n· 이메일: fengberd@gmail.com\n· 저작권 라벨을 클릭하고 이슈를 제출하세요.· 충돌 대화 상자를 볼 때 \"보고\" 버튼을 누르세요.\n\n* \"씨*\" 같은 콘텐츠와 함께 별 1개 리뷰를 남기는 것은 효과가 없습니다\n\n저는 아래의 문제들이 발생하면 이들을 고칠 수 없습니다:\n· \"서버 폴더는 어디에 있나요?\" –> /sdcard/PocketMine 또는 /sdcard/Nukkit\n· \"왜 랙이 많이 걸리고 심지어는 시스템이 멈추나요?\"–>장치에서 발생하는 것으로, 장치는 E5–2699로 구동되는 서버가 아니라 그냥 휴대전화나 태블릿일 뿐이라고요...\n· \"콘솔에 Login Timeout(로그인 시간 초과)\" 또는 \"XXX 오류\" -> 서버 소프트웨어로 인해 발생\n· 콘솔에 \"No such file or directory(그런 파일 또는 디렉터리 없음)\"같은 이상한 출력 표시 -> 장치에서 ABI가 지원되지 않거나 하는 경우에 발생합니다.\n· ABI 지원되지 않음 대화 상자 -> x86 또는 armeabi 장치만 지원합니다.· \"어떻게 제 서버의 IP 주소와 포트를 가져오나요?\", \"서버에 들어갈 수 없어요!!! 씨* 앱 개 쓰*기네!!!\" -> 그냥 앱을 삭제하세요, Google Play에서 응답하지 않겠습니다.\n· PocketMine 서버가 갑자기 추가 메시지 없이 중지되었어요 -> 서버 소프트웨어 또는 PHP 바이너리로 발생합니다.\n\n이 앱은 \"서버 소프트웨어\"를 장치에서 실행할 수 있도록 해주는 플랫폼으로, \"서버 소프트웨어\"는 제가 개발하지 않습니다. 문제를 해결하려면 해당 서버 소프트웨어의 개발자에게 문의해야 합니다.\n학생으로서 이 앱을 자주 업데이트할 수 없기에, 차분하게 기다려주세요.\n\n이 앱이 작동하지 않고 제가 문제를 해결하는 데 관심이 없다면, 그냥 제거 버튼을 누르세요]]></string>
+    <string name="dialog_readme_message"><![CDATA[다음 텍스트에 동의하지 않으신다면 \"나가기\"를 클릭하고 앱을 제거하세요.\n이 앱은 게임 서버 대신 개발자를 위한 도구입니다.\n\n버그 보고:\n· 이메일: fengberd@gmail.com\n· 저작권 라벨을 클릭하고 이슈를 제출하세요.· 충돌 대화 상자를 볼 때 \"보고\" 버튼을 누르세요.\n\n* \"씨*\" 같은 콘텐츠와 함께 별 1개 리뷰를 남기는 것은 효과가 없습니다\n\n저는 아래의 문제들이 발생하면 이들을 고칠 수 없습니다:\n· \"서버 폴더는 어디에 있나요?\" –> /sdcard/PocketMine 또는 /sdcard/Nukkit\n· \"왜 랙이 많이 걸리고 심지어는 시스템이 멈추나요?\"–>장치에서 발생하는 것으로, 장치는 E5–2699로 구동되는 서버가 아니라 그냥 휴대전화나 태블릿일 뿐이라고요...\n· \"콘솔에 Login Timeout(로그인 시간 초과)\" 또는 \"XXX 오류\" -> 서버 소프트웨어로 인해 발생\n· 콘솔에 \"No such file or directory(그런 파일 또는 디렉터리 없음)\"같은 이상한 출력 표시 -> 장치에서 ABI가 지원되지 않거나 하는 경우에 발생합니다.\n· ABI 지원되지 않음 대화 상자 -> x86 또는 armeabi 장치만 지원합니다.· \"어떻게 제 서버의 IP 주소와 포트를 확인할 수 있나요?\", \"서버에 들어갈 수 없어요!!! 씨* 앱 개 쓰*기네!!!\" -> 그냥 앱을 삭제하세요, Google Play에서 응답하지 않겠습니다.\n· PocketMine 서버가 갑자기 추가 메시지 없이 중지되었어요 -> 서버 소프트웨어 또는 PHP 바이너리로 인해 발생합니다.\n\n이 앱은 \"서버 소프트웨어\"를 장치에서 실행할 수 있도록 해주는 플랫폼으로, \"서버 소프트웨어\"는 제가 개발하지 않습니다. 문제를 해결하려면 해당 서버 소프트웨어의 개발자에게 문의해야 합니다.\n학생으로서 이 앱을 자주 업데이트할 수 없기에, 차분하게 기다려주세요.\n\n이 앱이 작동하지 않고 제가 문제를 해결하는 데 관심이 없다면, 그냥 제거 버튼을 누르세요]]></string>
     <string name="dialog_readme_exit">나가기</string>
     <string name="dialog_readme_continue">동의 및 계속</string>
 
@@ -83,5 +83,5 @@ Thanks to everyone above!
     <string name="menu_download_server">서버 다운로드</string>
 
     <string name="alert_install_php_title">조심하세요</string>
-    <string name="alert_install_php_message">수동으로 PHP를 설치하는 것은 고급 작업입니다. PHP 바이너리를 직접 선택해야 하며, 신뢰할 수 없는 다른 사람으로부터 받은 바이너리는 선택하지 마세요. 장치에 해를 끼칠 수 있습니다.\n압축된 PHP 바이너리를 가지고 있는 경우, 먼저 압축을 해제해주세요.</string>
+    <string name="alert_install_php_message">수동으로 PHP를 설치하는 것은 고급 작업입니다. PHP 바이너리를 직접 선택해야 하며, 신뢰할 수 없는 다른 사람으로부터 받은 바이너리는 선택하지 마세요, 장치에 해를 끼칠 수 있습니다.\n압축된 PHP 바이너리를 가지고 있는 경우, 먼저 압축을 해제해주세요.</string>
 </resources>
