@@ -16,12 +16,6 @@
             android:defaultValue="false"
             android:summary="@string/preference_kusud_summary"/>
 
-        <CheckBoxPreference
-            android:key="EnableFirebase"
-            android:title="@string/preference_enable_firebase_title"
-            android:defaultValue="true"
-            android:summary="@string/preference_enable_firebase_summary"/>
-
         <Preference
             android:key="button_install_php"
             android:title="@string/preference_install_php"/>

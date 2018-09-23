@@ -7,8 +7,6 @@ import android.os.*;
 import android.view.*;
 import android.widget.*;
 
-import com.google.firebase.analytics.*;
-
 import net.fengberd.minecraftpe_server.*;
 
 import org.json.*;
@@ -62,8 +60,6 @@ public class MainActivity extends Activity implements Handler.Callback
 	public ConsoleFragment fragment_console=new ConsoleFragment();
 	public SettingsFragment fragment_settings=new SettingsFragment();
 	
-	private FirebaseAnalytics firebaseAnalytics=null;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -79,11 +75,6 @@ public class MainActivity extends Activity implements Handler.Callback
 		
 		ansiMode=ConfigProvider.getBoolean("ANSIMode",nukkitMode);
 		nukkitMode=ConfigProvider.getBoolean("NukkitMode",nukkitMode);
-		
-		if(ConfigProvider.getBoolean("EnableFirebase",true))
-		{
-			firebaseAnalytics=FirebaseAnalytics.getInstance(this);
-		}
 		
 		ServerUtils.init(this);
 		try
@@ -233,15 +224,6 @@ public class MainActivity extends Activity implements Handler.Callback
 			fragment_main.refreshElements();
 			break;
 		case ACTION_START_FAILED_WARNING:
-			if(firebaseAnalytics!=null)
-			{
-				Bundle report=new Bundle();
-				report.putBoolean("installed_php",ServerUtils.installedPHP());
-				report.putBoolean("installed_java",ServerUtils.installedJava());
-				report.putBoolean("mounted_java",ServerUtils.mountedJavaLibrary());
-				report.putBoolean("nukkit_mode",nukkitMode);
-				firebaseAnalytics.logEvent("server_start_failed",report);
-			}
 			runOnUiThread(new Runnable()
 			{
 				@Override
@@ -595,27 +577,6 @@ public class MainActivity extends Activity implements Handler.Callback
 	
 	public void alertABIWarning(final String name,final DialogInterface.OnClickListener onclick,ArrayList<String> supportedABIS)
 	{
-		if(firebaseAnalytics!=null)
-		{
-			Bundle report=new Bundle();
-			StringBuilder abis=new StringBuilder();
-			boolean first=true;
-			for(String abi : supportedABIS)
-			{
-				if(first)
-				{
-					first=false;
-				}
-				else
-				{
-					abis.append(',');
-				}
-				abis.append(abi);
-			}
-			report.putString("abis",abis.toString());
-			report.putString("binary",name);
-			firebaseAnalytics.logEvent("unsupported_abi",report);
-		}
 		runOnUiThread(new Runnable()
 		{
 			@Override

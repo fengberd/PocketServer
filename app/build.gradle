@@ -1,16 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "net.fengberd.minecraftpe_server"
         minSdkVersion 14
-        targetSdkVersion 21
-        versionCode 1095
-        versionName "1.0.9.5"
-        vectorDrawables.useSupportLibrary = true
+        targetSdkVersion 27
+        versionCode 1096
+        versionName "1.0.9.6"
     }
 
     buildTypes {
@@ -26,12 +25,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:21.0.3'
-    compile 'com.google.firebase:firebase-core:10.0.1'
-    compile 'com.google.firebase:firebase-crash:10.0.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:support-v4:27.1.1'
 }
-
-
-
-apply plugin: 'com.google.gms.google-services'
