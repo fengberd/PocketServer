@@ -100,7 +100,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:text="Copyright 2016-2018 © FENGberd.All rights reserved."
+        android:text="Copyright © 2016-2019 FENGberd. All rights reserved."
         android:textAllCaps="false"
         tools:ignore="HardcodedText"/>
 
