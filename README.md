@@ -2,7 +2,7 @@
 An Android application which enables you to run PocketMine or Nukkit on your phone!
 
 # Download
-You can download from the [Google Play](https://play.google.com/store/apps/details?id=net.fengberd.minecraftpe_server) or [Releases Page](https://github.com/fengberd/PocketServer/releases)
+You can download from the [Releases Page](https://github.com/fengberd/PocketServer/releases) or compile it yourself.
 
 # Usage
 PocketMine = Install App -> Install PHP -> Check PocketMine at Server Type  -> Press Download Server, then choose server you want to use-> Press Start Server
