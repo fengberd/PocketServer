@@ -73,7 +73,7 @@ public class ServerUtils
 		try
 		{
 			// TODO: This might kill other processes?
-			ConsoleFragment.logLine("[PE Server] Killing server...");
+			ConsoleFragment.logLine("[PocketServer] Killing server...");
 			Runtime.getRuntime()
 				.exec(getAppDirectory() + "/busybox killall -9 " + (MainActivity.nukkitMode ? "java" : "php"))
 				.waitFor();
@@ -139,7 +139,12 @@ public class ServerUtils
 		else
 		{
 			args=new String[]{
-				getAppDirectory() + "/php","-c",getDataDirectory() + "/php.ini",getDataDirectory() + file,MainActivity.ansiMode ? "--enable-ansi" : "--disable-ansi"
+				getAppDirectory() + "/php",
+				"-c",
+				getDataDirectory() + "/php.ini",
+				getDataDirectory() + file,
+				MainActivity.ansiMode ? "--enable-ansi" : "--disable-ansi",
+				"--no-wizard"
 			};
 		}
 		ProcessBuilder builder=new ProcessBuilder(args);
@@ -208,12 +213,12 @@ public class ServerUtils
 					}
 					if(System.currentTimeMillis() - startTime<3000)
 					{
-						ConsoleFragment.logLine("[PE Server] Server start failed!");
+						ConsoleFragment.logLine("[PocketServer] Server start failed!");
 						MainActivity.postStartFailedWarning();
 					}
 					else
 					{
-						ConsoleFragment.logLine("[PE Server] Server was stopped.");
+						ConsoleFragment.logLine("[PocketServer] Server was stopped.");
 					}
 					MainActivity.postStopService();
 				}
@@ -222,7 +227,7 @@ public class ServerUtils
 		}
 		catch(Exception e)
 		{
-			ConsoleFragment.logLine("[PE Server] Unable to start " + (MainActivity.nukkitMode ? "Java" : "PHP") + ".");
+			ConsoleFragment.logLine("[PocketServer] Unable to start " + (MainActivity.nukkitMode ? "Java" : "PHP") + ".");
 			ConsoleFragment.logLine(e.toString());
 			MainActivity.postStopService();
 			killServer();

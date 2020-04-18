@@ -1,13 +1,18 @@
 package moe.berd.pocket_server.activity;
 
+import android.*;
+import android.app.Fragment;
 import android.app.*;
 import android.content.*;
+import android.content.pm.*;
 import android.net.*;
 import android.os.*;
+import android.support.v4.app.*;
+import android.support.v4.content.*;
 import android.view.*;
 import android.widget.*;
 
-import net.fengberd.minecraftpe_server.*;
+import net.fengberd.minecraftpe_server.R;
 
 import org.json.*;
 
@@ -26,6 +31,8 @@ public class MainActivity extends Activity implements Handler.Callback
 	public final static int ACTION_STOP_SERVICE=1, ACTION_START_FAILED_WARNING=2;
 	
 	public final static int CHOOSE_PHP_CODE=1, CHOOSE_JAVA_CODE=2;
+	
+	public final static int REQUEST_STORAGE = 0;
 	
 	public static Intent serverIntent=null;
 	public static Handler actionHandler=null;
@@ -96,6 +103,27 @@ public class MainActivity extends Activity implements Handler.Callback
 		serverIntent=new Intent(this,ServerService.class);
 		
 		switchFragment(fragment_main,R.string.activity_main);
+		
+		if(ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED)
+		{
+			ActivityCompat.requestPermissions(this,new String[]{
+				Manifest.permission.WRITE_EXTERNAL_STORAGE
+			},REQUEST_STORAGE);
+		}
+	}
+	
+	@Override
+	public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults)
+	{
+		switch(requestCode)
+		{
+		case REQUEST_STORAGE:
+			if(grantResults.length==0 || grantResults[0]!=PackageManager.PERMISSION_GRANTED)
+			{
+				toast("The app won't work without storage permission");
+			}
+			break;
+		}
 	}
 	
 	@Override

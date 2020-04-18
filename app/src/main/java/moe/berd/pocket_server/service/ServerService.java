@@ -16,7 +16,16 @@ public class ServerService extends Service
 	@Override
 	public int onStartCommand(Intent intent,int flags,int startId)
 	{
-		startForeground(1,new NotificationCompat.Builder(getApplicationContext()).setOngoing(true)
+		String channelId = "";
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+		{
+			channelId = "running";
+			NotificationChannel channel=new NotificationChannel(channelId,"Server Running",NotificationManager.IMPORTANCE_LOW);
+			channel.setDescription("Make sure the service won't die");
+			NotificationManager notificationManager=getSystemService(NotificationManager.class);
+			notificationManager.createNotificationChannel(channel);
+		}
+		startForeground(1,new NotificationCompat.Builder(getApplicationContext(), channelId).setOngoing(true)
 			.setSmallIcon(R.drawable.ic_launcher)
 			.setContentText(getString(R.string.message_tap_open))
 			.setContentTitle((MainActivity.nukkitMode ? "Nukkit " : "PocketMine ") + getString(R.string.message_running))
