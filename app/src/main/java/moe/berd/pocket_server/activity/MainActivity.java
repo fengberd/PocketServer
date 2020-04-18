@@ -7,6 +7,7 @@ import android.content.*;
 import android.content.pm.*;
 import android.net.*;
 import android.os.*;
+import android.support.annotation.*;
 import android.support.v4.app.*;
 import android.support.v4.content.*;
 import android.view.*;
@@ -18,7 +19,7 @@ import org.json.*;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
+import java.nio.charset.*;
 
 import moe.berd.pocket_server.exception.*;
 import moe.berd.pocket_server.fragment.*;
@@ -90,7 +91,7 @@ public class MainActivity extends Activity implements Handler.Callback
 		}
 		catch(ABINotSupportedException e)
 		{
-			alertABIWarning(e.binaryName,null,e.supportedABIS);
+			alertABIWarning(e.binaryName,null);
 		}
 		catch(Exception e)
 		{
@@ -113,16 +114,14 @@ public class MainActivity extends Activity implements Handler.Callback
 	}
 	
 	@Override
-	public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults)
+	public void onRequestPermissionsResult(int requestCode,@NonNull String[] permissions,@NonNull int[] grantResults)
 	{
-		switch(requestCode)
+		if(requestCode==REQUEST_STORAGE)
 		{
-		case REQUEST_STORAGE:
 			if(grantResults.length==0 || grantResults[0]!=PackageManager.PERMISSION_GRANTED)
 			{
 				toast("The app won't work without storage permission");
 			}
-			break;
 		}
 	}
 	
@@ -317,13 +316,13 @@ public class MainActivity extends Activity implements Handler.Callback
 			byte[] data=new byte[is.available()];
 			is.read(data);
 			is.close();
-			current_version=new JSONObject(new String(data,"UTF-8")).getInt("version");
+			current_version=new JSONObject(new String(data,StandardCharsets.UTF_8)).getInt("version");
 			
 			is=new FileInputStream(file);
 			data=new byte[(int)file.length()];
 			is.read(data);
 			is.close();
-			JSONObject json=new JSONObject(new String(data,"UTF-8"));
+			JSONObject json=new JSONObject(new String(data,StandardCharsets.UTF_8));
 			
 			if(!json.has("version") || json.getInt("version")<current_version)
 			{
@@ -603,7 +602,7 @@ public class MainActivity extends Activity implements Handler.Callback
 		ServerUtils.copyStream(getAssets().open(name),new FileOutputStream(target));
 	}
 	
-	public void alertABIWarning(final String name,final DialogInterface.OnClickListener onclick,ArrayList<String> supportedABIS)
+	public void alertABIWarning(final String name,final DialogInterface.OnClickListener onclick)
 	{
 		runOnUiThread(new Runnable()
 		{
@@ -644,19 +643,9 @@ public class MainActivity extends Activity implements Handler.Callback
 				Context context=((ContextWrapper)dialog.getContext()).getBaseContext();
 				if(context instanceof Activity)
 				{
-					if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1)
+					if(!((Activity)context).isFinishing() && !((Activity)context).isDestroyed())
 					{
-						if(!((Activity)context).isFinishing() && !((Activity)context).isDestroyed())
-						{
-							dialog.dismiss();
-						}
-					}
-					else
-					{
-						if(!((Activity)context).isFinishing())
-						{
-							dialog.dismiss();
-						}
+						dialog.dismiss();
 					}
 				}
 				else

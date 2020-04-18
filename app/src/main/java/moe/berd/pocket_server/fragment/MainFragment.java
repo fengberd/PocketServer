@@ -61,19 +61,19 @@ public class MainFragment extends Fragment implements View.OnClickListener
 	{
 		main.findViewById(R.id.label_copyright).setOnClickListener(this);
 		
-		label_path_tip=(TextView)main.findViewById(R.id.label_path_tip);
+		label_path_tip=main.findViewById(R.id.label_path_tip);
 		
-		button_stop=(Button)main.findViewById(R.id.button_stop);
+		button_stop=main.findViewById(R.id.button_stop);
 		button_stop.setOnClickListener(this);
-		button_start=(Button)main.findViewById(R.id.button_start);
+		button_start=main.findViewById(R.id.button_start);
 		button_start.setOnClickListener(this);
-		button_mount=(Button)main.findViewById(R.id.button_mount);
+		button_mount=main.findViewById(R.id.button_mount);
 		button_mount.setOnClickListener(this);
 		
-		radio_nukkit=(RadioButton)main.findViewById(R.id.radio_nukkit);
+		radio_nukkit=main.findViewById(R.id.radio_nukkit);
 		radio_nukkit.setChecked(nukkitMode);
 		radio_nukkit.setOnClickListener(this);
-		radio_pocketmine=(RadioButton)main.findViewById(R.id.radio_pocketmine);
+		radio_pocketmine=main.findViewById(R.id.radio_pocketmine);
 		radio_pocketmine.setChecked(!nukkitMode);
 		radio_pocketmine.setOnClickListener(this);
 		
@@ -182,7 +182,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 			main.openUrlFromJson("source_code");
 			break;
 		case R.id.button_start:
-			if(nukkitMode && ConfigProvider.getBoolean("AutoMountJava",false) && !ServerUtils.mountedJavaLibrary())
+			if(nukkitMode && ConfigProvider.getBoolean("AutoMountJava",false) && ServerUtils.javaLibraryNotFound())
 			{
 				processing_dialog.setCancelable(false);
 				processing_dialog.setMessage(getString(R.string.message_running));
@@ -299,7 +299,7 @@ public class MainFragment extends Fragment implements View.OnClickListener
 			{
 				running=true;
 			}
-			else if(!ServerUtils.mountedJavaLibrary() && !ConfigProvider.getBoolean("AutoMountJava",false))
+			else if(ServerUtils.javaLibraryNotFound() && !ConfigProvider.getBoolean("AutoMountJava",false))
 			{
 				running=true;
 				button_mount.setEnabled(true);

@@ -8,6 +8,7 @@ import android.os.*;
 import java.io.*;
 import java.lang.Process;
 import java.net.*;
+import java.nio.charset.*;
 import java.security.cert.*;
 import java.util.*;
 
@@ -31,7 +32,6 @@ public class ServerUtils
 	private static long startTime=0;
 	
 	@SuppressLint("SdCardPath")
-	@SuppressWarnings("SpellCheckingInspection")
 	public static void init(Context ctx)
 	{
 		appFilesDirectory=ctx.getFilesDir();
@@ -120,7 +120,7 @@ public class ServerUtils
 				ini.createNewFile();
 				FileOutputStream os=new FileOutputStream(ini);
 				os.write(("zend.enable_gc=On\nzend.assertions=-1\n\nenable_dl=On\nallow_url_fopen=On\nmax_execution_time=0\nregister_argc_argv=On\n\nerror_reporting=-1\ndisplay_errors=stderr\ndisplay_startup_errors=On\n\ndefault_charset=\"UTF-8\"\n\nphar.readonly=Off\nphar.require_hash=On\n\nopcache.enable=1\nopcache.enable_cli=1\nopcache.save_comments=1\nopcache.load_comments=1\nopcache.fast_shutdown=0\nopcache.memory_consumption=128\nopcache.interned_strings_buffer=8\nopcache.max_accelerated_files=4000\nopcache.optimization_level=0xffffffff")
-					.getBytes("UTF8"));
+					.getBytes(StandardCharsets.UTF_8));
 				os.close();
 			}
 			catch(Exception ignored)
@@ -155,8 +155,8 @@ public class ServerUtils
 		{
 			startTime=System.currentTimeMillis();
 			serverProcess=builder.start();
-			stdout=new InputStreamReader(serverProcess.getInputStream(),"UTF-8");
-			stdin=new OutputStreamWriter(serverProcess.getOutputStream(),"UTF-8");
+			stdout=new InputStreamReader(serverProcess.getInputStream(),StandardCharsets.UTF_8);
+			stdin=new OutputStreamWriter(serverProcess.getOutputStream(),StandardCharsets.UTF_8);
 			Thread tMonitor=new Thread()
 			{
 				public void run()
@@ -349,7 +349,6 @@ public class ServerUtils
 		return connection;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static void installBinary(File target,Context ctx,String filename,String friendlyName) throws Exception
 	{
 		AssetManager assets=ctx.getAssets();
@@ -366,7 +365,7 @@ public class ServerUtils
 				ABIS.add(Build.CPU_ABI2);
 			}
 		}
-		Collections.addAll(supportedABIS,assets.list(filename));
+		Collections.addAll(supportedABIS,Objects.requireNonNull(assets.list(filename)));
 		InputStream data=null;
 		boolean compressed=false;
 		for(String ABI : ABIS)
@@ -385,7 +384,7 @@ public class ServerUtils
 		}
 		if(data==null)
 		{
-			throw new ABINotSupportedException(friendlyName,supportedABIS);
+			throw new ABINotSupportedException(friendlyName);
 		}
 		target.delete();
 		File writeTo=compressed ? new File(target + ".tar.xz") : target;
@@ -428,7 +427,7 @@ public class ServerUtils
 		Runtime.getRuntime()
 			.exec(prefix + "mount -o bind " + ServerUtils.getAppDirectory() + "/java/lib /lib")
 			.waitFor();
-		if(!mountedJavaLibrary())
+		if(javaLibraryNotFound())
 		{
 			throw new RuntimeException("Mount failed.");
 		}
@@ -444,7 +443,7 @@ public class ServerUtils
 		return new File(getAppDirectory(),"java/jre/bin/java").exists();
 	}
 	
-	public static boolean mountedJavaLibrary()
+	public static boolean javaLibraryNotFound()
 	{
 		String[] list=new File("/lib").list();
 		if(list!=null)
@@ -453,11 +452,11 @@ public class ServerUtils
 			{
 				if(f.contains("ld-linux.so"))
 				{
-					return true;
+					return false;
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	public static boolean installedServerSoftware()

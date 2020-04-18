@@ -1,6 +1,7 @@
 package moe.berd.pocket_server.fragment;
 
 import android.app.*;
+import android.content.ClipboardManager;
 import android.content.*;
 import android.os.*;
 import android.text.*;
@@ -28,6 +29,8 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 	public TextView label_log=null, label_current=null;
 	public EditText edit_command=null;
 	public ScrollView scroll_log=null;
+	
+	public ClipboardManager clipboardManager = null;
 	
 	public ConsoleFragment()
 	{
@@ -61,11 +64,13 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 	@Override
 	public void onStart()
 	{
+		super.onStart();
+		
 		logUpdateHandler=new Handler(this);
 		
-		label_log=(TextView)main.findViewById(R.id.label_log);
-		label_current=(TextView)main.findViewById(R.id.label_current);
-		edit_command=(EditText)main.findViewById(R.id.edit_command);
+		label_log=main.findViewById(R.id.label_log);
+		label_current=main.findViewById(R.id.label_current);
+		edit_command=main.findViewById(R.id.edit_command);
 		edit_command.setOnKeyListener(new View.OnKeyListener()
 		{
 			@Override
@@ -79,8 +84,8 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 				return false;
 			}
 		});
-		scroll_log=(ScrollView)main.findViewById(R.id.logScrollView);
-		button_command=(Button)main.findViewById(R.id.button_send);
+		scroll_log=main.findViewById(R.id.logScrollView);
+		button_command=main.findViewById(R.id.button_send);
 		button_command.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -96,7 +101,7 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 		label_log.setText(currentLog);
 		label_current.setText(currentLine);
 		
-		super.onStart();
+		clipboardManager = (ClipboardManager)main.getSystemService(Context.CLIPBOARD_SERVICE);
 	}
 	
 	@Override
@@ -132,8 +137,7 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 			label_current.setText("");
 			break;
 		case R.id.menu_copy:
-			((android.content.ClipboardManager)main.getSystemService(Context.CLIPBOARD_SERVICE)).setPrimaryClip(ClipData
-				.newPlainText("PocketServer_ConsoleLog",currentLog));
+			clipboardManager.setPrimaryClip(ClipData.newPlainText("PocketServer_ConsoleLog",currentLog));
 			main.toast(R.string.message_copied);
 			break;
 		default:
@@ -177,7 +181,7 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 		edit_command.setText("");
 	}
 	
-	public static boolean postAppend(CharSequence data)
+	public static void postAppend(CharSequence data)
 	{
 		if(logUpdateHandler!=null)
 		{
@@ -185,21 +189,17 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 			msg.arg1=MESSAGE_APPEND;
 			msg.obj=data;
 			logUpdateHandler.sendMessage(msg);
-			return true;
 		}
-		return false;
 	}
 	
-	public static boolean postNewLine()
+	public static void postNewLine()
 	{
 		if(logUpdateHandler!=null)
 		{
 			Message msg=new Message();
 			msg.arg1=MESSAGE_UPDATE_LINE;
 			logUpdateHandler.sendMessage(msg);
-			return true;
 		}
-		return false;
 	}
 	
 	public static void logLine(String line)
@@ -212,7 +212,7 @@ public class ConsoleFragment extends Fragment implements Handler.Callback
 		}
 		if(ansiMode)
 		{
-			int index=0;
+			int index;
 			while((index=line.indexOf("\u001b[1G"))!=-1)
 			{
 				line=line.substring(index + 4);

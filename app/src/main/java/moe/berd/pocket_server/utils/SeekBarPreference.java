@@ -9,6 +9,7 @@ import android.widget.*;
 
 import net.fengberd.minecraftpe_server.*;
 
+@SuppressWarnings("WeakerAccess")
 public class SeekBarPreference extends Preference implements SeekBar.OnSeekBarChangeListener
 {
 	private int progress;
@@ -35,7 +36,7 @@ public class SeekBarPreference extends Preference implements SeekBar.OnSeekBarCh
 	protected void onBindView(View view)
 	{
 		super.onBindView(view);
-		SeekBar seekbar=(SeekBar)view.findViewById(R.id.preference_seekbar_seekbar);
+		SeekBar seekbar=view.findViewById(R.id.preference_seekbar_seekbar);
 		if(seekbar!=null)
 		{
 			seekbar.setProgress(progress);

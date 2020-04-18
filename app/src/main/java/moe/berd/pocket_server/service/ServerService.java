@@ -3,7 +3,6 @@ package moe.berd.pocket_server.service;
 import android.app.*;
 import android.content.*;
 import android.os.*;
-
 import android.support.v4.app.*;
 
 import net.fengberd.minecraftpe_server.*;
@@ -14,6 +13,7 @@ import moe.berd.pocket_server.utils.*;
 public class ServerService extends Service
 {
 	@Override
+	@SuppressWarnings("ConstantConditions")
 	public int onStartCommand(Intent intent,int flags,int startId)
 	{
 		String channelId = "";
@@ -22,8 +22,7 @@ public class ServerService extends Service
 			channelId = "running";
 			NotificationChannel channel=new NotificationChannel(channelId,"Server Running",NotificationManager.IMPORTANCE_LOW);
 			channel.setDescription("Make sure the service won't die");
-			NotificationManager notificationManager=getSystemService(NotificationManager.class);
-			notificationManager.createNotificationChannel(channel);
+			getSystemService(NotificationManager.class).createNotificationChannel(channel);
 		}
 		startForeground(1,new NotificationCompat.Builder(getApplicationContext(), channelId).setOngoing(true)
 			.setSmallIcon(R.drawable.ic_launcher)

@@ -3,7 +3,7 @@ package moe.berd.pocket_server.utils;
 import java.util.*;
 import java.util.regex.*;
 
-@SuppressWarnings("SpellCheckingInspection")
+@SuppressWarnings({"WeakerAccess"})
 public class TerminalColorConverter
 {
 	public static Pattern pattern_SGR=Pattern.compile("\u001b\\[((\\d;?)*)m");
@@ -47,7 +47,7 @@ public class TerminalColorConverter
 		"#bcbcbc","#c6c6c6","#d0d0d0","#dadada","#e4e4e4","#eeeeee"
 	};
 	
-	@SuppressWarnings("ConstantConditions")
+	@SuppressWarnings({"UnusedAssignment","unused"})
 	public static String control2html(String input)
 	{
 		String foreground="", background="";

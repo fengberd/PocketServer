@@ -61,7 +61,7 @@ public class SettingsFragment extends PreferenceFragment
 						}
 						catch(ABINotSupportedException e)
 						{
-							main.alertABIWarning(e.binaryName,null,e.supportedABIS);
+							main.alertABIWarning(e.binaryName,null);
 						}
 						catch(Exception e)
 						{
