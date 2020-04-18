@@ -377,50 +377,6 @@ public class ServerUtils
 				data=assets.open(filename + "/" + ABI);
 				break;
 			}
-			if(ABI.startsWith("arm64"))
-			{
-				if(supportedABIS.contains("arm64.tar.xz"))
-				{
-					compressed=true;
-					data=assets.open(filename + "/arm64.tar.xz");
-				}
-				else if(supportedABIS.contains("arm64"))
-				{
-					data=assets.open(filename + "/arm64");
-				}
-				else
-				{
-					continue;
-				}
-			}
-			if(ABI.startsWith("armeabi") || ABI.startsWith("arm64"))
-			{
-				if(supportedABIS.contains("armeabi.tar.xz"))
-				{
-					compressed=true;
-					data=assets.open(filename + "/armeabi.tar.xz");
-				}
-				else if(supportedABIS.contains("armeabi"))
-				{
-					data=assets.open(filename + "/armeabi");
-				}
-				else
-				{
-					continue;
-				}
-			}
-			if(ABI.startsWith("x86"))
-			{
-				if(supportedABIS.contains("i686.tar.xz"))
-				{
-					compressed=true;
-					data=assets.open(filename + "/i686.tar.xz");
-				}
-				else if(supportedABIS.contains("i686"))
-				{
-					data=assets.open(filename + "/i686");
-				}
-			}
 		}
 		if(data==null)
 		{
