@@ -133,7 +133,7 @@ public class SettingsFragment extends PreferenceFragment
 				{
 					public void run()
 					{
-						main.downloadFile("https://raw.githubusercontent.com/fengberd/MinecraftPEServer/master/app/src/main/assets/urls.json",new File(ServerUtils
+						main.downloadFile("https://raw.githubusercontent.com/fengberd/PocketServer/master/app/src/main/assets/urls.json",new File(ServerUtils
 							.getAppFilesDirectory(),"urls.json"),processing_dialog);
 						main.reloadUrls();
 						main.runOnUiThread(new Runnable()
